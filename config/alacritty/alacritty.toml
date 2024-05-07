@@ -1,0 +1,24 @@
+import = [
+    "~/.config/alacritty/themes/themes/github_dark_high_contras.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+# [shell]
+# program = "/usr/local/bin/tmux"  # Set this to the path of your tmux installation
+# args = ["new-session", "-A", "-D", "-s", "main"]
+
+[window]
+decorations = "Buttonless"
+padding.x = 15
+padding.y = 10
+# opacity = 0.7
+# blur = true
+
+option_as_alt = "Both"
+
+[font]
+normal.family = "Hack Nerd Font Mono"
+
+size = 14

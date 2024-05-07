@@ -37,7 +37,7 @@ vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste whitout yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete whitout yanking" })
 
 -- Launch tmux-sessionizer on CTRL+f
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer.sh<CR>")
+vim.keymap.set("n", "<C-f>", ":silent !tmux neww zsh -c '~/dotfiles/scripts/tmux-sessionizer.sh'<CR>", { silent = true })
 
 -- Search and replace helper
 vim.keymap.set("n", "<leader>fr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Find and Replace" })
