@@ -13,11 +13,12 @@ return {
       ["<leader>f"] = { name = "+find/file" },
       ["<leader>g"] = { name = "+git" },
       ["<leader>s"] = { name = "+search" },
-      ["<leader>x"] = { name = "+diagnostics/quickfix" },
+      -- ["<leader>x"] = { name = "+diagnostics/quickfix" },
       ["<leader>h"] = { name = "+harpoon" },
       ["<leader>w"] = { name = "+workspace" },
       ["<leader>r"] = { name = "+rename" },
       ["<leader>d"] = { name = "+document" },
+      ["<leader>t"] = { name = "+toggle" },
     },
   },
   config = function(_, opts)

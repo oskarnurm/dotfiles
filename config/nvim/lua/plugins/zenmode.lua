@@ -2,7 +2,7 @@ return {
   "folke/zen-mode.nvim",
   event = "VeryLazy",
   config = function()
-    vim.keymap.set("n", "<leader>z", function()
+    vim.keymap.set("n", "<leader>tz", function()
       require("zen-mode").setup {
         window = {
           width = 90,
@@ -15,7 +15,7 @@ return {
       vim.wo.rnu = true
     end, { desc = "Zen mode" })
 
-    vim.keymap.set("n", "<leader>zz", function()
+    vim.keymap.set("n", "<leader>tZ", function()
       require("zen-mode").setup {
         window = {
           width = 80,

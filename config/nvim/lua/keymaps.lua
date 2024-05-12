@@ -6,8 +6,8 @@ vim.keymap.set("n", "<leader>ft", vim.cmd.Ex, { desc = "Filte tree" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Error messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Quickfix List" })
-vim.keymap.set("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location List" })
+-- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Quickfix List" }) --> Handeled by Trouble
+-- vim.keymap.set("n", "<leader>l", "<cmd>lopen<cr>", { desc = "Location List" })
 
 -- Move between Quickfix-list
 vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Prev Quickfix" })
@@ -37,7 +37,7 @@ vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste whitout yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete whitout yanking" })
 
 -- Launch tmux-sessionizer on CTRL+f
-vim.keymap.set("n", "<C-f>", ":silent !tmux neww zsh -c '~/dotfiles/scripts/tmux-sessionizer.sh'<CR>", { silent = true })
+vim.keymap.set("n", "<C-f>", ":silent !tmux neww '~/dotfiles/scripts/tmux-sessionizer.sh'<CR>", { silent = true })
 
 -- Search and replace helper
 vim.keymap.set("n", "<leader>fr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Find and Replace" })
