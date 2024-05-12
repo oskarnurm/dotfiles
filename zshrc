@@ -1,4 +1,3 @@
-
 # Prompt
 eval "$(starship init zsh)"
 
@@ -34,7 +33,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Zoxide (better cd)
 eval "$(zoxide init zsh)"
-alias cd="z"
+# alias cd="z"
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
