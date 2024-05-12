@@ -1,7 +1,7 @@
 # (Github Dark Default) Colors for Wezterm
 
 [colors]
-background = '#000000' # '#0d1117'
+background = '#0d1117'
 foreground = '#e6edf3'
 
 cursor_bg = '#e6edf3'

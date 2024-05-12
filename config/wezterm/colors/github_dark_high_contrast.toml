@@ -1,7 +1,7 @@
 # (Github Dark High Contrast) Colors for Wezterm
 
 [colors]
-background = '#000000' # '#0a0c10'
+background = '#0a0c10'
 foreground = '#f0f3f6'
 
 cursor_bg = '#f0f3f6'
