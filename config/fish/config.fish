@@ -1,18 +1,15 @@
-# Aliases
-if type -q eza
-  alias ll "eza -l -g --icons"
-  alias lla "ll -a"
-end
+# Launch starship
+starship init fish | source
 
+# Aliases
+alias ll "eza -l -g --icons"
+alias lla "ll -a"
 alias neoconf "cd ~/.config/nvim"
 alias v "nvim"
 alias lq "lazygit"
 
 # Ctrl+f to launch tmux-sessionizer
-bind \cf  ~/.local/scripts/tmux-sessionizer.sh
-
-# Launch starship
-starship init fish | source
+bind \cf  ~/dotfiles/scripts/tmux-sessionizer.sh
 
 # Fzf prettier preview
 set -gx FZF_DEFAULT_OPTS '--preview "bat -n --color=always --style=numbers --line-range=:500 {}"'
@@ -40,5 +37,3 @@ end
 function fish_greeting
     # Do nothing
 end
-
-set -gx PATH ~/.local/scripts/ $PATH
