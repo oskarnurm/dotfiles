@@ -10,6 +10,12 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
+if [ -f "$selected" ]; then
+    # If the selected item is a file, open it in neovim
+    nvim "$selected"
+    exit 0
+fi
+
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
