@@ -1,20 +1,24 @@
-# Prompt
+# Create Aliases
+alias ls="ls -lAFh"
+alias ll="eza -l -g --icons"
+alias lla="ll -a"
+alias reload-zsh="source ~/.zshrc"
+alias v="nvim"
+
+# Customize Prompt
+PROMPT="%1~ %L %# "
 eval "$(starship init zsh)"
+
+# Handy Functions 
+function mkcd () {
+ mkdir -p "$@" && cd "$_";
+}
 
 function tmux-sessionizer() {
     ~/dotfiles/scripts/tmux-sessionizer.sh
 }
 zle -N tmux-sessionizer
 bindkey '^F' tmux-sessionizer
-
-# Better ls
-alias ll="eza -l -g --icons"
-alias ls="eza -l --no-filesize --no-permissions --no-user --no-time --icons"
-alias lla="ll -a"
-
-# Quality of life
-alias reload-zsh="source ~/.zshrc"
-alias v="nvim"
 
 # History
 HISTFILE=$HOME/.zhistory
