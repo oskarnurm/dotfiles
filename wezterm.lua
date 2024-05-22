@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 
 -- Spawn a fish shell in login mode
-config.default_prog = { "/usr/local/bin/fish", "-l" }
+-- config.default_prog = { "/usr/local/bin/fish", "-l" }
 
 -- Colors
 config.color_scheme = "Gruvbox dark, hard (base16)"
@@ -41,8 +41,8 @@ config.keys = {
 	{ key = "phys:Space", mods = "LEADER", action = act.ActivateCommandPalette },
 
 	-- Pane keybindings
-	{ key = "_", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "|", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "s", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "t", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
 	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
 	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
