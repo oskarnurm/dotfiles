@@ -1,5 +1,8 @@
 # TODO
 
+- Treesitter markdown not working correctly on windows, make sure markdown is installed,
+- configure wezterm
+
 ##dependencies needed for the condig to work i.e. nerdfonts, starship, fish, etc, for linux, windows and mac
 
 Run the following commands to install your dotfiles:
