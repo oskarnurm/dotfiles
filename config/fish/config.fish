@@ -1,12 +1,23 @@
-# Launch starship
-starship init fish | source
+# Remove the fish greeting
+set -g fish_greeting
 
-# Aliases
+if status is-interactive
+    starship init fish | source
+end
+
+# Better list dirs
 alias ll "eza -l -g --icons"
 alias lla "ll -a"
-alias neoconf "cd ~/.config/nvim"
+
 alias v "nvim"
-alias lq "lazygit"
+alias lg "lazygit"
+
+# Handy change dir shortcuts
+abbr .. 'cd ..'
+abbr ... 'cd ../..'
+
+# Makes the parent dir if missing ex. mkdir -p config/fish (if config did not exist)
+abbr mkdir 'mkdir -p'
 
 # Ctrl+f to launch tmux-sessionizer
 bind \cf  ~/dotfiles/scripts/tmux-sessionizer.sh
@@ -31,9 +42,4 @@ function _fzf_comprun
         case '*'
             fzf --preview "bat -n --color=always --line-range :500 {}" $argv
     end
-end
-
-# Disable fish greeting
-function fish_greeting
-    # Do nothing
 end
