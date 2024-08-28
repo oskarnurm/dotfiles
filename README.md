@@ -27,6 +27,7 @@
 - c compiler
 - ripgrep
 - fd
+- tree
 
 ## Alacritty
 ### Requirements

@@ -1,10 +1,9 @@
 [init]
 	defaultBranch = main
 [credential]
-	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
-[credential "https://dev.azure.com"]
-	useHttpPath = true
 [user]
 	email = 19738295+oskarnurm@users.noreply.github.com.
 	name = oskarnurm
+[core]
+	editor = nvim
