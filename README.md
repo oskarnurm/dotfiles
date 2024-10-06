@@ -17,6 +17,12 @@
 - keyd
 - wofi
 - packages/bewfiles etc
+- yay or paru
+- nerdfots
+- fd
+- tree
+- ripgrep
+- c compiler
 - ?
 
 ## Neovim
@@ -28,6 +34,7 @@
 - ripgrep
 - fd
 - tree
+- 
 
 ## Alacritty
 ### Requirements
