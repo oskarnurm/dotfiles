@@ -23,6 +23,7 @@
 - tree
 - ripgrep
 - c compiler
+- scripts
 - ?
 
 ## Neovim
