@@ -1,0 +1,56 @@
+{
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["network", "pulseaudio", "battery", "clock"],
+  "clock": {
+    "format": "<span size='13000'></span>{:%a %d. %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "battery": {
+    "interval": 3 // UPDATE BATTERY STATUS EVERY 3 SECONDS
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span size='13000'>{icon} </span> {capacity}%",  // Normal battery format
+    "format-charging": "<span size='13000'> </span>{capacity}%",  // Charger icon immediately when charging
+    "format-plugged": "<span size='13000'> </span>{capacity}%",  // Charger icon when plugged in
+    "format-discharging": "<span size='13000'>{icon} </span> {capacity}%",  // Discharging state
+    "format-critical": "<span size='13000'>{icon} </span> {capacity}%",  // Critical level format
+    "format-alt": "<span size='13000'>{icon} </span> {time}",
+    "format-full": "<span size='13000'>{icon} </span> {capacity}%",  // Full battery icon
+    "format-icons": ["", "", "", "", ""],  // Battery icons for different levels
+    "tooltip-format": "{time}",  // Tooltip showing remaining time
+  },
+  //"network": {
+  //  "format-wifi": "<span size='13000'> </span>",
+  //  "format-ethernet": "<span size='13000'>󰤭 </span> Disconnected",
+  //  "format-linked": "{ifname} (No IP) ",
+  //  "tooltip-format": "{essid}\nSignal Strength: {signalStrength}%",
+  //  "format-disconnected": "<span size='13000'>  </span>Disconnected",
+  //},
+"network": {
+      "format-wifi": " ",
+      "format-ethernet":" ",
+      "format-disconnected": "",
+      "tooltip-format": "{ipaddr}",
+      "tooltip-format-wifi": "{essid} ({signalStrength}%) | {ipaddr}",
+      "tooltip-format-ethernet": "{ifname} | {ipaddr}",
+      "on-click": "networkmanager_dmenu"
+    },
+  "pulseaudio": {
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "format": "<span size='13000'>{icon} </span> {volume}%",
+    "format-muted": "<span size='14000'></span> Muted",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""]
+    }
+  }
+}
