@@ -8,7 +8,7 @@
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
   "battery": {
-    "interval": 3 // UPDATE BATTERY STATUS EVERY 3 SECONDS
+    "interval": 3, // UPDATE BATTERY STATUS EVERY 3 SECONDS
     "states": {
       "warning": 30,
       "critical": 15
@@ -21,7 +21,7 @@
     "format-alt": "<span size='13000'>{icon} </span> {time}",
     "format-full": "<span size='13000'>{icon} </span> {capacity}%",  // Full battery icon
     "format-icons": ["", "", "", "", ""],  // Battery icons for different levels
-    "tooltip-format": "{time}",  // Tooltip showing remaining time
+    "tooltip-format": "{time}"  // Tooltip showing remaining time
   },
   //"network": {
   //  "format-wifi": "<span size='13000'> </span>",
