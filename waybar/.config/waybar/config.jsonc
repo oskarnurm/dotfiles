@@ -1,56 +1,103 @@
 {
-  "position": "top",
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["hyprland/window"],
-  "modules-right": ["network", "pulseaudio", "battery", "clock"],
-  "clock": {
-    "format": "<span size='13000'></span>{:%a %d. %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-  },
-  "battery": {
-    "interval": 3, // UPDATE BATTERY STATUS EVERY 3 SECONDS
-    "states": {
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "<span size='13000'>{icon} </span> {capacity}%",  // Normal battery format
-    "format-charging": "<span size='13000'> </span>{capacity}%",  // Charger icon immediately when charging
-    "format-plugged": "<span size='13000'> </span>{capacity}%",  // Charger icon when plugged in
-    "format-discharging": "<span size='13000'>{icon} </span> {capacity}%",  // Discharging state
-    "format-critical": "<span size='13000'>{icon} </span> {capacity}%",  // Critical level format
-    "format-alt": "<span size='13000'>{icon} </span> {time}",
-    "format-full": "<span size='13000'>{icon} </span> {capacity}%",  // Full battery icon
-    "format-icons": ["", "", "", "", ""],  // Battery icons for different levels
-    "tooltip-format": "{time}"  // Tooltip showing remaining time
-  },
-  //"network": {
-  //  "format-wifi": "<span size='13000'> </span>",
-  //  "format-ethernet": "<span size='13000'>󰤭 </span> Disconnected",
-  //  "format-linked": "{ifname} (No IP) ",
-  //  "tooltip-format": "{essid}\nSignal Strength: {signalStrength}%",
-  //  "format-disconnected": "<span size='13000'>  </span>Disconnected",
-  //},
-"network": {
-      "format-wifi": " ",
-      "format-ethernet":" ",
-      "format-disconnected": "",
-      "tooltip-format": "{ipaddr}",
-      "tooltip-format-wifi": "{essid} ({signalStrength}%) | {ipaddr}",
-      "tooltip-format-ethernet": "{ifname} | {ipaddr}",
-      "on-click": "networkmanager_dmenu"
-    },
-  "pulseaudio": {
-    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    "format": "<span size='13000'>{icon} </span> {volume}%",
-    "format-muted": "<span size='14000'></span> Muted",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", ""]
-    }
-  }
+	"position": "top",
+	"modules-left": ["hyprland/workspaces"],
+	"modules-center": ["hyprland/window"],
+	"modules-right": [
+		"network",
+		"backlight",
+		"pulseaudio",
+		"pulseaudio#microphone",
+		"battery",
+		"clock"
+	],
+	"network": {
+		"format-wifi": "<span rise='-2000'> </span>",
+		"format-ethernet": "<span rise='-2000'> </span>",
+		"format-alt": "<span rise='-2000'>  {bandwidthDownBytes}</span> <span rise='-2000'>  {bandwidthUpBytes}</span>",
+		"format-disconnected": "<span rise='-2000'></span>",
+		"tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+		"tooltip-format-disconnected": "Disconnected",
+		"interval": 2
+	},
+	"backlight": {
+		"format": "<span size='13000' rise='-2000'>{icon} </span>{percent}%",
+		"format-icons": ["", "", "", "", "", "", "", "", ""],
+		//"on-scroll-up": "brightnessctl set 1%+",
+		//"on-scroll-down": "brightnessctl set 1%-",
+		"tooltip-format": "Screen brightness ({percent}%)",
+		"min-length": 6
+	},
+	"pulseaudio": {
+		"scroll-step": 5,
+		"format": "<span size='13000' rise='-2000'>{icon}</span> {volume}%",
+		"format-bluetooth": "<span size='13000' rise='-2000'></span> {icon} {volume}%",
+		"format-bluetooth-muted": "<span size='13000' rise='-2000'></span>  {icon}",
+		"format-muted": "<span size='13000' rise='-2000'></span>",
+		"format-icons": {
+			"headphone": "<span size='13000'></span>",
+			"hands-free": "<span size='13000'></span>",
+			"headset": "<span size='13000'></span>",
+			"phone": "<span size='13000'></span>",
+			"portable": "<span size='13000'></span>",
+			"car": "<span size='13000'></span>",
+			"default": [
+				"<span size='13000' rise='-2000'> </span>",
+				"<span size='13000' rise='-2000'> </span>",
+				"<span size='13000' rise='-2000'> </span>"
+			]
+		},
+		"on-click": "exec ~/bin/volumecontrol.sh -o m",
+		"on-click-right": "pavucontrol -t 3",
+		//"on-scroll-up": "exec pamixer --increase 5",
+		//"on-scroll-down": "exec pamixer --decrease 5"
+		"tooltip-format": "Left-click to open Devices\nRight-click to mute"
+	},
+	"pulseaudio#microphone": {
+		"format": "{format_source}",
+		"format-source": "",
+		"format-source-muted": "<span size='13000'> </span>",
+		"on-click": "volumecontrol.sh -i m",
+		"on-click-right": "pavucontrol -t 4",
+		//"on-scroll-up": "volumecontrol.sh -i i",
+		//"on-scroll-down": "volumecontrol.sh -i d",
+		"tooltip-format": "Left-click to open Devices\nRight-click to mute",
+		"scroll-step": 5
+	},
+	"battery": {
+		"interval": 3,
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "<span size='13000', rise='-2000'>{icon} </span> {capacity}%",
+		"format-charging": "<span size='13000' rise='-2000'> </span>{capacity}%",
+		"format-plugged": "<span size='13000' rise='-2000'> </span>{capacity}%",
+		"format-discharging": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
+		"format-critical": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
+		"format-alt": "<span size='13000' rise='-2000'>{icon} </span> {time}",
+		"format-full": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
+		"format-icons": ["", "", "", "", ""],
+		"tooltip-format": "{time}"
+	},
+	"clock": {
+		"format": "<span rise='-15000'>{:%a %d. %H:%M}</span>",
+		"format-alt": "{:%A, %B %d, %Y}",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+			"mode": "year",
+			"mode-mon-col": 3,
+			"weeks-pos": "right",
+			"on-scroll": 0.1,
+			"format": {
+				"months": "<span color='#ffead3'><b>{}</b></span>",
+				"days": "<span color='#ecc6d9'><b>{}</b></span>",
+				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+			}
+		},
+		"actions": {
+			"on-click-right": "mode"
+		}
+	}
 }
