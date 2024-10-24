@@ -24,6 +24,9 @@
 - swaylock
 - karabiner?
 - keyd
+- pamixer
+- swayosd
+- npm
 - packages/bewfiles etc
 
 ## Neovim
