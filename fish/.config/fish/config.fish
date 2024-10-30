@@ -14,7 +14,7 @@ alias lt='eza --icons=auto --tree' # list folder as tree
 # Handy change dir shortcuts
 abbr .. 'cd ..'
 abbr ... 'cd ../..'
-abbr gc 'git commit -m"'
+abbr gc 'git commit -m'
 abbr ga 'git add'
 abbr gt 'git status'
 
