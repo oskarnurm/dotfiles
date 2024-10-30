@@ -16,6 +16,7 @@ abbr .. 'cd ..'
 abbr ... 'cd ../..'
 abbr gc 'git commit -m"'
 abbr ga 'git add'
+abbr gt 'git status'
 
 # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
 abbr mkdir 'mkdir -p'
