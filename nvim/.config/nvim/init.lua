@@ -51,7 +51,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -62,15 +62,22 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
-vim.opt.swapfile = true
+-- Disable swap files as they become very annoying when editing symlinks
+vim.opt.swapfile = false
+
+-- backup is about creating a safety copy of the file before making changes, so you can recover the file if something goes wrong. Enable if it becomes a problem
 vim.opt.backup = false
+
+-- Enables presistent undo that works well with undo-tree plugins
 vim.opt.undofile = true
 
--- TODO: See if there is a noticeable differece having these option enabled/disabled
+-- With presistent undo enabled it makes sense to specify a custom directory to avoid cluttering working directories
+vim.opt.undodir = os.getenv 'HOME' .. '/.neovim/undodir'
+
 vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
 vim.opt.smartindent = true
 
 -- [[ Basic Keymaps ]]
@@ -126,7 +133,7 @@ vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
 vim.keymap.set('n', '<C-f>', ":silent !tmux neww '~/dotfiles/scripts/tmux-sessionizer.sh'<CR>", { silent = true })
 
 -- Search and replace helper
-vim.keymap.set('n', '<leader>fr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><eft><Left>]], { desc = 'Find and Replace' })
+vim.keymap.set('n', '<leader>fr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 -- [[ Basic Autocommands ]]
@@ -177,6 +184,13 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+  },
+  -- Color highlighter
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end,
   },
 
   -- lazy loading plugins that don't need to be loaded immediately at startup.

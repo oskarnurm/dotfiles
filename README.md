@@ -27,7 +27,8 @@
 - pamixer
 - swayosd
 - npm
-- packages/bewfiles etc
+- eza
+- nwg-look
 
 ## Neovim
 ### Requirements

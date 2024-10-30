@@ -3,65 +3,86 @@
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": ["hyprland/window"],
 	"modules-right": [
+		"tray",
+		"hyprland/language",
 		"network",
 		"backlight",
 		"pulseaudio",
 		"pulseaudio#microphone",
 		"battery",
-		"clock"
+		"clock",
+		"group/group-power"
 	],
+	"hyprland/workspaces": {
+		"disable-scroll": true,
+		"all-outputs": true,
+		"warp-on-scroll": false,
+		"format": "{icon}",
+		"format-icons": {
+			"1": "󰈹 ",
+			"2": " ",
+			"3": " ",
+			"4": " "
+		}
+	},
+	"tray": {
+		"spacing": 10
+	},
 	"network": {
-		"format-wifi": "<span rise='-2000'> </span>",
-		"format-ethernet": "<span rise='-2000'> </span>",
-		"format-alt": "<span rise='-2000'>  {bandwidthDownBytes}</span> <span rise='-2000'>  {bandwidthUpBytes}</span>",
-		"format-disconnected": "<span rise='-2000'></span>",
-		"tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+		"format-wifi": "<span font='12px'></span>",
+		"format-ethernet": "<span font='14px'></span>",
+		"format-alt": "<span font='14px'></span> {bandwidthDownBytes} <span font='14px'></span> {bandwidthUpBytes}",
+		"format-disconnected": "<span font='14px'></span>",
+		"tooltip-format": "Network: {essid}\nSignal strength: {signaldBm}dBm ({signalStrength}%)\nFrequency: {frequency}MHz\nInterface: {ifname}\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}\nNetmask: {netmask}",
 		"tooltip-format-disconnected": "Disconnected",
+		"on-click-right": "rofi-wifi-menu.sh",
 		"interval": 2
 	},
 	"backlight": {
-		"format": "<span size='13000' rise='-2000'>{icon} </span>{percent}%",
-		"format-icons": ["", "", "", "", "", "", "", "", ""],
-		//"on-scroll-up": "brightnessctl set 1%+",
-		//"on-scroll-down": "brightnessctl set 1%-",
-		"tooltip-format": "Screen brightness ({percent}%)",
-		"min-length": 6
+		"format": "{icon} ",
+		"format-icons": [
+			"<span font='14px'>󱩎</span>",
+			"<span font='14px'>󱩏</span>",
+			"<span font='14px'>󱩐</span>",
+			"<span font='14px'>󱩑</span>",
+			"<span font='14px'>󱩒</span>",
+			"<span font='14px'>󱩓</span>",
+			"<span font='14px'>󱩔</span>",
+			"<span font='14px'>󱩕</span>",
+			"<span font='14px'>󱩖</span>",
+			"<span font='14px'>󰛨</span>"
+		],
+		"tooltip-format": "Screen brightness ({percent}%)"
 	},
 	"pulseaudio": {
-		"scroll-step": 5,
-		"format": "<span size='13000' rise='-2000'>{icon}</span> {volume}%",
-		"format-bluetooth": "<span size='13000' rise='-2000'></span> {icon} {volume}%",
-		"format-bluetooth-muted": "<span size='13000' rise='-2000'></span>  {icon}",
-		"format-muted": "<span size='13000' rise='-2000'></span>",
+		"format": "{icon}",
+		"format-bluetooth": "<span font='14px'>󰂯</span>",
+		"format-bluetooth-muted": "<span font='14px'>󰂲</span>",
+		"format-muted": "<span font='14px'>󰸈</span>",
 		"format-icons": {
-			"headphone": "<span size='13000'></span>",
-			"hands-free": "<span size='13000'></span>",
-			"headset": "<span size='13000'></span>",
-			"phone": "<span size='13000'></span>",
-			"portable": "<span size='13000'></span>",
-			"car": "<span size='13000'></span>",
+			"headphone": "<span font='14px'> </span>",
+			"hands-free": "<span font='14px'> </span>",
+			"headset": "<span font='14px'> </span>",
+			"phone": "<span font='14px'> </span>",
+			"portable": "<span font='14px'> </span>",
+			"car": "<span font='14px'> </span>",
 			"default": [
-				"<span size='13000' rise='-2000'> </span>",
-				"<span size='13000' rise='-2000'> </span>",
-				"<span size='13000' rise='-2000'> </span>"
+				"<span font='14px'>󰕿</span>",
+				"<span font='14px'>󰖀</span>",
+				"<span font='14px'>󰕾</span>"
 			]
 		},
-		"on-click": "exec ~/bin/volumecontrol.sh -o m",
+		"on-click": "volumecontrol.sh -o m",
 		"on-click-right": "pavucontrol -t 3",
-		//"on-scroll-up": "exec pamixer --increase 5",
-		//"on-scroll-down": "exec pamixer --decrease 5"
-		"tooltip-format": "Left-click to open Devices\nRight-click to mute"
+		"tooltip-format": "Level {volume}%\nMute/Devices"
 	},
 	"pulseaudio#microphone": {
 		"format": "{format_source}",
-		"format-source": "",
-		"format-source-muted": "<span size='13000'> </span>",
+		"format-source": "<span font='12px'></span>",
+		"format-source-muted": "<span font='12px'></span>",
 		"on-click": "volumecontrol.sh -i m",
 		"on-click-right": "pavucontrol -t 4",
-		//"on-scroll-up": "volumecontrol.sh -i i",
-		//"on-scroll-down": "volumecontrol.sh -i d",
-		"tooltip-format": "Left-click to open Devices\nRight-click to mute",
-		"scroll-step": 5
+		"tooltip-format": "Level {volume}%\nMute/Devices"
 	},
 	"battery": {
 		"interval": 3,
@@ -69,35 +90,79 @@
 			"warning": 30,
 			"critical": 15
 		},
-		"format": "<span size='13000', rise='-2000'>{icon} </span> {capacity}%",
-		"format-charging": "<span size='13000' rise='-2000'> </span>{capacity}%",
-		"format-plugged": "<span size='13000' rise='-2000'> </span>{capacity}%",
-		"format-discharging": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
-		"format-critical": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
-		"format-alt": "<span size='13000' rise='-2000'>{icon} </span> {time}",
-		"format-full": "<span size='13000' rise='-2000'>{icon} </span> {capacity}%",
-		"format-icons": ["", "", "", "", ""],
+		"format": "{capacity}% {icon}",
+		"format-charging": "{capacity}% <span font='14px'></span>",
+		"format-plugged": "{capacity}% <span font='14px'></span>",
+		"format-alt": "{icon}",
+		"format-icons": [
+			"<span font='14px'>󰂎</span>",
+			"<span font='14px'>󰁺</span>",
+			"<span font='14px'>󰁻</span>",
+			"<span font='14px'>󰁼</span>",
+			"<span font='14px'>󰁽</span>",
+			"<span font='14px'>󰁾</span>",
+			"<span font='14px'>󰁿</span>",
+			"<span font='14px'>󰂀</span>",
+			"<span font='14px'>󰂁</span>",
+			"<span font='14px'>󰂂</span>",
+			"<span font='14px'>󰁹</span>"
+		],
 		"tooltip-format": "{time}"
 	},
+	"hyprland/language": {
+		"format": "<span font='14px'>{short}  </span>",
+		//"format-en": "EN",
+		//"format-ee": "EE",
+		"on-click": "hyprctl switchxkblayout current next"
+	},
 	"clock": {
-		"format": "<span rise='-15000'>{:%a %d. %H:%M}</span>",
-		"format-alt": "{:%A, %B %d, %Y}",
+		"format": "{:%a %H:%M}",
+		"format-alt": "{:%a, %b %d, %Y}",
 		"tooltip-format": "<tt><small>{calendar}</small></tt>",
 		"calendar": {
 			"mode": "year",
 			"mode-mon-col": 3,
 			"weeks-pos": "right",
-			"on-scroll": 0.1,
+			"on-scroll": 1,
 			"format": {
-				"months": "<span color='#ffead3'><b>{}</b></span>",
-				"days": "<span color='#ecc6d9'><b>{}</b></span>",
-				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
-				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+				"months": "<span color='#fbf1c7'><b>{}</b></span>",
+				"days": "<span color='#b16286'><b>{}</b></span>",
+				"weeks": "<span color='#458588'><b>W{}</b></span>",
+				"weekdays": "<span color='#d79921'><b>{}</b></span>",
+				"today": "<span color='#fb4934'><b><u>{}</u></b></span>"
 			}
 		},
 		"actions": {
 			"on-click-right": "mode"
 		}
+	},
+	"group/group-power": {
+		"orientation": "inherit",
+		"drawer": {
+			"transition-duration": 500,
+			"children-class": "not-power",
+			"transition-left-to-right": false
+		},
+		"modules": ["custom/power", "custom/quit", "custom/lock", "custom/reboot"]
+	},
+	"custom/quit": {
+		"format": "<span font='14px'>󰗼</span>",
+		"tooltip-format": "Exit",
+		"on-click": "hyprctl dispatch exit"
+	},
+	"custom/lock": {
+		"format": "<span font='14px'>󰍁</span>",
+		"tooltip-format": "Lock",
+		"on-click": "hyprlock"
+	},
+	"custom/reboot": {
+		"format": "<span font='14px'>󰜉</span>",
+		"tooltip-format": "Reboot",
+		"on-click": "reboot"
+	},
+	"custom/power": {
+		"format": "<span font='14px'></span>",
+		"tooltip-format": "Shutdown",
+		"on-click": "shutdown now"
 	}
 }
