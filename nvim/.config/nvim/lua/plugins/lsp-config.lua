@@ -210,6 +210,8 @@ return {
         'autopep8',
         'black',
         'isort',
+        'markdownlint',
+        'eslint_d', -- js linter
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

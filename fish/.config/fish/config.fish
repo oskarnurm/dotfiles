@@ -23,10 +23,10 @@ abbr mkdir 'mkdir -p'
 
 # Other quality of life
 alias v='nvim'
-#alias gc='git commit -m'
 
 # Make custom scripts accessible stystem-wide
-#export PATH="$HOME/dotfiles/scripts:$PATH"
+# export PATH="$HOME/dotfiles/scripts:$PATH"
 set -gx PATH $HOME/dotfiles/scripts $PATH
 
-export GTK_THEME=Gruvbox-Dark
+# For Apple Silicon Macs the homebrew path needs to set for it to work in other shells like fish
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths

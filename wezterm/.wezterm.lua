@@ -5,6 +5,8 @@ local wezterm = require("wezterm")
 -- Will provide clearer error messages.
 local config = wezterm.config_builder()
 
+config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
+
 config.window_background_opacity = 1.0
 config.color_scheme = "Gruvbox dark, medium (base16)"
 
@@ -15,19 +17,8 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.hide_tab_bar_if_only_one_tab = true
 
+-- Hides the buttons on top
 -- config.window_decorations = "RESIZE"
-
--- Window
--- config.window_frame = {
--- 	-- Fancy tab bar
--- 	active_titlebar_bg = "#000000",
--- 	inactive_titlebar_bg = "#000000",
--- }
-
--- Padding
--- config.window_padding = {
--- 	left = 15,
--- }
 
 -- and finally, return the configuration to wezterm
 return config

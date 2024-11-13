@@ -1,6 +1,10 @@
 vim.opt.updatetime = 250
+vim.opt.clipboard = 'unnamedplus'
 
--- Decrease mapped sequence wait time
+-- Make line numbers default
+vim.opt.number = true
+vim.opt.relativenumber = true
+
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
 
@@ -42,7 +46,7 @@ vim.opt.undofile = true
 vim.opt.undodir = os.getenv 'HOME' .. '/.neovim/undodir'
 
 -- Confirm to save changes before exiting modified buffer
-vim.opt.confirm = true
+vim.opt.confirm = false
 
 -- Use spaces instead of tabs
 vim.opt.expandtab = true

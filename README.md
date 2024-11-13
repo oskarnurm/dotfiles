@@ -1,53 +1,59 @@
 ﻿# Chiefdog's dotfiles
 
-## Packages
+## macOS setup
 
-- Neovim
-- Kitty
-- git
-- yay/paru
-- hyprland
-- gnu-stow
-- nerdfots
-- fd
+- install homebrew
+- install chrome
+- setup ssh
+- install dotfiles
+- install stow
+
+### Neovim
+
+- install neovim
+- install ripgrep
+- install nerdfont (brew install --cask font-jetbrains-mono-nerd-font)
+- install fd
+
+### wezterm
+
+- install wezterm (do before fish so we can set the default shell from there)
+- Allow wezterm to do stuff in the developer tools in privacy & security setting
+
+### Fish
+
+- install fish
+- on Apple Silicon macs the homebrew path is different and needs to be set in the shell like `set -U fish_user_paths /opt/homebrew/bin $fish_user_paths`
+- install eza
+- install starship
+- install fisher
+- install z for fish
+- install bat
+- install fd (dependency for fish.fzf)
+- install fzf
+- install fd
+
+- ### Install karabiner
+
+- change caps to hyper and escp and vim motions
+- TODO: how to include karabiner settings
+
+### Tmux
+
+- install tmux
+- stow tmux
+- install TPM
+
+-
+
+### Apps
+
+- raycast
+
+### Other packages
+
 - tree
-- ripgrep
-- c compiler
-- waybar
-- hyprshot 
-- swaync
-- hyprlock
-- Fish
-- Tmux
-- wlogout
-- hyprpaper
-- swaylock
-- karabiner?
-- keyd
-- pamixer
-- swayosd
 - npm
-- eza
-- nwg-look
-
-## Neovim
-### Requirements
-- Neovim
-- git
-- nerdfont (jetbrains, hack the nerd, other?)
-- c compiler
-- ripgrep
-- fd
-- tree
-- 
-## Fish
-### Requirements
-### Steps
-- [Fisher](https://github.com/jorgebucaran/fisher)
-- [z for fish](https://github.com/jethrokuan/z)
-- [eza](https://github.com/eza-community/eza)
-- find
-- bat
-
-
-
+- pyright
+- node
+-
