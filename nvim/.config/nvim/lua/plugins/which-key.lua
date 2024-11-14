@@ -4,11 +4,9 @@ return {
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
   opts = {
     icons = {
-      -- set icon mappings to true if you have a Nerd Font
-      mappings = vim.g.have_nerd_font,
-      -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-      -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
-      keys = vim.g.have_nerd_font and {} or {
+      -- set icon mappings to false to disable distracting icons
+      mappings = false,
+      keys = {
         Up = '<Up> ',
         Down = '<Down> ',
         Left = '<Left> ',
@@ -48,7 +46,7 @@ return {
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
   },
 }
