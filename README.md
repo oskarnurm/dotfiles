@@ -4,9 +4,14 @@
 
 - install homebrew
 - install chrome
-- setup ssh
+- setup ssh for personal and kth
 - install dotfiles
 - install stow
+- run ./settings
+
+## other macOS settings
+
+- wallpaper
 
 ### Neovim
 
@@ -44,11 +49,10 @@
 - stow tmux
 - install TPM
 
--
-
 ### Apps
 
 - raycast
+- rectangle
 
 ### Other packages
 
@@ -56,4 +60,3 @@
 - npm
 - pyright
 - node
--

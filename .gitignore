@@ -1,0 +1,15 @@
+# Sensitive stuff
+ssh/.ssh/authorized_keys
+ssh/.ssh/id_*
+ssh/.ssh/*.pub
+ssh/.ssh/known_hosts
+ssh/.ssh/known_hosts.old
+
+# Let TPM handle it
+tmux/.tmux/plugins/
+
+# Let Fisher handle it
+fish/.config/fish/fish_plugins
+fish/.config/fish/fish_variables
+
+.DS_Store
