@@ -23,6 +23,16 @@ abbr mkdir 'mkdir -p'
 
 # Other quality of life
 alias v='nvim'
+alias lg='lazygit'
+
+function tmux_move_up_and_maximize
+    # Move to the upper pane
+    tmux select-pane -U
+    tmux resize-pane -Z
+end
+
+# Bind Alt-t to the tmux_move_up_and_maximize function
+bind \et tmux_move_up_and_maximize
 
 # Make custom scripts accessible stystem-wide
 # export PATH="$HOME/dotfiles/scripts:$PATH"
