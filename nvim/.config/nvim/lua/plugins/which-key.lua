@@ -1,8 +1,8 @@
--- Useful plugin to show you pending keybinds.
 return {
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  event = 'VimEnter',
   opts = {
+    delay = 0,
     icons = {
       -- set icon mappings to false to disable distracting icons
       mappings = false,
@@ -21,7 +21,7 @@ return {
         ScrollWheelUp = '<ScrollWheelUp> ',
         NL = '<NL> ',
         BS = '<BS> ',
-        Space = '<Space> ',
+        Space = '󱁐 ',
         Tab = '<Tab> ',
         F1 = '<F1>',
         F2 = '<F2>',
@@ -37,7 +37,9 @@ return {
         F12 = '<F12>',
       },
     },
-
+    win = {
+      border = 'double',
+    },
     -- Document existing key chains
     spec = {
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
@@ -46,7 +48,7 @@ return {
       { '<leader>s', group = '[S]earch' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
-      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
     },
   },
 }

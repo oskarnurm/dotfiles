@@ -1,15 +1,41 @@
 return {
-  'folke/trouble.nvim',
-  cmd = { 'Trouble' },
-  opts = {
-    focus = true, -- Add this line to focus the Trouble window when opened
-  },
-  keys = {
-    { '<leader>td', '<cmd>Trouble diagnostics toggle<cr>', desc = '[d]iagnostics (Trouble)' },
-    { '<leader>tD', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer [D]iagnostics (Trouble)' },
-    { '<leader>ts', '<cmd>Trouble symbols toggle<cr>', desc = '[s]ymbols (Trouble)' },
-    { '<leader>tS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
-    { '<leader>tL', '<cmd>Trouble loclist toggle<cr>', desc = '[L]ocation List (Trouble)' },
-    { '<leader>tQ', '<cmd>Trouble qflist toggle<cr>', desc = '[Q]uickfix List (Trouble)' },
+  {
+    'folke/trouble.nvim',
+    opts = {
+      focus = true,
+    },
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>tT',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Workspace Diagnostics',
+      },
+      {
+        '<leader>tt',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics',
+      },
+      {
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Toggle Symbols',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'Toggle LSP Definitions / references / ...',
+      },
+      {
+        '<leader>tl',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = '[L]ocation List',
+      },
+      {
+        '<leader>tq',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = '[Q]uickfix List (Trouble)',
+      },
+    },
   },
 }

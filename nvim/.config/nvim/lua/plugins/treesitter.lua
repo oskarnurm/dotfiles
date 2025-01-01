@@ -1,37 +1,11 @@
--- Highlight, edit, and navigate code
 return {
   'nvim-treesitter/nvim-treesitter',
+  dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
   build = ':TSUpdate',
-  main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-  -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+  main = 'nvim-treesitter.configs',
   opts = {
-    ensure_installed = {
-      'bash',
-      'c',
-      'diff',
-      'html',
-      'javascript',
-      'jsdoc',
-      'json',
-      'jsonc',
-      'lua',
-      'luadoc',
-      'luap',
-      'markdown',
-      'markdown_inline',
-      'printf',
-      'python',
-      'query',
-      'regex',
-      'toml',
-      'tsx',
-      'typescript',
-      'vim',
-      'vimdoc',
-      'xml',
-      'yaml',
-    },
-    -- Autoinstall languages that are not installed
+    -- A list of parser names, or "all" (the listed parsers MUST always be installed)
+    ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'markdown', 'markdown_inline' },
     auto_install = true,
     highlight = {
       enable = true,
@@ -41,11 +15,19 @@ return {
       additional_vim_regex_highlighting = { 'ruby' },
     },
     indent = { enable = true, disable = { 'ruby' } },
+    textobjects = {
+      select = {
+        enable = true,
+        -- Automatically jump forward to textobj
+        lookahead = true,
+        keymaps = {
+          ['af'] = { query = '@function.outer', desc = 'Select around a function (outer)' },
+          ['if'] = { query = '@function.inner', desc = 'Select inside a function (inner)' },
+          ['ac'] = { query = '@class.outer', desc = 'Select around a class (outer)' },
+          ['ic'] = { query = '@class.inner', desc = 'Select inside a class (inner)' },
+        },
+        include_surrounding_whitespace = true,
+      },
+    },
   },
-  -- There are additional nvim-treesitter modules that you can use to interact
-  -- with nvim-treesitter. You should go explore a few and see what interests you:
-  --
-  --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-  --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-  --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 }
