@@ -7,7 +7,7 @@ return {
     cmd = 'Trouble',
     keys = {
       {
-        '<leader>tT',
+        '<leader>tw',
         '<cmd>Trouble diagnostics toggle<cr>',
         desc = 'Workspace Diagnostics',
       },

@@ -1,4 +1,6 @@
 vim.g.mapleader = ' ' -- Global leader key
+vim.opt.statusline = '%F' -- Show full path in statusline
+vim.opt.signcolumn = 'yes' -- Always display the sign column
 vim.opt.path:append '**'
 vim.g.maplocalleader = ' ' -- Local leader key
 vim.opt.number = true -- Show line numbers.

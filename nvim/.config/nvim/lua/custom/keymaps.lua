@@ -12,8 +12,8 @@ vim.keymap.set('n', '[b', ':bprev<cr>')
 vim.keymap.set('n', ']b', ':bnext<cr>')
 
 -- Quickfix
-vim.keymap.set('n', '[q', ':cprev<cr>')
-vim.keymap.set('n', ']q', ':cnext<cr>')
+vim.keymap.set('n', '[q', vim.cmd.cprev, { desc = 'Prev [Q]uickfix' })
+vim.keymap.set('n', ']q', vim.cmd.cnext, { desc = 'Next [Q]uickfix' })
 vim.keymap.set('n', '<leader>q', function()
   custom.toggle_quickfix()
 end, { desc = 'Toggle [Q]quickfix' })
@@ -21,7 +21,7 @@ end, { desc = 'Toggle [Q]quickfix' })
 -- Diagnostics
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Line [E]rrors' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next [D]iagnotsitc' })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous [D]iagnostic' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Prev [D]iagnostic' })
 
 -- Completion
 vim.keymap.set('i', '<C-Space>', '<C-x><C-o>', { desc = 'Omni complete' })
