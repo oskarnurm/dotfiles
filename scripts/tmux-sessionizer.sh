@@ -3,7 +3,18 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/rustlings/ ~/projects ~/github ~/dotfiles/config ~/dotfiles ~/programming ~/advent_of_code -mindepth 1 -maxdepth 1 | fzf --preview 'if [ -d {} ]; then eza --tree --color=always {}; elif [ -f {} ]; then bat --style=numbers --color=always --line-range :500 {}; fi')
+selected=$(
+  find ~/dotfiles/config ~/dotfiles ~/programming \
+    -mindepth 1 -maxdepth 4 \
+    \( -path '*/node_modules' -prune \) -o -print \
+  | fzf --preview '
+    if [ -d {} ]; then
+      eza --tree --color=always {}
+    elif [ -f {} ]; then
+      bat --style=numbers --color=always --line-range :500 {}
+    fi
+  '
+)
 fi
 
 if [[ -z $selected ]]; then
