@@ -21,7 +21,7 @@ abbr gt 'git status'
 # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
 abbr mkdir 'mkdir -p'
 
-# Other quality of life
+# Quality of life
 alias v='nvim'
 alias lg='lazygit'
 
@@ -30,6 +30,11 @@ function tmux_move_up_and_maximize
     tmux select-pane -U
     tmux resize-pane -Z
 end
+
+set -Ux EDITOR nvim
+set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
+set fzf_fd_opts --hidden --max-depth 5
+fzf_configure_bindings --directory=\cf
 
 # Bind Alt-t to the tmux_move_up_and_maximize function
 bind \et tmux_move_up_and_maximize
