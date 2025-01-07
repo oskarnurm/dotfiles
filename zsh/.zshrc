@@ -1,82 +1,33 @@
-# Create Aliases
-alias ls="ls -lAFh"
-alias ll="eza -l -g --icons"
-alias lla="ll -a"
-alias reload-zsh="source ~/.zshrc"
-alias v="nvim"
+unsetopt BEEP
+export ZSH="$HOME/.oh-my-zsh"
+export EDITOR='nvim'
 
-# Customize Prompt
-PROMPT="%1~ %L %# "
-eval "$(starship init zsh)"
+ZSH_THEME="robbyrussell"
+DISABLE_LS_COLORS="true"
 
-# Handy Functions 
-function mkcd () {
- mkdir -p "$@" && cd "$_";
-}
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+source $ZSH/oh-my-zsh.sh
 
-function tmux-sessionizer() {
-    ~/dotfiles/scripts/tmux-sessionizer.sh
-}
-zle -N tmux-sessionizer
-bindkey '^F' tmux-sessionizer
+file_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
+export FZF_CTRL_T_OPTS="--preview '$file_dir_preview' --bind 'ctrl-o:execute(${EDITOR} {} &> /dev/tty)'"
 
-# History
-HISTFILE=$HOME/.zhistory
-SAVEHIST=1000
-HISTSIZE=999
-setopt share_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_verify
+bindkey -s '^F' 'tmux-sessionizer.sh\n'
 
-# Completion using arrow keys (based on history)
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# List Directory
+alias l='eza -lh  --icons=auto' # long list
+alias ls='eza -1   --icons=auto' # short list
+alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
+alias ld='eza -lhD --icons=auto' # long list dirs
+alias lt='eza --icons=auto --tree' # list folder as tree
+alias ..='cd ..'
+alias ...='cd ../..'
 
-# Zoxide (better cd)
+# Quality of life
+alias v='nvim'
+alias lg='lazygit'
+alias gc='git commit -m'
+alias ga='git add'
+alias gt='git status'
+
 eval "$(zoxide init zsh)"
-# alias cd="z"
-
-# Set up fzf key bindings and fuzzy completion
 eval "$(fzf --zsh)"
-
-# Use fd instead of fzf
-export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
-
-# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --hidden --exclude .git . "$1"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  fd --type=d --hidden --exclude .git . "$1"
-}
-
-source ~/fzf-git.sh/fzf-git.sh
-
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
-
-export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
-export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
-
-# Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
-  esac
-}

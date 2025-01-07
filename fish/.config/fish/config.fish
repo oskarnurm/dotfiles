@@ -1,8 +1,16 @@
-set -g fish_greeting
-
 if status is-interactive
     starship init fish | source
 end
+
+set -g fish_greeting
+
+# Variables
+set -Ux EDITOR nvim
+# Custom scripts executable from everywhere
+set -gx PATH $HOME/dotfiles/scripts $PATH
+set -Ux XDG_CONFIG_HOME $HOME/.config
+# For Apple Silicon Macs the homebrew path needs to set for it to work in other shells like fish
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 
 # List Directory
 alias l='eza -lh  --icons=auto' # long list
@@ -25,23 +33,15 @@ abbr mkdir 'mkdir -p'
 alias v='nvim'
 alias lg='lazygit'
 
+# Functions
 function tmux_move_up_and_maximize
-    # Move to the upper pane
     tmux select-pane -U
     tmux resize-pane -Z
 end
 
-set -Ux EDITOR nvim
+# Binds
+bind \et tmux_move_up_and_maximize
+bind \cf tmux-sessionizer.sh
+
 set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 set fzf_fd_opts --hidden --max-depth 5
-fzf_configure_bindings --directory=\cf
-
-# Bind Alt-t to the tmux_move_up_and_maximize function
-bind \et tmux_move_up_and_maximize
-
-# Make custom scripts accessible stystem-wide
-# export PATH="$HOME/dotfiles/scripts:$PATH"
-set -gx PATH $HOME/dotfiles/scripts $PATH
-
-# For Apple Silicon Macs the homebrew path needs to set for it to work in other shells like fish
-set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
