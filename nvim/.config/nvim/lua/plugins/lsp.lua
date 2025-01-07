@@ -4,7 +4,9 @@ return {
     dependencies = { 'saghen/blink.cmp' },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require('lspconfig').lua_ls.setup {
+      local lsp = require 'lspconfig'
+
+      lsp.lua_ls.setup {
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -15,10 +17,11 @@ return {
           },
         },
       }
-      require('lspconfig').ts_ls.setup { capabilities = capabilities }
-      require('lspconfig').vtsls.setup { capabilities = capabilities }
-      require('lspconfig').pyright.setup { capabilities = capabilities }
-      require('lspconfig').clangd.setup { capabilities = capabilities }
+
+      lsp.ts_ls.setup { capabilities = capabilities }
+      lsp.vtsls.setup { capabilities = capabilities }
+      lsp.pyright.setup { capabilities = capabilities }
+      lsp.clangd.setup { capabilities = capabilities }
 
       vim.api.nvim_create_autocmd('LspAttach', {
         desc = 'LSP actions',
