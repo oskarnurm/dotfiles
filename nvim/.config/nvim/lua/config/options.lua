@@ -32,3 +32,9 @@ vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv 'HOME' .. '/.neovim/undodir'
 vim.opt.splitright = true
+
+local border = 'rounded'
+
+-- Set borders for hover and signature help
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })

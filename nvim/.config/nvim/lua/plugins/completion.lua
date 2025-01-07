@@ -4,8 +4,11 @@ return {
     dependencies = 'rafamadriz/friendly-snippets',
     version = '*',
     opts = {
-      signature = { enabled = true },
-
+      signature = { enabled = true, window = { border = 'single' } },
+      completion = {
+        -- menu = { border = 'single' },
+        documentation = { window = { border = 'single' } },
+      },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
