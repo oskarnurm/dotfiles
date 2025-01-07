@@ -13,4 +13,4 @@ fish/.config/fish/fish_plugins
 fish/.config/fish/fish_variables
 
 .DS_Store
-*.bak/
+*.bak*/  # Matches all directories ending with .bak, .bak2, etc.
