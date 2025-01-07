@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
+-- config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 config.max_fps = 120
 
 config.window_background_opacity = 1.0
