@@ -11,7 +11,11 @@ source $ZSH/oh-my-zsh.sh
 file_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 export FZF_CTRL_T_OPTS="--preview '$file_dir_preview' --bind 'ctrl-o:execute(${EDITOR} {} &> /dev/tty)'"
 
-bindkey -s '^F' 'tmux-sessionizer.sh\n'
+tmux_sessionizer() {
+  ~/dotfiles/scripts/tmux-sessionizer.sh
+}
+zle -N tmux_sessionizer
+bindkey '^F' tmux_sessionizer
 
 # List Directory
 alias l='eza -lh  --icons=auto' # long list
