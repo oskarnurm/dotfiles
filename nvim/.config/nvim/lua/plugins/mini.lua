@@ -3,8 +3,10 @@ return {
   config = function()
     -- NOTE: experimental
     require('mini.surround').setup()
+
     -- Better ci for ({[
     require('mini.ai').setup { n_lines = 500 }
+
     -- NOTE: experimental
     require('mini.files').setup {
       mappings = {
@@ -26,7 +28,7 @@ return {
         width_preview = 80,
       },
     }
-    -- require('mini.pick').setup {}
+    -- require('mini.icons').setup {}
 
     local hipatterns = require 'mini.hipatterns'
     hipatterns.setup {
