@@ -1,6 +1,7 @@
 unsetopt BEEP
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR='nvim'
+export PATH="$HOME/dotfiles/scripts:$PATH"
 
 ZSH_THEME="robbyrussell"
 DISABLE_LS_COLORS="true"
@@ -11,17 +12,12 @@ source $ZSH/oh-my-zsh.sh
 file_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 export FZF_CTRL_T_OPTS="--preview '$file_dir_preview' --bind 'ctrl-o:execute(${EDITOR} {} &> /dev/tty)'"
 
-tmux_sessionizer() {
-  ~/dotfiles/scripts/tmux-sessionizer.sh
-}
-zle -N tmux_sessionizer
-bindkey '^F' tmux_sessionizer
+bindkey -s '^F' 'tmux-sessionizer.sh\n'
 
 # List Directory
 alias l='eza -lh  --icons=auto' # long list
 alias ls='eza -1   --icons=auto' # short list
 alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
-alias ld='eza -lhD --icons=auto' # long list dirs
 alias lt='eza --icons=auto --tree' # list folder as tree
 alias ..='cd ..'
 alias ...='cd ../..'
