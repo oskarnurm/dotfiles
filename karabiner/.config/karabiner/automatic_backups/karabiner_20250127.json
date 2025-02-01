@@ -2,11 +2,10 @@
     "profiles": [
         {
             "complex_modifications": {
-                "parameters": { "basic.to_if_held_down_threshold_milliseconds": 200 },
+                "parameters": { "basic.to_if_held_down_threshold_milliseconds": 170 },
                 "rules": [
                     {
                         "description": "Home row mods - ctrl, opt, cmd, shift",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
