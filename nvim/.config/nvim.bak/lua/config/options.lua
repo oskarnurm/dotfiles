@@ -4,7 +4,6 @@ vim.opt.completeopt = 'menu,menuone,noinsert,preview'
 
 vim.opt.signcolumn = 'yes'
 vim.opt.number = true
-vim.opt.rnu = true
 vim.opt.scrolloff = 10
 
 vim.opt.ignorecase = true
@@ -18,9 +17,6 @@ vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.wrap = false
-
--- Decrease mapped sequence wait time, important for flash.nvim
-vim.opt.timeoutlen = 300
 
 vim.opt.termguicolors = true
 vim.opt.inccommand = 'split'
@@ -38,6 +34,7 @@ vim.opt.undodir = os.getenv 'HOME' .. '/.neovim/undodir'
 vim.opt.splitright = true
 
 local border = 'rounded'
+
 -- Set borders for hover and signature help
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })

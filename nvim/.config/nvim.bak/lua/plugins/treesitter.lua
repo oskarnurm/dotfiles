@@ -17,7 +17,7 @@ return {
     indent = { enable = true, disable = { 'ruby' } },
     textobjects = {
       select = {
-        enable = false,
+        enable = true,
         -- Automatically jump forward to textobj
         lookahead = true,
         keymaps = {

@@ -1,30 +1,34 @@
 return {
   'echasnovski/mini.nvim',
-  event = 'VeryLazy',
   config = function()
+    -- NOTE: experimental
     require('mini.surround').setup()
+
+    -- Better ci for ({[
     require('mini.ai').setup { n_lines = 500 }
-    -- require('mini.files').setup {
-    --   mappings = {
-    --     close = '<esc>',
-    --     go_in = '<right>',
-    --     go_in_plus = '<CR>',
-    --     go_out = 'H',
-    --     go_out_plus = '<left>',
-    --     reset = '<BS>',
-    --     reveal_cwd = '.',
-    --     show_help = '?',
-    --     synchronize = 's',
-    --     trim_left = '<',
-    --     trim_right = '>',
-    --   },
-    --   windows = {
-    --     preview = true,
-    --     width_focus = 30,
-    --     width_preview = 80,
-    --   },
-    -- }
-    -- vim.keymap.set('n', '<leader>o', '<cmd>lua MiniFiles.open()<cr>', { desc = '[O]pen Files' })
+
+    -- NOTE: experimental
+    require('mini.files').setup {
+      mappings = {
+        close = '<esc>',
+        go_in = 'l',
+        go_in_plus = '<CR>',
+        go_out = 'H',
+        go_out_plus = 'h',
+        reset = '<BS>',
+        reveal_cwd = '.',
+        show_help = '?',
+        synchronize = 's',
+        trim_left = '<',
+        trim_right = '>',
+      },
+      windows = {
+        preview = true,
+        width_focus = 30,
+        width_preview = 80,
+      },
+    }
+    -- require('mini.icons').setup {}
 
     local hipatterns = require 'mini.hipatterns'
     hipatterns.setup {

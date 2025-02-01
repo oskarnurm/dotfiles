@@ -1,9 +1,8 @@
 return {
-  enabled = true,
   'folke/which-key.nvim',
   event = 'VimEnter',
   opts = {
-    -- delay = 100,
+    delay = 0,
     icons = {
       -- set icon mappings to false to disable distracting icons
       mappings = false,
@@ -50,7 +49,7 @@ return {
       { '<leader>f', group = '[F]ind' },
       { '<leader>w', group = '[W]orkspace' },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>g', group = '[G]oto', mode = { 'n', 'v' } },
+      { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
     },
   },
 }

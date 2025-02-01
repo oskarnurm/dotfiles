@@ -11,10 +11,9 @@ return {
       lua = { 'stylua' },
       javascript = { 'prettier' },
       typescript = { 'prettier' },
-      python = { 'isort', 'black' },
+      python = { 'isort', 'black', 'autopep8', 'prettier' },
       sh = { 'shfmt' },
       fish = { 'fish_indent' },
-      html = { 'htmlbeautifier' },
       -- Other
       ['_'] = { 'prettier' },
     },
