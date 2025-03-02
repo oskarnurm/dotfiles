@@ -2,6 +2,7 @@ unsetopt BEEP
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR='nvim'
 export PATH="$HOME/dotfiles/scripts:$PATH"
+export JAVA_HOME="/usr/bin/java"
 
 ZSH_THEME="robbyrussell"
 DISABLE_LS_COLORS="true"
@@ -31,3 +32,4 @@ alias gt='git status'
 
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"

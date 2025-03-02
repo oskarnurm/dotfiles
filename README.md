@@ -1,4 +1,4 @@
-﻿# Chiefdog's dotfiles
+﻿# This README is the most incomplete thign you can read.
 
 ## macOS setup
 
@@ -25,7 +25,7 @@
 - install wezterm (do before fish so we can set the default shell from there)
 - Allow wezterm to do stuff in the developer tools in privacy & security setting
 
-### Fish
+### Fish - TODO: I dont use fish anymore, need to update readme
 
 - install fish
 - on Apple Silicon macs the homebrew path is different and needs to be set in the shell like `set -U fish_user_paths /opt/homebrew/bin $fish_user_paths`
@@ -52,7 +52,6 @@
 ### Apps
 
 - raycast
-- rectangle
 
 ### Other packages
 
