@@ -1,4 +1,4 @@
-﻿# This README is the most incomplete thign you can read.
+﻿# This README is the most incomplete thing you can read.
 
 ## macOS setup
 
