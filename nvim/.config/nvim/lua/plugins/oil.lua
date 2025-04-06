@@ -1,8 +1,12 @@
 return {
   {
-    'stevearc/oil.nvim',
-    opts = {},
+    "stevearc/oil.nvim",
+    opts = {
+      view_options = {
+        show_hidden = true,
+      },
+    },
     lazy = false,
-    vim.keymap.set('n', '<leader>o', '<CMD>Oil<CR>', { desc = 'Open parent directory' }),
+    vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>", { desc = "Open Parent Directory" }),
   },
 }

@@ -1,14 +1,9 @@
 local M = {}
 
--- Define a function to clear highlights and close floating windows.
 function M.clear_highlight_and_close_float()
-  -- 1. Disable search highlights
   vim.cmd 'noh'
-
-  -- 2. Close any floating windows
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local config = vim.api.nvim_win_get_config(win)
-    -- If `relative` is not an empty string, it’s a floating window
     if config.relative ~= '' then
       vim.api.nvim_win_close(win, false)
     end
@@ -31,6 +26,7 @@ function M.toggle_quickfix()
   end
 end
 
+-- Toggle tmux pane below with correct path
 M.tmux_pane_toggle = function(dir)
   -- NOTE: variable that controls the auto-cd behavior
   local auto_cd_to_new_dir = true
@@ -75,7 +71,7 @@ M.tmux_pane_toggle = function(dir)
     if vim.g.tmux_pane_dir == nil then
       vim.g.tmux_pane_dir = escaped_dir
     end
-    vim.fn.system('tmux split-window ' .. split_cmd .. ' -l ' .. pane_size .. ' \'cd "' .. escaped_dir .. '"&& fish\'')
+    vim.fn.system('tmux split-window ' .. split_cmd .. ' -l ' .. pane_size .. ' \'cd "' .. escaped_dir .. '"&& zsh\'')
     vim.fn.system('tmux send-keys ' .. move_key)
   end
 end
