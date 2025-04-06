@@ -19,7 +19,7 @@ done 2>/dev/null &
 ###############################################################################
 
 # Disable transparency in the menu bar and elsewhere on Yosemite
-defaults write com.apple.universalaccess reduceTransparency -bool true
+defaults write com.apple.universalaccess reduceTransparency -bool false
 
 # Remove window resizing animations
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
@@ -32,6 +32,13 @@ defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
 # Disable Resume system-wide
 defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+
+# Always show scrollbars
+defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+# Possible values: `WhenScrolling`, `Automatic` and `Always`
+
+# Automatically quit printer app once the print jobs complete
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
 # Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
 # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
@@ -67,8 +74,11 @@ defaults write NSGlobalDomain AppleLanguages -array "en" "sv" "en"
 # Screen                                                                      #
 ###############################################################################
 
-# Save screenshots to the desktop
+# Save screenshots to a folder
 defaults write com.apple.screencapture location -string "${HOME}/Pictures/Screenshots"
+
+# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
+defaults write com.apple.screencapture type -string "png"
 
 ###############################################################################
 # Finder                                                                      #
@@ -106,14 +116,58 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 chflags nohidden ~/Library
 
 ###############################################################################
+# Energy saving                                                               #
+###############################################################################
+
+# Enable lid wakeup
+# sudo pmset -a lidwake 1
+
+# Restart automatically on power loss
+# sudo pmset -a autorestart 1
+
+# Restart automatically if the computer freezes
+# sudo systemsetup -setrestartfreeze on
+
+# Sleep the display after 15 minutes
+# sudo pmset -a displaysleep 15
+
+# Disable machine sleep while charging
+# sudo pmset -c sleep 0
+
+# Set machine sleep to 5 minutes on battery
+# sudo pmset -b sleep 5
+
+# Set standby delay to 24 hours (default is 1 hour)
+# sudo pmset -a standbydelay 86400
+
+# Never go into computer sleep mode
+# sudo systemsetup -setcomputersleep Off > /dev/null
+
+# Hibernation mode
+# 0: Disable hibernation (speeds up entering sleep mode)
+# 3: Copy RAM to disk so the system state can still be restored in case of a
+#    power failure.
+# sudo pmset -a hibernatemode 0
+
+# Remove the sleep image file to save disk space
+# sudo rm /private/var/vm/sleepimage
+# Create a zero-byte file instead…
+# sudo touch /private/var/vm/sleepimage
+# …and make sure it can’t be rewritten
+# sudo chflags uchg /private/var/vm/sleepimage
+
+###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
+
+# Make dock smaller
+defaults write com.apple.dock tilesize -int 60
 
 # Show only open applications in the Dock
 defaults write com.apple.dock static-only -bool true
 
 # Don’t animate opening applications from the Dock
-defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.dock launchanim -bool true
 
 # Speed up Mission Control animations
 defaults write com.apple.dock expose-animation-duration -float 0.1
@@ -134,6 +188,32 @@ defaults write com.apple.dock showhidden -bool true
 
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
+
+# Set dock to the left
+defaults write com.apple.dock orientation -string left
+
+# Hot corners
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+# 13: Lock Screen
+# Top left screen corner → Mission Control
+defaults write com.apple.dock wvous-tl-corner -int 0
+defaults write com.apple.dock wvous-tl-modifier -int 0
+# Top right screen corner → Desktop
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+# Bottom left screen corner → Start screen saver
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 
