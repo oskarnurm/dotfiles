@@ -33,6 +33,7 @@
 # GitHub Light Default theme based on https://github.com/projekt0n/github-theme-contrib
 
 background = #ffffff
+# background = #e0e2ea
 foreground = #1F2328
 
 cursor-color = #1f2328

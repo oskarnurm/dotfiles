@@ -1,5 +1,6 @@
-theme = github_custom
+theme = custom
 # macos-titlebar-style = hidden
+macos-option-as-alt = left
 font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
