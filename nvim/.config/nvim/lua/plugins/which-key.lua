@@ -1,9 +1,10 @@
 return {
   enabled = true,
   "folke/which-key.nvim",
-  event = "VimEnter",
+  event = "VeryLazy",
   opts = {
     -- delay = 100,
+    preset = "helix",
     icons = {
       -- set icon mappings to false to disable distracting icons
       mappings = false,
