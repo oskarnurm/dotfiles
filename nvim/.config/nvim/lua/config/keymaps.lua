@@ -1,5 +1,4 @@
--- stylua: ignore
-local custom = require 'config.utils'
+local custom = require "config.utils"
 
 -- completion
 vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
@@ -17,9 +16,6 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>q", function()
   custom.toggle_quickfix()
 end, { desc = "Toggle Qquickfix" })
-
--- diagnostics
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open Float" })
 
 -- disable highlights
 vim.keymap.set("n", "<Esc>", function()
