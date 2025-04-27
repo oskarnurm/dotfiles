@@ -3,8 +3,8 @@ vim.g.maplocalleader = " "
 vim.opt.completeopt = "menuone,noinsert,preview"
 
 vim.opt.signcolumn = "yes"
-vim.opt.number = true
-vim.opt.rnu = true
+-- vim.opt.number = true
+-- vim.opt.rnu = true
 vim.opt.scrolloff = 10
 
 vim.opt.ignorecase = true
