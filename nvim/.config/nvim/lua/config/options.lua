@@ -38,6 +38,7 @@ vim.opt.undofile = true
 vim.opt.undodir = os.getenv "HOME" .. "/.neovim/undodir"
 vim.opt.splitright = true
 
+-- fix paths for Snacks.picker that we otherwise can't see
 vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#676767" })
 vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = "#676767" })
 
@@ -47,5 +48,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
     vim.hl.on_yank()
+  end,
+})
+
+-- lsp-completion
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp-completion", { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+    if client and client:supports_method "textDocument/completion" then
+      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = false })
+    end
   end,
 })
