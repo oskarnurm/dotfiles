@@ -2,7 +2,6 @@ local custom = require "config.utils"
 
 -- completion
 vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
-vim.keymap.set("n", "<leader>!", ":-1read $HOME/.config/nvim/.skeleton.html<CR>5jwf>a", { desc = "HTML Boilerplate" })
 
 -- search and replace
 vim.keymap.set(
