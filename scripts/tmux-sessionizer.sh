@@ -5,7 +5,7 @@ settings="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/learning -mindepth 1 -maxdepth 1 -type d | fzf --preview "$settings")
+  selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth -mindepth 1 -maxdepth 1 -type d | fzf --preview "$settings")
 fi
 
 if [[ -z $selected ]]; then
