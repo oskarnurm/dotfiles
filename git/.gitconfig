@@ -8,7 +8,6 @@
 [core]
 	editor = nvim
 [alias]
-	st = status
 	co = checkout
 	br = branch
 	gc = commit

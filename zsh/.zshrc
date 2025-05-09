@@ -26,9 +26,6 @@ alias ...='cd ../..'
 # Quality of life
 alias v='nvim'
 alias lg='lazygit'
-alias gc='git commit -m'
-alias ga='git add'
-alias gt='git status'
 
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
