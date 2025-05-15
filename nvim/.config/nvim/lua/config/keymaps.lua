@@ -7,8 +7,8 @@ vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
 vim.keymap.set(
   "n",
   "<leader>sr",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "Search and Replace" }
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]],
+  { desc = "Search & Replace (confirm each)" }
 )
 
 -- quickfix
@@ -22,7 +22,7 @@ vim.keymap.set("n", "<Esc>", function()
 end, { noremap = true, silent = true })
 
 -- disable macro recording
-vim.keymap.set("n", "q", "<Nop>")
+-- vim.keymap.set("n", "q", "<Nop>")
 
 -- center screen
 vim.keymap.set("n", "n", "nzz")
