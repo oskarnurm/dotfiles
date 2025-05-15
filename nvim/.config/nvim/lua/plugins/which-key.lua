@@ -51,7 +51,7 @@ return {
       { "<leader>f", group = "Find" },
       { "<leader>w", group = "Workspace" },
       -- { "<leader>t", group = "Toggle" },
-      { "<leader>g", group = "Git", mode = { "n", "v" } },
+      -- { "<leader>g", group = "Git", mode = { "n", "v" } },
     },
   },
 }
