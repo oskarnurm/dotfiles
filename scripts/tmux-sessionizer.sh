@@ -5,23 +5,31 @@ settings="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth -mindepth 1 -maxdepth 1 -type d | fzf --preview "$settings")
+  selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth \
+    -mindepth 1 -maxdepth 1 -type d |
+    fzf --preview "$settings")
 fi
 
-if [[ -z $selected ]]; then
-  exit 0
-fi
+[[ -z $selected ]] && exit 0
 
 selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
+session="dev"
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-  tmux new-session -s $selected_name -c $selected
-  exit 0
+# start master session if needed
+if ! tmux has-session -t "$session" 2>/dev/null; then
+  tmux new-session -ds "$session" -c "$selected"
 fi
 
-if ! tmux has-session -t=$selected_name 2>/dev/null; then
-  tmux new-session -ds $selected_name -c $selected
+# Try to select the window.  If it doesn't exist, create it, then select it.
+if tmux select-window -t "$session:$selected_name" 2>/dev/null; then
+  # window already existed and is now selected
+  :
+else
+  tmux new-window -t "$session" -n "$selected_name" -c "$selected"
+  tmux select-window -t "$session:$selected_name"
 fi
 
-tmux switch-client -t $selected_name
+# If not already inside tmux, attach to the session.
+if [[ -z "$TMUX" ]]; then
+  tmux attach-session -t "$session"
+fi
