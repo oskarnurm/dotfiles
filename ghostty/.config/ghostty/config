@@ -1,6 +1,7 @@
-theme = custom
-# macos-titlebar-style = hidden
-macos-option-as-alt = left
+# vim set ft=conf
+theme = dark:monochrome,light:github_light
+macos-titlebar-style = hidden
+
 font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
