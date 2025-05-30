@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
 
-settings="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
+settings="if [ -d \$HOME/{} ]; then \
+             eza --tree --color=always \$HOME/{} | head -200; \
+           else \
+             bat -n --color=always --line-range :500 \$HOME/{}; \
+           fi"
 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
   selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth \
     -mindepth 1 -maxdepth 1 -type d |
+    sed "s|$HOME/||" |
     fzf --preview "$settings")
 fi
 
 [[ -z $selected ]] && exit 0
 
+selected="$HOME/$selected"
 selected_name=$(basename "$selected" | tr . _)
 session="dev"
 
