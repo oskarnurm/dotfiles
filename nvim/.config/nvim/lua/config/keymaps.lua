@@ -4,11 +4,13 @@ local custom = require "config.utils"
 vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
 
 -- search and replace
+vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search & Replace" })
+-- search, replace with confirm
 vim.keymap.set(
   "n",
-  "<leader>sr",
+  "<leader>sc",
   [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]],
-  { desc = "Search & Replace (confirm each)" }
+  { desc = "Search, Replace & Confirm" }
 )
 
 -- quickfix
