@@ -11,6 +11,8 @@ return {
       },
     },
     explorer = {},
+    gitbrowse = {},
+    git = {},
   },
     keys = {
     -- Top Pickers & Explorer
@@ -35,8 +37,8 @@ return {
     { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<leader>fc", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
-        -- LSP
+    { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    -- LSP
     { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
     { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
@@ -44,5 +46,8 @@ return {
     { "<leader>gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
     { "<leader>fs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     { "<leader>fS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+    -- Other
+    { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+
   },
 }
