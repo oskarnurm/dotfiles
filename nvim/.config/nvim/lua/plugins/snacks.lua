@@ -12,7 +12,6 @@ return {
     },
     explorer = {},
     gitbrowse = {},
-    git = {},
   },
     keys = {
     -- Top Pickers & Explorer
