@@ -18,6 +18,7 @@ vim.opt.shiftwidth = 2
 vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.wrap = false
+vim.opt.spell = true
 
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 300
