@@ -46,11 +46,10 @@ return {
     spec = {
       -- { "<leader>c", group = "Code", mode = { "n", "x" } },
       { "<leader>d", group = "Document" },
-      -- { "<leader>r", group = "Rename" },
       { "<leader>s", group = "Search" },
       { "<leader>f", group = "Find" },
       { "<leader>w", group = "Workspace" },
-      -- { "<leader>t", group = "Toggle" },
+      { "<leader>t", group = "Toggle" },
       -- { "<leader>g", group = "Git", mode = { "n", "v" } },
     },
   },
