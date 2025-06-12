@@ -3,7 +3,6 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
-  ---@type snacks.Config
   opts = {
     picker = {
       sources = {
@@ -12,6 +11,8 @@ return {
     },
     explorer = {},
     gitbrowse = {},
+    indent = { enabled = false },
+    toggel = {},
   },
     keys = {
     -- Top Pickers & Explorer
@@ -40,13 +41,27 @@ return {
     -- LSP
     { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-    { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "Goto References" },
     { "<leader>gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-    { "<leader>gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
+    { "<leader>gt", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
     { "<leader>fs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     { "<leader>fS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
     { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
-
   },
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      callback = function()
+        -- Create some toggle mappings
+        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
+        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
+        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
+        Snacks.toggle.diagnostics():map("<leader>td")
+        Snacks.toggle.line_number():map("<leader>tl")
+        Snacks.toggle.treesitter():map("<leader>tT")
+        Snacks.toggle.indent():map("<leader>ti")
+      end,
+    })
+  end,
 }
