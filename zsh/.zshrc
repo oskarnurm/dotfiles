@@ -3,6 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export EDITOR='nvim'
 export PATH="$HOME/dotfiles/scripts:$PATH"
 export JAVA_HOME="/usr/bin/java"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 ZSH_THEME="robbyrussell"
 DISABLE_LS_COLORS="true"
@@ -29,4 +30,12 @@ alias lg='lazygit'
 
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# Yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
