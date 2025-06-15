@@ -1,6 +1,5 @@
--- stylua: ignore
 return {
-  'folke/snacks.nvim',
+  "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   opts = {
@@ -14,6 +13,7 @@ return {
     indent = { enabled = false },
     toggel = {},
   },
+    -- stylua: ignore
     keys = {
     -- Top Pickers & Explorer
     { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
@@ -54,13 +54,13 @@ return {
       pattern = "VeryLazy",
       callback = function()
         -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
-        Snacks.toggle.diagnostics():map("<leader>td")
-        Snacks.toggle.line_number():map("<leader>tl")
-        Snacks.toggle.treesitter():map("<leader>tT")
-        Snacks.toggle.indent():map("<leader>ti")
+        Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>ts"
+        Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>tw"
+        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map "<leader>tL"
+        Snacks.toggle.diagnostics():map "<leader>td"
+        Snacks.toggle.line_number():map "<leader>tl"
+        Snacks.toggle.treesitter():map "<leader>tT"
+        Snacks.toggle.indent():map "<leader>ti"
       end,
     })
   end,
