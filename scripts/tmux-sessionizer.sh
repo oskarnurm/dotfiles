@@ -9,7 +9,7 @@ settings="if [ -d \$HOME/{} ]; then \
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth \
+  selected=$(find ~/odin ~/dotfiles ~/dotfiles/nvim/.config ~/projects ~/kth \
     -mindepth 1 -maxdepth 1 -type d |
     sed "s|$HOME/||" |
     fzf --preview "$settings")
