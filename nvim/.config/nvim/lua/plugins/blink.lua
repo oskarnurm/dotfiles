@@ -11,7 +11,7 @@ return {
         nerd_font_variant = "mono",
       },
       completion = {
-        menu = { auto_show = false },
+        menu = { auto_show = true },
         documentation = { auto_show = true },
       },
     },
