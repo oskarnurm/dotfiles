@@ -37,7 +37,7 @@ return {
     { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    { "<leader>sC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
     -- LSP
     { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
