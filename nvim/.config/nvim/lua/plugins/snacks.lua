@@ -1,13 +1,10 @@
 return {
+  enabled = true,
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   opts = {
-    picker = {
-      sources = {
-        files = { hidden = true },
-      },
-    },
+    picker = { sources = { files = { hidden = true } } },
     explorer = {},
     gitbrowse = {},
     indent = { enabled = false },
@@ -15,11 +12,8 @@ return {
   },
     -- stylua: ignore
     keys = {
-    -- Top Pickers & Explorer
+    -- Find
     { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
-    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
-    { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
-    -- find
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>fn", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
@@ -38,7 +32,7 @@ return {
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
     { "<leader>sC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
-        -- git
+    -- git
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     -- LSP
     { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
@@ -50,18 +44,14 @@ return {
     { "<leader>fS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
     { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+    { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       callback = function()
-        -- Create some toggle mappings
-        Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>ts"
-        Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>tw"
-        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map "<leader>tL"
         Snacks.toggle.diagnostics():map "<leader>td"
-        Snacks.toggle.line_number():map "<leader>tl"
-        Snacks.toggle.treesitter():map "<leader>tT"
+        Snacks.toggle.treesitter():map "<leader>tt"
         Snacks.toggle.indent():map "<leader>ti"
       end,
     })
