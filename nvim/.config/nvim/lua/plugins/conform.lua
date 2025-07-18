@@ -14,7 +14,7 @@ return {
       python = { "isort", "black" },
       sh = { "shfmt" },
       fish = { "fish_indent" },
-      html = { "htmlbeautifier" },
+      html = { "prettier" },
       java = { "google-java-format" },
       -- Other
       ["_"] = { "prettier" },
