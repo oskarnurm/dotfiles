@@ -11,7 +11,7 @@ return {
     explorer = {},
     gitbrowse = {},
     indent = { enabled = false },
-    toggel = {},
+    toggle = {},
   },
     -- stylua: ignore
     keys = {
