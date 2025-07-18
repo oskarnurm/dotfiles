@@ -31,6 +31,10 @@ alias lg='lazygit'
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
+function mkcd() {
+  mkdir -p $@ && cd ${@:$#}
+}
+
 # Yazi
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
