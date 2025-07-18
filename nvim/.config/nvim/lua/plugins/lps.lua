@@ -45,7 +45,11 @@ return {
       jdtls = {},
       pyright = {},
       ts_ls = {},
-
+      vtsls = {
+        settings = {
+          vtsls = { autoUseWorkspaceTsdk = true },
+        },
+      },
       lua_ls = {
         settings = {
           Lua = {
