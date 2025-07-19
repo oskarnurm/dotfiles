@@ -1,5 +1,4 @@
 return {
-  enabled = true,
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
@@ -32,16 +31,14 @@ return {
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
     { "<leader>sC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
-    -- git
-    { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     -- LSP
     { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
     { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "Goto References" },
     { "<leader>gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
     { "<leader>gt", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
-    { "<leader>fs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-    { "<leader>fS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+    { "<leader>gs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+    { "<leader>gS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
     { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
     { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
