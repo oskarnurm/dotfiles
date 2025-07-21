@@ -46,6 +46,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- fix paths for Snacks.picker that we otherwise can't see
+-- Fix paths for Snacks.picker that we otherwise can't see when using a monochrome colorscheme
 -- vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#676767" })
 -- vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = "#676767" })
