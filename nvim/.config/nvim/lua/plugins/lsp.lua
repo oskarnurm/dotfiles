@@ -3,7 +3,26 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     { "mason-org/mason.nvim", cmd = "Mason", opts = {} },
+    -- Blink-based completion (no manual capabilities merge needed)
     "saghen/blink.cmp",
   },
+
+  -- Allows extra capabilities provided. Uncomment this section if not using blink.cmp
+  -- vim.lsp.config("*", {
+  -- capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- })
+  --
+
+  -- Set custom settings for servers
+  vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        completion = { callSnippet = "Replace" },
+        diagnostics = { disable = { "missing-fields" } },
+      },
+    },
+  }),
+
+  -- Add server to the list to enable
   vim.lsp.enable { "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "vtsls", "lua_ls" },
 }
