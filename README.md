@@ -1,4 +1,12 @@
-﻿# My dotfiles with a minimal and "batteries included" approach.
+## How to install
 
-Managed with `Stow` and `Homebrew`. Will someday maybe add install instructions.
-I still need to figure out how to store my macOS settings smoothly. I'm also using Raycast as an application launcher and a window manager.
+My dotfiles are managed by [GNU Stow](https://www.gnu.org/software/stow/).
+
+1. Install [homebrew](https://brew.sh/)
+2. Install [GNU Stow](https://www.gnu.org/software/stow/) (`brew install stow`)
+3. Clone this repository
+4. Run stow command
+
+```sh
+stow . -t ~
+```
