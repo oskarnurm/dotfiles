@@ -18,10 +18,8 @@ return {
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     -- { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-    -- Grep
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
-    -- search
     { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
     { "<leader>fd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>fD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
@@ -30,13 +28,13 @@ return {
     { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
-    { "<leader>sC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    { "<leader>fC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
     -- LSP
-    { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
-    { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
-    { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "Goto References" },
-    { "<leader>gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
-    { "<leader>gt", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto Type Definition" },
+    { "<leader>gd", function() Snacks.picker.lsp_definitions() end, desc = "Definition" },
+    { "<leader>gD", function() Snacks.picker.lsp_declarations() end, desc = "Declaration" },
+    { "<leader>gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "<leader>gI", function() Snacks.picker.lsp_implementations() end, desc = "Implementation" },
+    { "<leader>gt", function() Snacks.picker.lsp_type_definitions() end, desc = "Type Definition" },
     { "<leader>gs", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
     { "<leader>gS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
