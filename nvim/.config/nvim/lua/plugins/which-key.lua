@@ -43,13 +43,11 @@ return {
     },
     -- Document existing key chains
     spec = {
-      -- { "<leader>c", group = "Code", mode = { "n", "x" } },
-      { "<leader>d", group = "Document" },
       { "<leader>s", group = "Search" },
       { "<leader>f", group = "Find" },
-      { "<leader>w", group = "Workspace" },
       { "<leader>t", group = "Toggle" },
-      { "<leader>g", group = "Git/Goto", mode = { "n", "v" } },
+      { "<leader>g", group = "Goto", mode = { "n", "v" } },
+      { "<leader>h", group = "Git/hunk" },
     },
   },
 }
