@@ -17,9 +17,11 @@ return {
         vim.keymap.set(mode, l, r, opts)
       end
 
-      -- stylua: ignore start
-        -- map("v", "<leader>hs", function() gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end, { desc = "Stage hunk" })
-        -- map("v", "<leader>hr", function() gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end, { desc = "Reset hunk" })
+        -- stylua: ignore start
+        -- visual
+        map("v", "<leader>hs", function() gitsigns.stage_hunk { vim.fn.line ".", vim.fn.line "v" } end, { desc = "Stage hunk" })
+        map("v", "<leader>hr", function() gitsigns.reset_hunk { vim.fn.line ".", vim.fn.line "v" } end, { desc = "Reset hunk" })
+        -- normal
         map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage Hunk" })
         map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset Hunk" })
         -- map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage buffer" })
