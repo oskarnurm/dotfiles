@@ -48,7 +48,7 @@ return {
       { "<leader>t", group = "Toggle" },
       { "<leader>g", group = "Goto", mode = { "n", "v" } },
       { "<leader>h", group = "Hunk" },
-      { "<leader>hg", group = "Git" },
+      -- { "<leader>hg", group = "Git" },
     },
   },
 }
