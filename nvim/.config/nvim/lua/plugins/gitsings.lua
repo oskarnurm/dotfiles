@@ -24,8 +24,8 @@ return {
         -- normal
         map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage Hunk" })
         map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset Hunk" })
-        -- map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage buffer" })
-        -- map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset buffer" })
+        map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage buffer" })
+        map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset buffer" })
         map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
         map("n", "<leader>hb", gitsigns.blame_line, { desc = "Blame Line" })
         map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Blame Line" })
