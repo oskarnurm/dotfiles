@@ -1,6 +1,6 @@
 return {
   "saghen/blink.cmp",
-  event = "VimEnter",
+  event = "InsertEnter",
   version = "1.*",
   dependencies = {
     "rafamadriz/friendly-snippets",
