@@ -1,6 +1,6 @@
 return {
   "catgoose/nvim-colorizer.lua",
-  event = "BufReadPre",
+  event = "LazyFile",
   opts = {
     tailwind = true,
     tailwind_opts = {
