@@ -89,15 +89,6 @@ vim.opt.undodir = os.getenv "HOME" .. "/.neovim/undodir"
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Highlight when yanking
-vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking",
-  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
 -- Fix paths for Snacks.picker that we otherwise can't see when using a monochrome colorscheme
 -- vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#676767" })
 -- vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = "#676767" })
