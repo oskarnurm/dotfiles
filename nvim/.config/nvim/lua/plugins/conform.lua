@@ -16,6 +16,7 @@ return {
       fish = { "fish_indent" },
       html = { "prettier" },
       java = { "google-java-format" },
+      yaml = { "yamlfmt" },
       -- Other
       ["_"] = { "prettier" },
     },
