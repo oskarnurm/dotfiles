@@ -1,6 +1,6 @@
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
+  event = "LazyFile",
   opts = {
     notify_on_error = true,
     format_on_save = {
