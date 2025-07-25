@@ -2,8 +2,8 @@ name: Auto PR from feature branches
 
 on:
   push:
-    branches:
-      - 'feature/**'
+    branches-ignore:
+      - main
 
 jobs:
   auto-pr:
