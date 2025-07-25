@@ -1,4 +1,4 @@
-name: Auto PR from feature branches
+name: Auto Pull Request
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  auto-pr:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -14,18 +14,5 @@ jobs:
         with:
           fetch-depth: 0     
           
-      - name: Create or update PR
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: main  
-          head: ${{ github.ref_name }}  
-          title: ${{ github.ref_name }}
-          body: |
-            This PR was opened automatically by GitHub Actions.
-
-            • **Branch**: `${{ github.ref_name }}`  
-            • **Commit**: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})  
-          
-          update-method: squash
-          labels: automated
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
