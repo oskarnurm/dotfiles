@@ -6,7 +6,6 @@ return {
     -- Blink-based completion (no manual capabilities merge needed)
     "saghen/blink.cmp",
   },
-
   -- Allows extra capabilities provided. Uncomment this section if not using blink.cmp
   -- vim.lsp.config("*", {
   -- capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -23,6 +22,6 @@ return {
     },
   }),
 
-  -- Add server to the list to enable
+  -- Add servers to the list to enable them
   vim.lsp.enable { "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "vtsls", "lua_ls" },
 }
