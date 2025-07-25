@@ -3,7 +3,6 @@ return {
   dependencies = {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
-  -- event = { "BufReadPre" },
   build = ":TSUpdate",
   main = "nvim-treesitter.configs",
   opts = {
@@ -30,28 +29,28 @@ return {
       enable = true,
       keymaps = {
         init_selection = "zi",
-        node_incremental = "zn",
-        scope_incremental = "zo",
-        node_decremental = "zd",
+        node_incremental = "zi",
+        scope_incremental = false,
+        node_decremental = "<BS>",
       },
     },
     textobjects = {
       select = {
         enable = true,
-        -- So you we do `vif` even if your cursor is on the `f
         lookahead = true,
 
         keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-          ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+          ["af"] = { query = "@function.outer", desc = "Select around function" },
+          ["if"] = { query = "@function.inner", desc = "Select inside funcition" },
+          ["ac"] = { query = "@conditional.outer", desc = "Select around conditional" },
+          ["ic"] = { query = "@conditional.inner", desc = "Select inside conditional" },
+          ["al"] = { query = "@loop.outer", desc = "Select around loop" },
+          ["il"] = { query = "@loop.inner", desc = "Select inside loop" },
         },
         selection_modes = {
-          ["@parameter.outer"] = "v", -- charwise
-          ["@function.outer"] = "V", -- linewise
-          ["@class.outer"] = "<c-v>", -- blockwise
+          ["@parameter.outer"] = "v",
+          ["@function.outer"] = "V",
+          ["@class.outer"] = "<c-v>",
         },
         include_surrounding_whitespace = true,
       },
