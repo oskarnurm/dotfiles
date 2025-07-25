@@ -1,5 +1,5 @@
 return {
-  -- This is nice because it also autorenames html tags
+  -- Use treesitter to autoclose and autorename html tag
   "windwp/nvim-ts-autotag",
   event = "InsertEnter",
   opts = {},
