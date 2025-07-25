@@ -1,6 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  event = { "BufReadPre", "BufNewFile" },
+  event = "LazyFile",
   dependencies = {
     { "mason-org/mason.nvim", cmd = "Mason", opts = {} },
     -- Blink-based completion (no manual capabilities merge needed)
