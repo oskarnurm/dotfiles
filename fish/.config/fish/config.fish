@@ -1,15 +1,17 @@
-if status is-interactive
-    starship init fish | source
-end
-
+# Disable fish greeting
 set -g fish_greeting
+
+# Prompt theme
+fish_config prompt choose arrow
 
 # Variables
 set -Ux EDITOR nvim
+
 # Custom scripts executable from everywhere
 set -gx PATH $HOME/dotfiles/scripts $PATH
 set -Ux XDG_CONFIG_HOME $HOME/.config
-# For Apple Silicon Macs the homebrew path needs to set for it to work in other shells like fish
+
+# For Apple Silicon macOS, the homebrew path needs to set for it to work in other shells like fish
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 
 # List Directory
@@ -22,9 +24,10 @@ alias lt='eza --icons=auto --tree' # list folder as tree
 # Handy change dir shortcuts
 abbr .. 'cd ..'
 abbr ... 'cd ../..'
-abbr gc 'git commit -m'
-abbr ga 'git add'
-abbr gt 'git status'
+function mkcd
+    mkdir -p $argv[1]
+    and cd $argv[1]
+end
 
 # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
 abbr mkdir 'mkdir -p'
@@ -33,7 +36,8 @@ abbr mkdir 'mkdir -p'
 alias v='nvim'
 alias lg='lazygit'
 
-# Functions
+fzf --fish | source
+Functions
 function tmux_move_up_and_maximize
     tmux select-pane -U
     tmux resize-pane -Z
