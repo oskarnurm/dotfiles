@@ -2,7 +2,7 @@
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+osascript -e 'tell application "System Settings" to quit'
 
 # Ask for the administrator password upfront
 sudo -v
@@ -20,6 +20,9 @@ done 2>/dev/null &
 
 # Disable transparency in the menu bar and elsewhere on Yosemite
 defaults write com.apple.universalaccess reduceTransparency -bool false
+
+defaults write com.apple.universalaccess reduceMotion -bool true
+defaults write com.apple.Accessibility ReduceMotionEnabled -bool true
 
 # Remove window resizing animations
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
@@ -55,7 +58,7 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
 # Enable full keyboard access for all controls
 # (e.g. enable Tab in modal dialogs)
-# defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -69,6 +72,12 @@ defaults write NSGlobalDomain AppleLanguages -array "en" "sv" "en"
 # defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
 # defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 # defaults write NSGlobalDomain AppleMetricUnits -bool true
+
+# Dragging with three finger drag on trackpad
+defaults write com.apple.AppleMultitouchTrackpad "TrackpadThreeFingerDrag" -bool "true"
+
+# Disable UI sound effects
+defaults write -g com.apple.sound.uiaudio.enabled -int 0
 
 ###############################################################################
 # Screen                                                                      #
@@ -206,14 +215,16 @@ defaults write com.apple.dock orientation -string bottom
 # 12: Notification Center
 # 13: Lock Screen
 # Top left screen corner → Mission Control
+
+# Disable hot corners
 defaults write com.apple.dock wvous-tl-corner -int 0
 defaults write com.apple.dock wvous-tl-modifier -int 0
-# Top right screen corner → Desktop
 defaults write com.apple.dock wvous-tr-corner -int 0
 defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom left screen corner → Start screen saver
 defaults write com.apple.dock wvous-bl-corner -int 0
 defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-br-corner -int 0
+defaults write com.apple.dock wvous-br-modifier -int 0
 
 ###############################################################################
 
