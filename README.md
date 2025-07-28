@@ -22,7 +22,7 @@ xcode-select --install
 git clone https://github.com/oskarnurm/dotfiles.git ~/dotfiles
 ```
 
-6. Tap into brew:
+4. Tap into brew:
 
 ```bash
 cd ~/dotfiles/brew
