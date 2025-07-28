@@ -1,3 +1,6 @@
+# Prevent the terminal from peeping
+unsetopt BEEP
+
 alias v="nvim"
 alias lg="lazygit"
 alias l='eza -lha --icons=auto --sort=name --group-directories-first' 
@@ -8,8 +11,6 @@ alias ...='cd ../..'
 
 bindkey -s '^F' 'tmux-sessionizer.sh\n'
 bindkey -e # Emacs style keybinds
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
 
 function mkcd() {
   mkdir -p $@ && cd ${@:$#}

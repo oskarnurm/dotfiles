@@ -1,6 +1,3 @@
-# Prevent the terminal from peeping
-unsetopt BEEP
-
 # Environment variables
 export EDITOR='nvim'
 
