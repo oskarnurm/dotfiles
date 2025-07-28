@@ -12,6 +12,8 @@ tmux/.tmux/plugins/
 fish/.config/fish/fish_plugins
 fish/.config/fish/fish_variables
 
+hammerspoon/Spoons/
+
 .DS_Store
 *.bak*/ 
 startup.log
