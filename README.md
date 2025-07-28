@@ -1,22 +1,22 @@
 # Oskar's dotfiles
 
-Configured on macOS Apple Silicon. Files important enough for version control. Copy at your own discretion.
+Configured on macOS Apple Silicon. Files that are important enough for version control. Copy at your discretion.
 
 ## How to install
 
-1. Install commandline tools (macOS only):
+1. Install command-line tools (macOS only):
 
 ```bash
 xcode-select --install
 ```
 
-2. Install [homebrew](https://brew.sh/)
+2. Install [homebrew](https://brew.sh/):
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-3. Clone this repository
+3. Clone this repository:
 
 ```bash
 git clone https://github.com/oskarnurm/dotfiles.git ~/dotfiles
@@ -29,7 +29,7 @@ cd ~/dotfiles/brew
 brew bundle
 ```
 
-5. Symlink the configs you want with [stow](https://www.gnu.org/software/stow/)
+5. Symlink the configs you want with [stow](https://www.gnu.org/software/stow/):
 
 ```bash
 cd ~/dotfiles
