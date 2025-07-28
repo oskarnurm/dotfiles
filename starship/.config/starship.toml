@@ -2,6 +2,7 @@ add_newline = false
 
 format = """$character $username$hostname$directory$git_branch$git_state$git_status """
 
+# random comment
 [character]
 success_symbol = "[➜](bright-green)"
 error_symbol   = "[➜](bright-red)"
@@ -11,11 +12,11 @@ format = 'git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218)($ahead_behind$stashed)]($style)"
+format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218)($ahead_behind$stashed)]($style)"
 style = "bright-yellow"
 conflicted = " "
 untracked  = " "
-modified   = " "
+modified   = ""
 staged     = " "
 renamed    = " "
 deleted    = " "
@@ -23,4 +24,3 @@ stashed = "≡"
 
 [git_state]
 format = '\([$state($progress_current/$progress_total)]($style)\)'
-
