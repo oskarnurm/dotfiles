@@ -9,8 +9,8 @@ alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-bindkey -s '^F' 'tmux-sessionizer.sh\n'
 bindkey -e # Emacs style keybinds
+bindkey -s '^F' 'tmux-sessionizer.sh\n'
 
 function mkcd() {
   mkdir -p $@ && cd ${@:$#}
