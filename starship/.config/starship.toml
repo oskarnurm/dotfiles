@@ -20,18 +20,16 @@ format = 'git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
-format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-style = "bright-yellow"
-conflicted = ""
-untracked  = ""
-modified   = ""
-staged     = ""
-renamed    = ""
-deleted    = ""
-stashed = "≡"
-
-[git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
+# format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+# style = "bright-yellow"
+# conflicted = ""
+# untracked  = ""
+# modified   = ""
+# staged     = ""
+# renamed    = ""
+# deleted    = ""
+# stashed = "≡"
+format = '([$all_status$ahead_behind]($style) )'
 
 [python]
 format = "[$virtualenv]($style) "
