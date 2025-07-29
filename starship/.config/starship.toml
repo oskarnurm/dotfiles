@@ -22,15 +22,14 @@ style = "bright-red"
 
 [git_status]
 format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-style = "bright-yellow"
+style = "cyan"
 conflicted = ""
-untracked  = ""
-modified   = ""
-staged     = ""
-renamed    = ""
-deleted    = ""
+untracked = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
 stashed = "≡"
-# format = '([$all_status$ahead_behind]($style) )'
 
 [python]
 format = "[$virtualenv]($style) "
