@@ -1,35 +1,36 @@
 add_newline = false
 
 format = """
-$character\
 $username\
 $hostname\
 $directory\
 $git_branch\
 $git_state\
 $git_status\
-$python"""
+$line_break\
+$python\
+$character"""
 
 [character]
-success_symbol = "[➜](bright-green)"
-error_symbol   = "[➜](bright-red)"
-vimcmd_symbol  = "[](bright-green)"
+success_symbol = "[❯](bright-green)"
+error_symbol = "[❯](bright-red)"
+vimcmd_symbol = "[❮](bright-green)"
 
 [git_branch]
 format = 'git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
-# format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-# style = "bright-yellow"
-# conflicted = ""
-# untracked  = ""
-# modified   = ""
-# staged     = ""
-# renamed    = ""
-# deleted    = ""
-# stashed = "≡"
-format = '([$all_status$ahead_behind]($style) )'
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "bright-yellow"
+conflicted = ""
+untracked  = ""
+modified   = ""
+staged     = ""
+renamed    = ""
+deleted    = ""
+stashed = "≡"
+# format = '([$all_status$ahead_behind]($style) )'
 
 [python]
 format = "[$virtualenv]($style) "
