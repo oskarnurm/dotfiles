@@ -58,7 +58,6 @@ vim.keymap.set("v", "<S-Up>", ":m '<-2<CR>gv=gv")
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
-vim.keymap.set("v", "<leader>p", [["_dP]])
 
 -- Rezise windows with arrow CTRL+arrow keys
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>")
