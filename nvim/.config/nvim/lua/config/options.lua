@@ -18,6 +18,9 @@ vim.o.mouse = 'a'
 -- Always show the sign column to prevent text shifting when signs (like errors or git changes) appear
 vim.opt.signcolumn = "yes"
 
+-- Bigger signcolumn
+vim.cmd [[let &stc = '%s %5l ']]
+
 -- Enable absolute and relative line numbers for line jumps
 vim.opt.number = true
 vim.opt.relativenumber = true
