@@ -3,7 +3,7 @@ unsetopt BEEP
 
 alias v="nvim"
 alias lg="lazygit"
-alias l='eza -lha --icons=auto --sort=name --group-directories-first' 
+alias ll='eza -lha --icons=auto --sort=name --group-directories-first' 
 alias ls='eza -1   --icons=auto'
 alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
