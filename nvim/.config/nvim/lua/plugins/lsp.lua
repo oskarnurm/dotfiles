@@ -23,5 +23,14 @@ return {
   }),
 
   -- Add servers to the list to enable them
-  vim.lsp.enable { "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "vtsls", "lua_ls" },
+  vim.lsp.enable {
+    "cssls",
+    "html",
+    "clangd",
+    "tailwindcss",
+    "jdtls",
+    "basedpyright",
+    "ts_ls",
+    "lua_ls",
+  },
 }
