@@ -21,8 +21,8 @@ return {
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
-    { "<leader>fd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
-    { "<leader>fD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+    { "<leader>fD", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+    { "<leader>fd", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
     { "<leader>fh", function() Snacks.picker.help() end, desc = "Help Pages" },
     { "<leader>fi", function() Snacks.picker.icons() end, desc = "Icons" },
     { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
@@ -45,9 +45,9 @@ return {
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       callback = function()
-        Snacks.toggle.diagnostics():map "<leader>td"
-        Snacks.toggle.treesitter():map "<leader>tt"
-        Snacks.toggle.indent():map "<leader>ti"
+        Snacks.toggle.diagnostics():map("<leader>td")
+        Snacks.toggle.treesitter():map("<leader>tt")
+        Snacks.toggle.indent():map("<leader>ti")
       end,
     })
   end,
