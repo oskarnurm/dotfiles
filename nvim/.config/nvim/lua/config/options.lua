@@ -1,4 +1,6 @@
 -- stylua: ignore start
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Set completion options for Vim's insert mode completion:
 -- "menuone"   : Show the completion menu even if there is only one match
