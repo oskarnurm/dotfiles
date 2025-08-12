@@ -10,19 +10,14 @@ config.send_composed_key_when_right_alt_is_pressed = false
 
 config.window_background_opacity = 1.0
 
+config.window_padding = {
+	left = "2cell",
+}
+
 config.colors = {
 	foreground = "#ffffff",
 	background = "#000000",
-
 	cursor_bg = "#efefef",
-	-- cursor_fg = "#000000",
-	-- cursor_border = "#f4f4f4",
-	--
-	-- selection_fg = "#000000",
-	-- selection_bg = "#ffffff",
-	--
-	-- scrollbar_thumb = "#222222",
-	-- split = "#444444",
 
 	ansi = {
 		"#000000",
