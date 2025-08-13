@@ -19,7 +19,7 @@ vimcmd_symbol = "[󰕷](bright-green)"
 format = "[$path]($style)"
 
 [git_branch]
-format = 'git:\([$branch]($style)\)'
+format = ' git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
