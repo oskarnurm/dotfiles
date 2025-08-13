@@ -8,32 +8,36 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
-$python"""
+$python """
 
 [character]
 success_symbol = "[➜](bright-green)"
 error_symbol = "[➜](bright-red)"
 vimcmd_symbol = "[󰕷](bright-green)"
 
+[directory]
+format = "[$path]($style)"
+
 [git_branch]
 format = 'git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218)($ahead_behind$stashed)]($style) "
+# format = '([*$all_status$ahead_behind]($style) )'
+format = '[[*$all_status](218)($ahead_behind$stashed)]($style)'
 style = "cyan"
-conflicted = "​"
-untracked = "​"
-modified = "​"
-staged = "​"
-renamed = "​"
-deleted = "​"
+conflicted = ""
+untracked = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
 stashed = "≡"
 
 [git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
+format = '\([$state( $progress_current/$progress_total)]($style)\)'
 style = "bright-black"
 
 [python]
-format = "[$virtualenv]($style) "
+format = "[$virtualenv]($style)"
 style = "bright-black"
