@@ -24,7 +24,7 @@ style = "bright-red"
 
 [git_status]
 # format = '([*$all_status$ahead_behind]($style) )'
-format = '[[*$all_status](218)($ahead_behind$stashed)]($style)'
+format = '[[*$all_status](218)($ahead_behind)]($style)'
 style = "cyan"
 conflicted = ""
 untracked = ""
