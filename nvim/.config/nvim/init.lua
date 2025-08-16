@@ -211,10 +211,11 @@ require("gitsigns").setup({
       mode = mode or "n"
       vim.keymap.set(mode, keys, func, { buffer = event, desc = desc })
     end
-    map("<leader>hs", gitsigns.stage_hunk, "Stage")
+    map("<leader>hs", gitsigns.stage_hunk, "Stage Hunk")
     map("<leader>hS", gitsigns.stage_buffer, "Stage Buffer")
-    map("<leader>hr", gitsigns.reset_hunk, "Reset")
-    map("<leader>hp", gitsigns.preview_hunk, "Preview")
+    map("<leader>hr", gitsigns.reset_hunk, "Reset Hunk")
+    map("<leader>hR", gitsigns.reset_buffer, "Reset Buffer")
+    map("<leader>hp", gitsigns.preview_hunk, "Preview Hunk")
   end,
 })
 
