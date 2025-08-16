@@ -9,16 +9,16 @@ return {
     },
     formatters_by_ft = {
       lua = { "stylua" },
-      javascript = { "prettier" },
-      typescript = { "prettier" },
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
       python = { "isort", "black" },
       sh = { "shfmt" },
       fish = { "fish_indent" },
-      html = { "prettier" },
+      html = { "prettierd" },
       java = { "google-java-format" },
       yaml = { "yamlfmt" },
       -- Other
-      ["_"] = { "prettier" },
+      ["_"] = { "prettierd" },
     },
   },
 }

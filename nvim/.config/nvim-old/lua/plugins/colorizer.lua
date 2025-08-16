@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "catgoose/nvim-colorizer.lua",
   event = "LazyFile",
   opts = {

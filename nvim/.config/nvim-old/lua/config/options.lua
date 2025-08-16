@@ -88,7 +88,7 @@ vim.o.confirm = true
 -- Enable persistent undo to save undo history between sessions
 vim.opt.swapfile = false
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv "HOME" .. "/.neovim/undodir"
+vim.opt.undodir = os.getenv "HOME" .. "/.neovim/undodir-old"
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true

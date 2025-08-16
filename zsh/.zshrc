@@ -2,12 +2,14 @@
 unsetopt BEEP
 
 alias v="nvim"
+alias vv='NVIM_APPNAME="nvim-old" nvim'
 alias lg="lazygit"
 alias ll='eza -lha --icons=auto --sort=name --group-directories-first' 
 alias ls='eza -1   --icons=auto'
 alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias rm='rm -rf'
 
 bindkey -e # Emacs style keybinds
 bindkey -s '^F' 'tmux-sessionizer.sh\n'

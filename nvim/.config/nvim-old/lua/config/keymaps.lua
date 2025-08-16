@@ -1,7 +1,10 @@
 -- stylua: ignore start 
-
 -- Manually trigger completion
 vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
+
+-- Missing LSP keymaps
+vim.keymap.set("n", "grd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
+vim.keymap.set("n", "grD", vim.lsp.buf.declaration, { desc = "vim.lsp.buf.declaration()" })
 
 -- Search and replace helpers
 vim.keymap.set("n", "cr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search & Replace" })
@@ -15,7 +18,7 @@ vim.keymap.set("n", "<leader>q", function()
   end
 end, { desc = "Quickfix List" })
 
--- For when I find "]q" and "[q" awkward
+-- I find "]q" and "[q" awkward
 vim.keymap.set("n", "[[", "<cmd>cprev<CR>")
 vim.keymap.set("n", "]]", "<cmd>cnext<CR>")
 

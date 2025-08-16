@@ -10,7 +10,6 @@ return {
   -- vim.lsp.config("*", {
   -- capabilities = vim.lsp.protocol.make_client_capabilities()
   -- })
-  --
 
   -- Set custom settings for servers
   vim.lsp.config("lua_ls", {
@@ -23,7 +22,7 @@ return {
   }),
 
   -- Add servers to the list to enable them
-  vim.lsp.enable {
+  vim.lsp.enable({
     "cssls",
     "html",
     "clangd",
@@ -32,5 +31,5 @@ return {
     "basedpyright",
     "ts_ls",
     "lua_ls",
-  },
+  }),
 }
