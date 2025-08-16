@@ -1,3 +1,13 @@
+vim.loader.enable()
+-- Disable stuff I don't use
+vim.g.loaded_gzip = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_rplugin = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_tutor = 1
+vim.g.loaded_zipPlugin = 1
+
 vim.g.mapleader = " "
 
 vim.cmd([[let &stc = '%s %5l ']])
@@ -30,24 +40,6 @@ vim.schedule(function()
   vim.opt.clipboard = "unnamedplus"
 end)
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "[[", "<cmd>cprev<CR>")
-vim.keymap.set("n", "]]", "<cmd>cnext<CR>")
-vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set({ "n", "v" }, "x", '"_x')
-vim.keymap.set({ "n", "v" }, "c", [["_c]])
-vim.keymap.set({ "n", "v" }, "C", [["_C]])
-
--- Quickfix toggle
-vim.keymap.set("n", "<leader>q", function()
-  local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end, { desc = "Quickfix" })
-
 -- Highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
@@ -67,7 +59,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
   callback = function(event)
     if event.match:match("^%w%w+:[\\/][\\/]") then
@@ -96,63 +88,51 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp-attach", {}),
-  callback = function(event)
-    vim.lsp.document_color.enable(true, event.buf, { style = "virtual" })
-
-    local map = function(keys, func, desc, mode)
-      mode = mode or "n"
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
-    end
-    map("grn", vim.lsp.buf.rename, "Rename")
-    map("gra", vim.lsp.buf.code_action, "Code action")
-    map("grr", vim.lsp.buf.clear_references, "References")
-    map("gri", vim.lsp.buf.implementation, "Implementation")
-    map("grt", vim.lsp.buf.type_definition, "Type definition")
-    map("gO", vim.lsp.buf.document_symbol, "Document symbols")
-    map("grD", vim.lsp.buf.declaration, "Declaration")
-    map("grd", vim.lsp.buf.definition, "Declaration")
-  end,
-})
-
+-- Plugins, bloated?
 vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
   { src = "https://github.com/mbbill/undotree" },
   { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/stevearc/conform.nvim" },
   { src = "https://github.com/christoomey/vim-tmux-navigator" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master", build = ":TSUpdate" }, -- no clue if the update thing works
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
   { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/neovim/nvim-lspconfig" }, -- TODO: figure out lspconfigs yourself
+  { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/rafamadriz/friendly-snippets" },
   { src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
   { src = "https://github.com/echasnovski/mini.pick" },
   { src = "https://github.com/tpope/vim-fugitive" },
   { src = "https://github.com/windwp/nvim-ts-autotag" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
-  { src = "https://github.com/folke/which-key.nvim" }, -- remove this one day
+  { src = "https://github.com/folke/which-key.nvim" },
 })
 
+-- Helper mapping function - mode is required, buf is optional
+local map = function(mode, keys, func, desc, buf)
+  local opts = { desc = desc }
+  if buf then
+    opts.buffer = buf
+  end
+  vim.keymap.set(mode, keys, func, opts)
+end
+
+-- LSP
+vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "lua_ls" })
+
 require("mason").setup()
+require("mini.pick").setup()
+require("which-key").setup()
 require("nvim-ts-autotag").setup()
+require("blink.cmp").setup()
+require("oil").setup({ view_options = { show_hidden = true } })
 
 require("vague").setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
 
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Undotree" })
-
-require("oil").setup({ view_options = { show_hidden = true } })
-vim.keymap.set("n", "<leader>o", "<CMD>Oil<CR>")
-
 require("conform").setup({
-  notify_on_error = true,
-  format_on_save = {
-    lsp_format = "fallback",
-    timeout_ms = 1000,
-  },
+  format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
   formatters_by_ft = {
     lua = { "stylua" },
     javascript = { "prettierd" },
@@ -187,46 +167,77 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
-require("blink.cmp").setup({
-  completion = { accept = { auto_brackets = { enabled = false } } },
-})
-
-vim.lsp.config("*", {
-  root_markers = { ".git" },
-})
-vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "lua_ls" })
-
-require("mini.pick").setup()
-vim.keymap.set("n", "<leader><space>", "<cmd>Pick buffers<CR>", { desc = "Buffers" })
-vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>", { desc = "Files" })
-vim.keymap.set("n", "<leader>fh", "<cmd>Pick help<CR>", { desc = "Help" })
-vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>", { desc = "Grep" })
-vim.keymap.set("n", "<leader>fn", "<cmd>Pick files cwd=vim.fn.stdpath('config')<CR>", { desc = "Config" })
-
 require("gitsigns").setup({
-  on_attach = function(event)
+  signs = {
+    add = { text = "+" },
+    change = { text = "~" },
+    delete = { text = "_" },
+    topdelete = { text = "‾" },
+    changedelete = { text = "~" },
+  },
+  on_attach = function(bufnr)
     local gitsigns = require("gitsigns")
-
-    local map = function(keys, func, desc, mode)
-      mode = mode or "n"
-      vim.keymap.set(mode, keys, func, { buffer = event, desc = desc })
-    end
-    map("<leader>hs", gitsigns.stage_hunk, "Stage Hunk")
-    map("<leader>hS", gitsigns.stage_buffer, "Stage Buffer")
-    map("<leader>hr", gitsigns.reset_hunk, "Reset Hunk")
-    map("<leader>hR", gitsigns.reset_buffer, "Reset Buffer")
-    map("<leader>hp", gitsigns.preview_hunk, "Preview Hunk")
+    map("n", "<leader>hs", gitsigns.stage_hunk, "Stage Hunk", bufnr)
+    map("n", "<leader>hS", gitsigns.stage_buffer, "Stage Buffer", bufnr)
+    map("n", "<leader>hr", gitsigns.reset_hunk, "Reset Hunk", bufnr)
+    map("n", "<leader>hR", gitsigns.reset_buffer, "Reset Buffer", bufnr)
+    map("n", "<leader>hp", gitsigns.preview_hunk, "Preview Hunk", bufnr)
   end,
 })
 
-require("which-key").setup({
-  preset = "helix",
-  icons = { mappings = false },
-  spec = {
-    { "<leader>f", group = "Find" },
-    { "<leader>h", group = "Hunk" },
-    { "gr", group = "LSP", mode = { "n", "v" } },
-  },
-})
+-- General mappings
+map("n", "<Esc>", "<cmd>nohlsearch<CR>", "Clear highlights")
+map("n", "[[", "<cmd>cprev<CR>", "Previous quickfix")
+map("n", "]]", "<cmd>cnext<CR>", "Next quickfix")
+map("n", "<C-Space>", "<C-x><C-o>", "Trigger completion")
+map("v", "K", ":m '<-2<CR>gv=gv", "Move line up")
+map("v", "J", ":m '>+1<CR>gv=gv", "Move line down")
+map("n", "x", '"_x', "Delete without yank")
+map("v", "x", '"_x', "Delete without yank")
+map("n", "c", [["_c]], "Change without yank")
+map("v", "c", [["_c]], "Change without yank")
+map("n", "C", [["_C]], "Change line without yank")
+map("v", "C", [["_C]], "Change line without yank")
 
--- print(vim.inspect(vim.pack.get()))
+-- Quickfix toggle
+map("n", "<leader>q", function()
+  if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
+    vim.cmd.cclose()
+  else
+    vim.cmd.copen()
+  end
+end, "Toggle quickfix")
+
+-- Tool mappings
+map("n", "<leader>u", "<cmd>UndotreeToggle<CR>", "Toggle undotree")
+map("n", "<leader>gc", "<cmd>Git commit<CR>", "Git commit")
+map("n", "<leader>o", "<cmd>Oil<CR>", "Open file explorer")
+
+-- Picker mappings
+local picker = require("mini.pick").builtin
+map("n", "<leader><space>", picker.buffers, "Find buffers")
+map("n", "<leader>fh", picker.help, "Find help")
+map("n", "<leader>fg", picker.grep_live, "Live grep")
+map("n", "<leader>fn", function()
+  picker.files({}, { source = { cwd = vim.fn.stdpath("config") } })
+end, "Find config files")
+map("n", "<leader>ff", function()
+  picker.files({ tool = vim.uv.fs_stat(".git") and "git" or "rg" })
+end, "Find files")
+
+-- LSP mappings
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp-attach", {}),
+  callback = function(e)
+    vim.lsp.document_color.enable(true, e.buf, { style = "virtual" })
+
+    map("n", "grn", vim.lsp.buf.rename, "Rename symbol", e.buf)
+    map("n", "gra", vim.lsp.buf.code_action, "Code action", e.buf)
+    map("n", "grr", vim.lsp.buf.clear_references, "Clear references", e.buf)
+    map("n", "gri", vim.lsp.buf.implementation, "Go to implementation", e.buf)
+    map("n", "grt", vim.lsp.buf.type_definition, "Go to type definition", e.buf)
+    map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols", e.buf)
+    map("n", "grD", vim.lsp.buf.declaration, "Go to declaration", e.buf)
+    map("n", "grd", vim.lsp.buf.definition, "Go to definition", e.buf)
+  end,
+})
