@@ -204,13 +204,6 @@ vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>", { desc = "Grep" })
 vim.keymap.set("n", "<leader>fn", "<cmd>Pick files cwd=vim.fn.stdpath('config')<CR>", { desc = "Config" })
 
 require("gitsigns").setup({
-  signs = {
-    add = { text = "+" },
-    change = { text = "~" },
-    delete = { text = "_" },
-    topdelete = { text = "‾" },
-    changedelete = { text = "~" },
-  },
   on_attach = function(event)
     local gitsigns = require("gitsigns")
 
