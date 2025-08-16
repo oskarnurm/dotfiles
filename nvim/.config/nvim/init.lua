@@ -118,7 +118,7 @@ local map = function(mode, keys, func, desc, buf)
 end
 
 -- LSP
-vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "lua_ls" })
+vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "tsgo", "lua_ls" })
 
 require("mason").setup()
 require("mini.pick").setup()
