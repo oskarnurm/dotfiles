@@ -190,6 +190,10 @@ require("nvim-treesitter.configs").setup({
 require("blink.cmp").setup({
   completion = { accept = { auto_brackets = { enabled = false } } },
 })
+
+vim.lsp.config("*", {
+  root_markers = { ".git" },
+})
 vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "ts_ls", "lua_ls" })
 
 require("mini.pick").setup()
