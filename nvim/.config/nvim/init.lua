@@ -233,11 +233,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     map("n", "grn", vim.lsp.buf.rename, "Rename symbol", e.buf)
     map("n", "gra", vim.lsp.buf.code_action, "Code action", e.buf)
-    map("n", "grr", vim.lsp.buf.clear_references, "Clear references", e.buf)
-    map("n", "gri", vim.lsp.buf.implementation, "Go to implementation", e.buf)
-    map("n", "grt", vim.lsp.buf.type_definition, "Go to type definition", e.buf)
+    map("n", "grr", vim.lsp.buf.references, "References", e.buf)
+    map("n", "gri", vim.lsp.buf.implementation, "Implementation", e.buf)
+    map("n", "grt", vim.lsp.buf.type_definition, "Type definition", e.buf)
     map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols", e.buf)
-    map("n", "grD", vim.lsp.buf.declaration, "Go to declaration", e.buf)
-    map("n", "grd", vim.lsp.buf.definition, "Go to definition", e.buf)
+    map("n", "grD", vim.lsp.buf.declaration, "Declaration", e.buf)
+    map("n", "grd", vim.lsp.buf.definition, "Definition", e.buf)
   end,
 })
