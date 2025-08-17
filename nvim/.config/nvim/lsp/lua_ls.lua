@@ -84,6 +84,8 @@ return {
     Lua = {
       completion = { callSnippet = "Replace" },
       diagnostics = { disable = { "missing-fields" } },
+      runtime = { version = "LuaJIT" },
+      hint = { enable = true, arrayIndex = "Disable" },
       workspace = {
         checkThirdParty = false,
         library = {
