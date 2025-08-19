@@ -1,4 +1,9 @@
 --hidden
---no-ignore
---glob=!.git/
---glob=!node_modules/
+# Search hidden files and directories.
+--hidden
+# Follow symbolic links.
+--follow
+# Exclude directories.
+--glob=!{.git,node_modules}
+# Searches case insensitively.
+--smart-case
