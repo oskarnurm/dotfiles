@@ -1,5 +1,5 @@
-# Prevent the terminal from peeping
-unsetopt BEEP
+autoload -U colors && colors
+PS1="%{$fg[magenta]%}%~%{$fg[red]%} %{$reset_color%}$%b "
 
 alias v="nvim"
 alias vv='NVIM_APPNAME="nvim-old" nvim'
