@@ -26,6 +26,7 @@ vim.opt.wrap = false
 vim.opt.confirm = true
 vim.opt.swapfile = false
 vim.opt.undofile = true
+vim.opt.undodir = os.getenv("HOME") .. "/.neovim/undodir"
 vim.opt.inccommand = "split"
 vim.opt.virtualedit = "block"
 vim.opt.signcolumn = "yes"
