@@ -176,6 +176,12 @@ require("gitsigns").setup({
   },
   on_attach = function(bufnr)
     local gitsigns = require("gitsigns")
+    map("v", "<leader>hs", function()
+      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, "Stage hunk", bufnr)
+    map("v", "<leader>hr", function()
+      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, "Reset hunk", bufnr)
     map("n", "<leader>hs", gitsigns.stage_hunk, "Stage Hunk", bufnr)
     map("n", "<leader>hS", gitsigns.stage_buffer, "Stage Buffer", bufnr)
     map("n", "<leader>hr", gitsigns.reset_hunk, "Reset Hunk", bufnr)
