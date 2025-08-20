@@ -1,7 +1,5 @@
-# Environment variables
 export EDITOR='nvim'
 
-# PATH tweaks
 export PATH="$HOME/dotfiles/scripts:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/ripgrep/.ripgreprc

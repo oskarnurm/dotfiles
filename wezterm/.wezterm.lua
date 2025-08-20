@@ -1,18 +1,14 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
--- config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 config.max_fps = 120
-
--- Disable Option key composition
-config.send_composed_key_when_left_alt_is_pressed = false
+config.font_size = 16.0
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- Disable font ligatures
+config.hide_tab_bar_if_only_one_tab = true
+config.window_decorations = "RESIZE"
+config.send_composed_key_when_left_alt_is_pressed = false -- Disable Option key composition
 config.send_composed_key_when_right_alt_is_pressed = false
-
-config.window_background_opacity = 1.0
-
-config.window_padding = {
-	left = "2cell",
-}
+config.window_padding = { left = "2cell" }
 
 config.colors = {
 	foreground = "#ffffff",
@@ -40,12 +36,5 @@ config.colors = {
 		"#b5bfe2",
 	},
 }
-
--- Disable font ligatures
-config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-config.font_size = 13.0
-
-config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
 
 return config
