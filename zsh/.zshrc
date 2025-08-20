@@ -12,8 +12,7 @@ alias ...='cd ../..'
 alias rm='rm -rf'
 
 bindkey -e # Emacs style keybinds
-bindkey -s '^F' 'tmux-sessionizer.sh\n'
-
+bindkey -s '^F' 'tw.sh\n'
 function mkcd() {
   mkdir -p $@ && cd ${@:$#}
 }
