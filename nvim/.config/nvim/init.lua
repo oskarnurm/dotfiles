@@ -1,13 +1,4 @@
 vim.loader.enable()
--- Disable stuff I don't use
-vim.g.loaded_gzip = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_rplugin = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_tutor = 1
-vim.g.loaded_zipPlugin = 1
-
 vim.g.mapleader = " "
 
 vim.cmd([[let &stc = '%s %5l ']])
