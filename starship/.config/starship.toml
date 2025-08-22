@@ -23,16 +23,18 @@ format = ' git:\([$branch]($style)\)'
 style = "bright-red"
 
 [git_status]
-# format = '([*$all_status$ahead_behind]($style) )'
-format = '[[*$all_status](218)($ahead_behind)]($style)'
-style = "cyan"
-conflicted = ""
-untracked = ""
+format = '[[$all_status$ahead_behind]($style)]($style)'
+style = "218"
+conflicted = "x"
+untracked = "*"
 modified = ""
-staged = ""
+staged = "+"
 renamed = ""
 deleted = ""
 stashed = "≡"
+ahead = "⇡"
+behind = "⇣"
+up_to_date = ""
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\)'
