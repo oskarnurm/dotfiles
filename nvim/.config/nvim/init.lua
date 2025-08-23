@@ -158,9 +158,9 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
-require("gitsigns").setup({
-  signs = {
-    add = { text = "+" },
+vim.keymap.set({ "n", "v" }, "x", '"_x')
+vim.keymap.set({ "n", "v" }, "c", [["_c]])
+vim.keymap.set({ "n", "v" }, "C", [["_C]])
     change = { text = "~" },
     delete = { text = "_" },
     topdelete = { text = "‾" },
