@@ -65,7 +65,6 @@ vim.pack.add({
 
 require("mason").setup()
 require("mini.pick").setup()
-require("gitsigns").setup()
 require("which-key").setup()
 require("nvim-ts-autotag").setup()
 require("blink.cmp").setup()
@@ -74,6 +73,16 @@ require("oil").setup({ view_options = { show_hidden = true } })
 require("vague").setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
+
+require("gitsigns").setup({
+  signs = {
+    add = { text = "+" },
+    change = { text = "~" },
+    delete = { text = "_" },
+    topdelete = { text = "‾" },
+    changedelete = { text = "~" },
+  },
+})
 
 require("conform").setup({
   format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
