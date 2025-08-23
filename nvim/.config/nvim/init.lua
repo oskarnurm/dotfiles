@@ -1,5 +1,8 @@
 vim.loader.enable()
 vim.g.mapleader = " "
+require("autocmds")
+require("marks")
+require("statusline")
 
 vim.cmd([[let &stc = '%s %5l ']])
 vim.opt.mouse = "a"
