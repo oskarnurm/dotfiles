@@ -30,12 +30,15 @@ vim.opt.timeoutlen = 300
 vim.opt.list = true
 vim.opt.winborder = "single"
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.diagnostic.config({ virtual_text = true, underline = false })
 vim.schedule(function()
   vim.opt.clipboard = "unnamedplus"
 end)
 
--- Highlight when yanking
+vim.diagnostic.config({ virtual_text = true, underline = false })
+vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+vim.lsp.config("*", { root_makers = { ".git" } })
+vim.lsp.enable({ "ts_ls", "tsgo", "cssls", "html", "tailwindcss", "lua_ls", "jdtls", "basedpyright", "clangd" })
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
@@ -43,47 +46,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- Wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
-
--- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
-  callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then
-      return
-    end
-    local file = vim.uv.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-  end,
-})
-
--- Go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
-  callback = function(event)
-    local exclude = { "gitcommit" }
-    local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
-    vim.b[buf].lazyvim_last_loc = true
-    local mark = vim.api.nvim_buf_get_mark(buf, '"')
-    local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
-
--- Plugins, bloated?
 vim.pack.add({
   { src = "https://github.com/vague2k/vague.nvim" },
   { src = "https://github.com/mbbill/undotree" },
@@ -102,20 +64,9 @@ vim.pack.add({
   { src = "https://github.com/folke/which-key.nvim" },
 })
 
--- Helper mapping function - mode is required, buf is optional
-local map = function(mode, keys, func, desc, buf)
-  local opts = { desc = desc }
-  if buf then
-    opts.buffer = buf
-  end
-  vim.keymap.set(mode, keys, func, opts)
-end
-
--- LSP
-vim.lsp.enable({ "cssls", "html", "clangd", "tailwindcss", "jdtls", "basedpyright", "tsgo", "lua_ls" })
-
 require("mason").setup()
 require("mini.pick").setup()
+require("gitsigns").setup()
 require("which-key").setup()
 require("nvim-ts-autotag").setup()
 require("blink.cmp").setup()
@@ -164,80 +115,38 @@ require("nvim-treesitter.configs").setup({
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
-    change = { text = "~" },
-    delete = { text = "_" },
-    topdelete = { text = "‾" },
-    changedelete = { text = "~" },
-  },
-  on_attach = function(bufnr)
-    local gitsigns = require("gitsigns")
-    map("v", "<leader>hs", function()
-      gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Stage hunk", bufnr)
-    map("v", "<leader>hr", function()
-      gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-    end, "Reset hunk", bufnr)
-    map("n", "<leader>hs", gitsigns.stage_hunk, "Stage Hunk", bufnr)
-    map("n", "<leader>hS", gitsigns.stage_buffer, "Stage Buffer", bufnr)
-    map("n", "<leader>hr", gitsigns.reset_hunk, "Reset Hunk", bufnr)
-    map("n", "<leader>hR", gitsigns.reset_buffer, "Reset Buffer", bufnr)
-    map("n", "<leader>hp", gitsigns.preview_hunk, "Preview Hunk", bufnr)
-  end,
-})
-
--- General mappings
-map("n", "<Esc>", "<cmd>nohlsearch<CR>", "Clear highlights")
-map("n", "[[", "<cmd>cprev<CR>", "Previous quickfix")
-map("n", "]]", "<cmd>cnext<CR>", "Next quickfix")
-map("n", "<C-Space>", "<C-x><C-o>", "Trigger completion")
-map("v", "K", ":m '<-2<CR>gv=gv", "Move line up")
-map("v", "J", ":m '>+1<CR>gv=gv", "Move line down")
-map("n", "x", '"_x', "Delete without yank")
-map("v", "x", '"_x', "Delete without yank")
-map("n", "c", [["_c]], "Change without yank")
-map("v", "c", [["_c]], "Change without yank")
-map("n", "C", [["_C]], "Change line without yank")
-map("v", "C", [["_C]], "Change line without yank")
-
--- Quickfix toggle
-map("n", "<leader>q", function()
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "[[", "<cmd>cprev<CR>")
+vim.keymap.set("n", "]]", "<cmd>cnext<CR>")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("n", "grd", vim.lsp.buf.definition)
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+vim.keymap.set("n", "<leader>q", function()
   if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
     vim.cmd.cclose()
   else
     vim.cmd.copen()
   end
-end, "Toggle quickfix")
+end, { desc = "Toggle quickfix" })
 
--- Tool mappings
-map("n", "<leader>u", "<cmd>UndotreeToggle<CR>", "Toggle undotree")
-map("n", "<leader>gc", "<cmd>Git commit<CR>", "Git commit")
-map("n", "<leader>o", "<cmd>Oil<CR>", "Open file explorer")
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>gc", "<cmd>Git commit<CR>")
+vim.keymap.set("n", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
+vim.keymap.set("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>")
+vim.keymap.set("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<CR>")
+vim.keymap.set("n", "<leader>hR", "<cmd>Gitsigns reset_buffer<CR>")
+vim.keymap.set("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<CR>")
+vim.keymap.set("v", "<leader>hs", function()
+  require("gitsigns").stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+end, { desc = "Stage hunk" })
 
--- Picker mappings
-local picker = require("mini.pick").builtin
-map("n", "<leader><space>", picker.buffers, "Find buffers")
-map("n", "<leader>fh", picker.help, "Find help")
-map("n", "<leader>fg", picker.grep_live, "Live grep")
-map("n", "<leader>fn", function()
-  picker.files({}, { source = { cwd = vim.fn.stdpath("config") } })
-end, "Find config files")
-map("n", "<leader>ff", function()
-  picker.files({ tool = vim.uv.fs_stat(".git") and "git" or "rg" })
-end, "Find files")
-
--- LSP mappings
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp-attach", {}),
-  callback = function(e)
-    vim.lsp.document_color.enable(true, e.buf, { style = "virtual" })
-
-    map("n", "grn", vim.lsp.buf.rename, "Rename symbol", e.buf)
-    map("n", "gra", vim.lsp.buf.code_action, "Code action", e.buf)
-    map("n", "grr", vim.lsp.buf.references, "References", e.buf)
-    map("n", "gri", vim.lsp.buf.implementation, "Implementation", e.buf)
-    map("n", "grt", vim.lsp.buf.type_definition, "Type definition", e.buf)
-    map("n", "gO", vim.lsp.buf.document_symbol, "Document symbols", e.buf)
-    map("n", "grD", vim.lsp.buf.declaration, "Declaration", e.buf)
-    map("n", "grd", vim.lsp.buf.definition, "Definition", e.buf)
-  end,
-})
+vim.keymap.set("n", "<space><space>", "<cmd>Pick buffers<CR>")
+vim.keymap.set("n", "<leader>ff", "<cmd>Pick files tool='fd'<CR>")
+vim.keymap.set("n", "<leader>fr", "<cmd>Pick resume<CR>")
+vim.keymap.set("n", "<leader>fh", "<cmd>Pick help<CR>")
+vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>")
+vim.keymap.set("n", "<leader>fn", function()
+  require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } })
+end, { desc = "Pick config" })
