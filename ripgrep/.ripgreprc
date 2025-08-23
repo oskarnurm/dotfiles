@@ -1,4 +1,3 @@
---hidden
 # Search hidden files and directories.
 --hidden
 # Follow symbolic links.
@@ -7,3 +6,4 @@
 --glob=!{.git,node_modules}
 # Searches case insensitively.
 --smart-case
+--no-ignore
