@@ -67,7 +67,7 @@ require("mason").setup()
 require("mini.pick").setup()
 require("which-key").setup()
 require("nvim-ts-autotag").setup()
-require("blink.cmp").setup()
+require("blink.cmp").setup({ completion = { documentation = { auto_show = true } } })
 require("oil").setup({ view_options = { show_hidden = true } })
 
 require("vague").setup({ transparent = true })
