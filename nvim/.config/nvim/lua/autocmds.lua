@@ -37,11 +37,3 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-
--- Auto-save undo before writing config files
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = vim.fn.stdpath("config") .. "/*",
-  callback = function()
-    vim.cmd("silent! wundo")
-  end,
-})
