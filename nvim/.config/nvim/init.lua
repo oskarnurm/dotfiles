@@ -1,8 +1,5 @@
 vim.loader.enable()
 vim.g.mapleader = " "
-require("autocmds")
-require("marks")
-require("statusline")
 
 vim.cmd([[let &stc = '%s %5l ']])
 vim.opt.mouse = "a"
@@ -64,6 +61,8 @@ vim.pack.add({
   { src = "https://github.com/folke/which-key.nvim" },
 })
 
+require("marks")
+require("statusline")
 require("mason").setup()
 require("mini.pick").setup()
 require("which-key").setup()
