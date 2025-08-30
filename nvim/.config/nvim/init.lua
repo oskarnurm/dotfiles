@@ -140,6 +140,7 @@ end, { desc = "Toggle quickfix" })
 
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
+vim.keymap.set({ "o", "x" }, "ih", "<cmd>Gitsigns select_hunk<CR")
 vim.keymap.set("n", "<leader>gc", "<cmd>Git commit<CR>")
 vim.keymap.set("n", "<leader>hs", "<cmd>Gitsigns stage_hunk<CR>")
 vim.keymap.set("n", "<leader>hS", "<cmd>Gitsigns stage_buffer<CR>")
