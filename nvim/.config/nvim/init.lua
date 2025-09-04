@@ -45,20 +45,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.pack.add({
-  { src = "https://github.com/vague2k/vague.nvim" },
-  { src = "https://github.com/mbbill/undotree" },
-  { src = "https://github.com/stevearc/oil.nvim" },
-  { src = "https://github.com/stevearc/conform.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
-  { src = "https://github.com/mason-org/mason.nvim" },
-  { src = "https://github.com/rafamadriz/friendly-snippets" },
-  { src = "https://github.com/saghen/blink.cmp", version = "v1.6.0" },
-  { src = "https://github.com/oskarnurm/mini.pick" },
-  { src = "https://github.com/tpope/vim-fugitive" },
-  { src = "https://github.com/windwp/nvim-ts-autotag" },
-  { src = "https://github.com/lewis6991/gitsigns.nvim" },
-  { src = "https://github.com/folke/which-key.nvim" },
+  "https://github.com/vague2k/vague.nvim",
+  "https://github.com/mbbill/undotree",
+  "https://github.com/stevearc/oil.nvim",
+  "https://github.com/stevearc/conform.nvim",
+  "https://github.com/nvim-treesitter/nvim-treesitter",
+  "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+  "https://github.com/mason-org/mason.nvim",
+  "https://github.com/rafamadriz/friendly-snippets",
+  "https://github.com/saghen/blink.cmp",
+  "https://github.com/tpope/vim-fugitive",
+  "https://github.com/windwp/nvim-ts-autotag",
+  "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/folke/which-key.nvim",
+  "https://github.com/nvim-mini/mini.nvim",
 })
 
 require("marks")
