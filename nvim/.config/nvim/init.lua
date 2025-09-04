@@ -1,48 +1,45 @@
 vim.loader.enable()
 vim.g.mapleader = " "
 
-vim.cmd([[let &stc = '%s %5l ']])
-vim.opt.mouse = "a"
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.termguicolors = true
-vim.opt.spell = true
-vim.opt.cursorline = true
-vim.opt.scrolloff = 10
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.wrap = false
-vim.opt.confirm = true
-vim.opt.swapfile = false
-vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.neovim/undodir"
-vim.opt.inccommand = "split"
-vim.opt.virtualedit = "block"
-vim.opt.signcolumn = "yes"
-vim.opt.completeopt = "menuone,noinsert,preview"
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-vim.opt.list = true
-vim.opt.winborder = "single"
-vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+vim.o.mouse = "a"
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.termguicolors = true
+vim.o.spell = true
+vim.o.cursorline = true
+vim.o.scrolloff = 10
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.splitright = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
+vim.o.wrap = false
+vim.o.confirm = true
+vim.o.swapfile = false
+vim.o.undofile = true
+vim.o.inccommand = "split"
+vim.o.virtualedit = "block"
+vim.o.signcolumn = "yes"
+vim.o.completeopt = "menuone,noinsert,preview"
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+vim.o.list = true
+vim.o.winborder = "single"
+-- vim.o.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.schedule(function()
-  vim.opt.clipboard = "unnamedplus"
+  vim.o.clipboard = "unnamedplus"
 end)
 
 vim.diagnostic.config({ virtual_text = true, underline = false })
-vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+
 vim.lsp.config("*", { root_makers = { ".git" } })
 vim.lsp.enable({ "ts_ls", "tsgo", "cssls", "html", "tailwindcss", "lua_ls", "jdtls", "basedpyright", "clangd" })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
+require("lsp")
+require("autocmds")
+require("statusline")
+require("marks")
 
 vim.pack.add({
   "https://github.com/vague2k/vague.nvim",
@@ -61,13 +58,10 @@ vim.pack.add({
   "https://github.com/nvim-mini/mini.nvim",
 })
 
-require("marks")
-require("statusline")
 require("mason").setup()
 require("mini.pick").setup()
-require("which-key").setup()
+require("mini.extra").setup()
 require("nvim-ts-autotag").setup()
-require("blink.cmp").setup({ completion = { documentation = { auto_show = true } } })
 require("oil").setup({ view_options = { show_hidden = true } })
 require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
@@ -153,22 +147,28 @@ require("nvim-treesitter.configs").setup({
         ["al"] = { query = "@loop.outer" },
         ["il"] = { query = "@loop.inner" },
       },
+      selection_modes = {
+        ["@parameter.outer"] = "v",
+        ["@function.outer"] = "V",
+        ["@class.outer"] = "<c-v>",
+      },
       include_surrounding_whitespace = true,
     },
   },
 })
 
-vim.keymap.set({ "n", "v" }, "x", '"_x')
-vim.keymap.set({ "n", "v" }, "c", [["_c]])
-vim.keymap.set({ "n", "v" }, "C", [["_C]])
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "[[", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "]]", "<cmd>cnext<CR>zz")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("n", "grd", vim.lsp.buf.definition)
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
-vim.keymap.set("n", "<leader>q", function()
+local map = vim.keymap.set
+map({ "n", "v" }, "x", '"_x')
+map({ "n", "v" }, "c", [["_c]])
+map({ "n", "v" }, "C", [["_C]])
+map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("n", "[[", "<cmd>cprev<CR>zz")
+map("n", "]]", "<cmd>cnext<CR>zz")
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("n", "grd", vim.lsp.buf.definition, { desc = "Goto definition" })
+map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+map("n", "<leader>q", function()
   if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
     vim.cmd.cclose()
   else
@@ -176,10 +176,10 @@ vim.keymap.set("n", "<leader>q", function()
   end
 end, { desc = "Toggle quickfix" })
 
-vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
-vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
-vim.keymap.set({ "o", "x" }, "ih", "<cmd>Gitsigns select_hunk<CR")
-vim.keymap.set("n", "<leader>gc", "<cmd>Git commit<CR>")
+map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+map("n", "<leader>o", "<cmd>Oil<CR>")
+map("n", "<leader>gc", "<cmd>Git commit<CR>")
+
 map("n", "<leader><space>", "<cmd>Pick buffers<CR>")
 map("n", "<leader>ff", "<cmd>Pick files<CR>")
 map("n", "<leader>fh", "<cmd>Pick help<CR>")
