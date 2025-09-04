@@ -1,9 +1,6 @@
-# Search hidden files and directories.
+# Search in hidden files but exclude certain unwanted directories
 --hidden
-# Follow symbolic links.
---follow
-# Exclude directories.
---glob=!{.git,node_modules}
-# Searches case insensitively.
+--glob=!.git/*
+
+# Use smart case search
 --smart-case
---no-ignore
