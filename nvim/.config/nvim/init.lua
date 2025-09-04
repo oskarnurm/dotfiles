@@ -69,6 +69,8 @@ require("which-key").setup()
 require("nvim-ts-autotag").setup()
 require("blink.cmp").setup({ completion = { documentation = { auto_show = true } } })
 require("oil").setup({ view_options = { show_hidden = true } })
+require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
+require("which-key").setup({ preset = "helix", icons = { mappings = false } })
 
 require("vague").setup({ transparent = true })
 vim.cmd("colorscheme vague")
