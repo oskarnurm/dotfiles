@@ -1,11 +1,13 @@
 local M = {}
 
-M.diagnostics = {
-  ERROR = "",
-  WARN = "",
-  HINT = "",
-  INFO = "",
-}
+-- M.diagnostics = {
+--   ERROR = "",
+--   WARN = "",
+--   HINT = "",
+--   INFO = "",
+-- }
+
+M.diagnostics = { ERROR = "E", WARN = "W", INFO = "I", HINT = "H" }
 
 function _G._statusline_component(name)
   return M[name]()
@@ -32,19 +34,19 @@ function M.diagnostic_status()
   local status_parts = {}
 
   if errors > 0 then
-    table.insert(status_parts, string.format("%s %d", M.diagnostics.ERROR, errors))
+    table.insert(status_parts, string.format("%s%d", M.diagnostics.ERROR, errors))
   end
 
   if warnings > 0 then
-    table.insert(status_parts, string.format("%s %d", M.diagnostics.WARN, warnings))
+    table.insert(status_parts, string.format("%s%d", M.diagnostics.WARN, warnings))
   end
 
   if hints > 0 then
-    table.insert(status_parts, string.format("%s %d", M.diagnostics.HINT, hints))
+    table.insert(status_parts, string.format("%s%d", M.diagnostics.HINT, hints))
   end
 
   if info > 0 then
-    table.insert(status_parts, string.format("%s %d", M.diagnostics.INFO, info))
+    table.insert(status_parts, string.format("%s%d", M.diagnostics.INFO, info))
   end
 
   if #status_parts > 0 then
@@ -58,7 +60,7 @@ local statusline = {
   "%r",
   "%m",
   "%=",
-  '%{%v:lua._statusline_component("diagnostic_status")%} ',
+  "%{%v:lua._statusline_component('diagnostic_status')%} ",
   " %{&filetype} ",
   " %3l:%-2c ",
 }
