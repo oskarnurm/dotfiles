@@ -1,4 +1,4 @@
-app_version: 0.4.0-preview.4
+app_version: 0.4.0-preview.6
 behavior_configs:
 - base_move_speed: 5.0
   base_wheel_speed: 16.0
@@ -45,7 +45,7 @@ grid_configs:
     num_cells_y: 1
   hold_subgrid_key_for_nudge: false
   name: position_based_columns
-  nudges_per_cell: 4
+  nudges_per_cell: 8
   strategy: subgrid
   subgrid_dims:
   - 10
