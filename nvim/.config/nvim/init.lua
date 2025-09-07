@@ -130,6 +130,26 @@ require("conform").setup({
   },
 })
 
+local lint = require("lint")
+lint.linters_by_ft = {
+  markdown = { "markdownlint" },
+  javascript = { "eslint_d" },
+  typescript = { "eslint_d" },
+  javascriptreact = { "eslint_d" },
+  typescriptreact = { "eslint_d" },
+}
+
+-- Create autocommand which carries out the actual linting
+local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+  group = lint_augroup,
+  callback = function()
+    if vim.bo.modifiable then
+      lint.try_lint()
+    end
+  end,
+})
+
 require("nvim-treesitter.configs").setup({
   ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
   auto_install = true,
