@@ -128,6 +128,7 @@ vim.pack.add({
   "https://github.com/folke/which-key.nvim",
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/mfussenegger/nvim-lint",
+  "https://github.com/dmtrKovalenko/fff.nvim",
 })
 
 require("lsp")
@@ -137,6 +138,7 @@ require("marks")
 require("mason").setup()
 require("mini.pick").setup()
 require("mini.extra").setup()
+require("FFFmini").setup()
 require("nvim-ts-autotag").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
@@ -291,3 +293,4 @@ map(
   "<cmd>lua MiniPick.builtin.files({}, { source = { cwd = vim.fn.stdpath('config') } })<CR>",
   { desc = "Pick config" }
 )
+vim.keymap.set("n", "<leader>sf", "<cmd>Pick fffiles<CR>")
