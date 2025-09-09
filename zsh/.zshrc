@@ -11,6 +11,9 @@ alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
+# KTH specific
+alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
+
 
 bindkey -e # Emacs style keybinds
 bindkey -s '^F' 'tw.sh\n'
