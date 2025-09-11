@@ -130,6 +130,7 @@ vim.pack.add({
   "https://github.com/mfussenegger/nvim-lint",
   "https://github.com/dmtrKovalenko/fff.nvim",
   "https://github.com/chomosuke/typst-preview.nvim",
+  "https://github.com/NMAC427/guess-indent.nvim",
 })
 
 require("lsp")
@@ -141,6 +142,7 @@ require("mini.pick").setup()
 require("mini.extra").setup()
 require("FFFmini").setup()
 require("nvim-ts-autotag").setup()
+require("guess-indent").setup({})
 require("oil").setup({ view_options = { show_hidden = true } })
 require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
