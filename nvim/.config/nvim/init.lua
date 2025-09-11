@@ -129,6 +129,7 @@ vim.pack.add({
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/mfussenegger/nvim-lint",
   "https://github.com/dmtrKovalenko/fff.nvim",
+  "https://github.com/chomosuke/typst-preview.nvim",
 })
 
 require("lsp")
