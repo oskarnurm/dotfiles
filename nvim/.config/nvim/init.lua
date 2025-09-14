@@ -45,6 +45,7 @@ vim.lsp.enable({
   "jdtls",
   "basedpyright",
   "clangd",
+  "tinymist",
 })
 
 -- Highlight on yank
