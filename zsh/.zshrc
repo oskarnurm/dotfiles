@@ -14,7 +14,7 @@ setopt hist_find_no_dups
 unsetopt BEEP
 
 export EDITOR='nvim'
-export RIPGREP_CONFIG_PATH=$HOME/dotfiles/ripgrep/.ripgreprc
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
 export PATH="$HOME/dotfiles/scripts:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
