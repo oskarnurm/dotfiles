@@ -26,7 +26,7 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.o.list = true
 vim.o.winborder = "single"
--- vim.o.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
@@ -48,68 +48,10 @@ vim.lsp.enable({
   "tinymist",
 })
 
--- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
-  end,
-})
-
--- Wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
-
--- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
-  callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then
-      return
-    end
-    local file = vim.uv.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-  end,
-})
-
--- Go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
-  callback = function(event)
-    local exclude = { "gitcommit" }
-    local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
-    vim.b[buf].lazyvim_last_loc = true
-    local mark = vim.api.nvim_buf_get_mark(buf, '"')
-    local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
-  end,
-})
-
--- Build commands for TreeSitter
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = vim.api.nvim_create_augroup("nvim-treesitter-pack-changed-update-handler", { clear = true }),
-  callback = function(event)
-    if event.data.kind == "update" and event.data.spec.name == "nvim-treesitter" then
-      vim.notify("nvim-treesitter updated, running TSUpdate...", vim.log.levels.INFO)
-      ---@diagnostic disable-next-line: param-type-mismatch
-      local ok = pcall(vim.cmd, "TSUpdate")
-      if ok then
-        vim.notify("TSUpdate completed successfully!", vim.log.levels.INFO)
-      else
-        vim.notify("TSUpdate command not available yet, skipping", vim.log.levels.WARN)
-      end
-    end
   end,
 })
 
@@ -131,19 +73,18 @@ vim.pack.add({
   "https://github.com/mfussenegger/nvim-lint",
   "https://github.com/dmtrKovalenko/fff.nvim",
   "https://github.com/chomosuke/typst-preview.nvim",
-  "https://github.com/NMAC427/guess-indent.nvim",
 })
 
 require("lsp")
-require("statusline")
 require("marks")
+require("autocmds")
+require("statusline")
 
 require("mason").setup()
 require("mini.pick").setup()
 require("mini.extra").setup()
 require("FFFmini").setup()
 require("nvim-ts-autotag").setup()
-require("guess-indent").setup({})
 require("oil").setup({ view_options = { show_hidden = true } })
 require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
@@ -214,14 +155,12 @@ require("conform").setup({
 
 local lint = require("lint")
 lint.linters_by_ft = {
-  markdown = { "markdownlint" },
   javascript = { "eslint_d" },
   typescript = { "eslint_d" },
   javascriptreact = { "eslint_d" },
   typescriptreact = { "eslint_d" },
 }
-
--- Create autocommand which carries out the actual linting
+-- Lint automatically
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
   group = lint_augroup,
@@ -252,25 +191,24 @@ require("nvim-treesitter.configs").setup({
       selection_modes = {
         ["@parameter.outer"] = "v",
         ["@function.outer"] = "V",
-        ["@class.outer"] = "<c-v>",
       },
       include_surrounding_whitespace = true,
     },
   },
 })
 
-local map = vim.keymap.set
-map({ "n", "v" }, "x", '"_x')
-map({ "n", "v" }, "c", [["_c]])
-map({ "n", "v" }, "C", [["_C]])
-map("n", "<Esc>", "<cmd>nohlsearch<CR>")
-map("n", "[[", "<cmd>cprev<CR>zz")
-map("n", "]]", "<cmd>cnext<CR>zz")
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("n", "grd", vim.lsp.buf.definition, { desc = "Goto definition" })
-map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
-map("n", "<leader>q", function()
+vim.keymap.set({ "n", "v" }, "x", '"_x')
+vim.keymap.set({ "n", "v" }, "c", [["_c]])
+vim.keymap.set({ "n", "v" }, "C", [["_C]])
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "[[", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "]]", "<cmd>cnext<CR>zz")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("n", "grd", vim.lsp.buf.definition, { desc = "Goto definition" })
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+vim.keymap.set("n", "cr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>q", function()
   if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
     vim.cmd.cclose()
   else
@@ -278,20 +216,23 @@ map("n", "<leader>q", function()
   end
 end, { desc = "Toggle quickfix" })
 
-map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
-map("n", "<leader>o", "<cmd>Oil<CR>")
-map("n", "<leader>gc", "<cmd>Git commit<CR>")
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>gc", "<cmd>Git commit<CR>")
+vim.keymap.set("n", "<leader>l", function()
+  lint.try_lint()
+end, { desc = "Lint" })
 
-map("n", "<leader><space>", "<cmd>Pick buffers<CR>")
-map("n", "<leader>ff", "<cmd>Pick files<CR>")
-map("n", "<leader>fh", "<cmd>Pick help<CR>")
-map("n", "<leader>fg", "<cmd>Pick grep_live<CR>")
-map("n", "<leader>fk", "<cmd>Pick keymaps<CR>")
-map("n", "<leader>fs", '<cmd>Pick lsp scope="document_symbol"<CR>', { desc = "Pick symbols" })
-map("n", "<leader>/", '<cmd>Pick buf_lines scope="current"<CR>', { desc = "Pick buffer" })
-map("n", "<leader>:", "<cmd>Pick history<CR>")
-map("n", "<leader>.", "<cmd>Pick oldfiles<CR>")
-map(
+vim.keymap.set("n", "<leader><space>", "<cmd>Pick buffers<CR>")
+vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>")
+vim.keymap.set("n", "<leader>fh", "<cmd>Pick help<CR>")
+vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>")
+vim.keymap.set("n", "<leader>fk", "<cmd>Pick keymaps<CR>")
+vim.keymap.set("n", "<leader>fs", '<cmd>Pick lsp scope="document_symbol"<CR>', { desc = "Pick symbols" })
+vim.keymap.set("n", "<leader>/", '<cmd>Pick buf_lines scope="current"<CR>', { desc = "Pick buffer" })
+vim.keymap.set("n", "<leader>:", "<cmd>Pick history<CR>")
+vim.keymap.set("n", "<leader>.", "<cmd>Pick oldfiles<CR>")
+vim.keymap.set(
   "n",
   "<leader>fn",
   "<cmd>lua MiniPick.builtin.files({}, { source = { cwd = vim.fn.stdpath('config') } })<CR>",
