@@ -1,0 +1,36 @@
+# Colors (Root Loops)
+background = f1f1f1
+foreground = 3a3a3a
+
+# black
+palette = 0=#e2e2e2
+palette = 8=#ababab
+
+# red
+palette = 1=#ca0043
+palette = 9=#f30052
+
+# green
+palette = 2=#407f00
+palette = 10=#4f9a00
+
+# yellow
+palette = 3=#926200
+palette = 11=#b07700
+
+# blue
+palette = 4=#006acf
+palette = 12=#0081f8
+
+# purple
+palette = 5=#a200d1
+palette = 13=#c301fb
+
+# aqua
+palette = 6=#007d7d
+palette = 14=#009797
+
+# white
+palette = 7=#6a6a6a
+palette = 15=#222222
+
