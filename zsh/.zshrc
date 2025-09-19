@@ -51,6 +51,15 @@ alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 # Fallback prompt
 PS1="%{$fg[magenta]%}%~%{$fg[red]%} %{$reset_color%}$%b "
 
+
+# Light theme for fzf
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#CCD0DA,bg:#EFF1F5,spinner:#DC8A78,hl:#D20F39 \
+--color=fg:#4C4F69,header:#D20F39,info:#8839EF,pointer:#DC8A78 \
+--color=marker:#7287FD,fg+:#4C4F69,prompt:#8839EF,hl+:#D20F39 \
+--color=selected-bg:#BCC0CC \
+--color=border:#9CA0B0,label:#4C4F69"
+
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
