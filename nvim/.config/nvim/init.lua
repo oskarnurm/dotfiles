@@ -217,24 +217,14 @@ end, { desc = "Toggle quickfix" })
 
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
-vim.keymap.set("n", "<leader>gc", "<cmd>Git commit<CR>")
-vim.keymap.set("n", "<leader>l", function()
-  lint.try_lint()
-end, { desc = "Lint" })
-
-vim.keymap.set("n", "<leader><space>", "<cmd>Pick buffers<CR>")
-vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>")
-vim.keymap.set("n", "<leader>fh", "<cmd>Pick help<CR>")
-vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>")
-vim.keymap.set("n", "<leader>fk", "<cmd>Pick keymaps<CR>")
-vim.keymap.set("n", "<leader>fs", '<cmd>Pick lsp scope="document_symbol"<CR>', { desc = "Pick symbols" })
+vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
+vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>")
+vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>")
+vim.keymap.set("n", "<leader>k", "<cmd>Pick keymaps<CR>")
+vim.keymap.set("n", "<leader>s", '<cmd>Pick lsp scope="document_symbol"<CR>', { desc = "Pick symbols" })
 vim.keymap.set("n", "<leader>/", '<cmd>Pick buf_lines scope="current"<CR>', { desc = "Pick buffer" })
 vim.keymap.set("n", "<leader>:", "<cmd>Pick history<CR>")
 vim.keymap.set("n", "<leader>.", "<cmd>Pick oldfiles<CR>")
-vim.keymap.set(
-  "n",
-  "<leader>fn",
-  "<cmd>lua MiniPick.builtin.files({}, { source = { cwd = vim.fn.stdpath('config') } })<CR>",
-  { desc = "Pick config" }
-)
-vim.keymap.set("n", "<leader>sf", "<cmd>Pick fffiles<CR>")
+vim.keymap.set("n", "<leader>n", function()
+  require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } })
+end, { desc = "Pick config" })
