@@ -9,6 +9,7 @@ config.window_decorations = "RESIZE"
 config.send_composed_key_when_left_alt_is_pressed = false -- Disable Option key composition
 config.send_composed_key_when_right_alt_is_pressed = false
 config.window_padding = { left = "2cell" }
+config.line_height = 1.3
 
 config.colors = {
 	foreground = "#ffffff",
