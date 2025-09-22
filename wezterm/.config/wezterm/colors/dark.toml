@@ -1,31 +1,29 @@
-[colors.primary]
-background = "#f1f1f1"
-foreground = "#3a3a3a"
+[colors]
+foreground = "#ffffff"
+background = "#000000"
 
-[colors.cursor]
-cursor = "#6a6a6a"
-text = "#f1f1f1"
+cursor_bg = "#efefef"
+cursor_fg = "#000000"
+cursor_border = "#efefef"
 
-[colors.selection]
-background = "#3a3a3a"
-foreground = "#f1f1f1"
+ansi = [
+  "#000000", 
+  "#ff7676", 
+  "#a3d6a3", 
+  "#ffffff", 
+  "#b3b3b3", 
+  "#f4b8e4", 
+  "#fafafa", 
+  "#a5adce", 
+]
 
-[colors.normal]
-black = "#e2e2e2"
-red = "#ca0043"
-green = "#407f00"
-yellow = "#926200"
-blue = "#006acf"
-magenta = "#a200d1"
-cyan = "#007d7d"
-white = "#6a6a6a"
-
-[colors.bright]
-black = "#ababab"
-red = "#f30052"
-green = "#4f9a00"
-yellow = "#b07700"
-blue = "#0081f8"
-magenta = "#c301fb"
-cyan = "#009797"
-white = "#222222"
+brights = [
+  "#666666", 
+  "#ff5733", 
+  "#8ec772", 
+  "#d9ba73", 
+  "#ffffff", 
+  "#f2a4db", 
+  "#5abfb5", 
+  "#b5bfe2", 
+]
