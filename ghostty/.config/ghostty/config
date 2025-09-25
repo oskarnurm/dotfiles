@@ -1,5 +1,5 @@
 # vim set ft=conf
-theme = dark:monochrome,light:github_light
+theme = rootloops
 macos-titlebar-style = hidden
 
 font-feature = -calt
