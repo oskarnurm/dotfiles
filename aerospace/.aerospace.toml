@@ -1,12 +1,9 @@
-# Place a copy of this config to ~/.aerospace.toml
-# After that, you can edit ~/.aerospace.toml to your liking
-
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = true
+start-at-login = false
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -15,7 +12,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 10
+accordion-padding = 0
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -119,10 +116,10 @@ automatically-unhide-macos-hidden-apps = false
     alt-3 = 'workspace 3'
     alt-4 = 'workspace 4'
     alt-5 = 'workspace 5'
-    # alt-6 = 'workspace 6'
-    # alt-7 = 'workspace 7'
-    # alt-8 = 'workspace 8'
-    # alt-9 = 'workspace 9'
+    alt-6 = 'workspace 6'
+    alt-7 = 'workspace 7'
+    alt-8 = 'workspace 8'
+    alt-9 = 'workspace 9'
     alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B'
     alt-c = 'workspace C'
@@ -152,10 +149,10 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-3 = 'move-node-to-workspace 3'
     alt-shift-4 = 'move-node-to-workspace 4'
     alt-shift-5 = 'move-node-to-workspace 5'
-    # alt-shift-6 = 'move-node-to-workspace 6'
-    # alt-shift-7 = 'move-node-to-workspace 7'
-    # alt-shift-8 = 'move-node-to-workspace 8'
-    # alt-shift-9 = 'move-node-to-workspace 9'
+    alt-shift-6 = 'move-node-to-workspace 6'
+    alt-shift-7 = 'move-node-to-workspace 7'
+    alt-shift-8 = 'move-node-to-workspace 8'
+    alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
     alt-shift-c = 'move-node-to-workspace C'
@@ -188,8 +185,9 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-semicolon = 'mode service'
 
     alt-shift-enter = 'fullscreen'
-    ctrl-alt-cmd-shift-1 = 'exec-and-forget open -a /Applications/zen.app'
-    ctrl-alt-cmd-shift-2 = 'exec-and-forget open -a /Applications/WezTerm.app'
+    # ctrl-alt-cmd-shift-b = 'exec-and-forget open -a /Applications/zen.app'
+    # ctrl-alt-cmd-shift-t = 'exec-and-forget open -a /Applications/WezTerm.app'
+
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -213,14 +211,43 @@ automatically-unhide-macos-hidden-apps = false
 
 
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = "move-node-to-workspace T"
-
-[[on-window-detected]]
 if.app-id = 'com.apple.Notes'
 run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari.WebApp.507C0FA0-A80C-4D47-987B-97613861C022'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.github.wez.wezterm'
+run = "move-node-to-workspace T"
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'move-node-to-workspace F' 
+
+[[on-window-detected]]
+    if.app-id = 'app.zen-browser.zen'
+    run = 'move-node-to-workspace B' 
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.iCal'
+    run = 'move-node-to-workspace C' 
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.94ECE040-1E4B-42DC-82FC-9DFDBCC8392A'
+    run = 'move-node-to-workspace G' # ChatGPT
+
+[[on-window-detected]]
+    if.app-id = 'com.github.wez.wezterm'
+    run = 'move-node-to-workspace T' 
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.FBCBB07A-E49C-4751-925A-C788FA616155'
+    run = 'move-node-to-workspace A' # Claude
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.Safari.WebApp.507C0FA0-A80C-4D47-987B-97613861C022'
+    run = 'move-node-to-workspace O' # Todoist
+
 
