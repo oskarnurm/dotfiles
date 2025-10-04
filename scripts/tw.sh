@@ -16,15 +16,13 @@ selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 |
 selected="$HOME/$selected"
 selected_name=$(basename "$selected" | tr . _)
 
-if [[ -z "$TMUX" ]]; then
-  if ! tmux has-session -t "$selected_name" 2>/dev/null; then
-    tmux new-session -ds "$selected_name" -c "$selected"
-  fi
-  tmux attach-session -t "$selected_name"
-else
-  if tmux list-windows -F "#{window_name}" | grep -q "^$selected_name$"; then
-    tmux select-window -t "$selected_name"
+if [[ -z "$TMUX" ]]; then 
+  if tmux has-session 2>/dev/null; then
+    tmux new-window -d -n "$selected_name" -c "$selected"
+    tmux attach-session
   else
-    tmux new-window -n "$selected_name" -c "$selected"
+    tmux new-session -s main -n "$selected_name" -c "$selected"
   fi
+else
+  tmux new-window -n "$selected_name" -c "$selected"
 fi
