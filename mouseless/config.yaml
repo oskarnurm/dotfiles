@@ -1,4 +1,4 @@
-app_version: 0.4.0-preview.6
+app_version: 0.4.0-preview.7
 behavior_configs:
 - base_move_speed: 5.0
   base_wheel_speed: 16.0
@@ -268,6 +268,7 @@ keyboard_layout:
     126: "\x1E"
 keymaps:
 - entries:
+    back click: null
     back mouse button: null
     back mouse button (w/o overlay): null
     close UI element: Escape
@@ -283,6 +284,7 @@ keymaps:
     execute mouse action: Space
     execute mouse move: OptionLeft tap
     exit free mode: Escape
+    forward click: null
     forward mouse button: null
     forward mouse button (w/o overlay): null
     hide overlay: Escape
@@ -307,6 +309,7 @@ keymaps:
     jump to top: Shift+G
     left mouse button: C
     left mouse button (w/o overlay): null
+    middle click: null
     middle mouse button: Space
     middle mouse button (w/o overlay): null
     move down: null
@@ -315,6 +318,7 @@ keymaps:
     move up: null
     release hold/drag: Escape
     repeat last mouse action: null
+    right click: null
     right mouse button: V
     right mouse button (w/o overlay): null
     show overlay: cmd+shift+space
@@ -332,6 +336,7 @@ keymaps:
     - I
     switch monitor left: ShiftLeft tap
     switch monitor right: ShiftRight tap
+    toggle app enabled: null
     toggle continuous mode: null
     toggle continuous mode until closed: '1'
     toggle free mode: null
@@ -411,7 +416,7 @@ style_configs:
   - 0.21
   - 0.48
   - 0.95
-  - 0.2
+  - 0.1
   name: default
   show_initial_highlight: false
   subgrid_font_size_multiplier: 0.75
@@ -421,16 +426,16 @@ style_configs:
   - 1.0
   - 0.5
   subgrid_text_rgba:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 0.5
+  - 1
+  - 1
+  - 1
+  - 1
   text_rgba:
   - 1.0
   - 1.0
   - 1.0
   - 1.0
-  text_shadow_blur_radius: 4.0
+  text_shadow_blur_radius: 2
   text_shadow_offset:
   - 0.0
   - 0.0
