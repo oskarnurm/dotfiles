@@ -49,7 +49,7 @@ alias rmdir='rm -rf'
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
 # Fallback prompt
-PS1="%{$fg[magenta]%}%~%{$fg[red]%} %{$reset_color%}$%b "
+PS1="%{$fg[magenta]%}%1~%{$fg[red]%} %{$reset_color%}$%b "
 
 export FZF_DEFAULT_OPTS="
 --color='fg:#000000,current-fg:#000000,bg:#F7F8FA,current-bg:#D7E1FC'
