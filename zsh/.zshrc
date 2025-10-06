@@ -56,7 +56,7 @@ export FZF_DEFAULT_OPTS="
 --color='gutter:#F7F8FA,hl:#fc8c03,current-hl:#fc8c03'
 --color='header:#000000,pointer:#D7E1FC,query:#000000,marker:#FAE7B7'
 --color='border:#D3D3D3,separator:#D3D3D3,prompt:#000000,info:#8E8E8E,disabled:#8E8E8E'
---prompt='  '
+--prompt=' > '
 --margin 3%,1%
 --border=horizontal
 "
