@@ -17,6 +17,7 @@ vimcmd_symbol = "[󰕷](bright-green)"
 
 [directory]
 format = "[$path]($style)"
+truncation_length = 1
 
 [git_branch]
 format = ' git:\([$branch]($style)\)'
