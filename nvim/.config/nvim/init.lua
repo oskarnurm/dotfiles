@@ -45,7 +45,6 @@ vim.lsp.enable({
   "jdtls",
   "basedpyright",
   "clangd",
-  "tinymist",
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -68,7 +67,6 @@ vim.pack.add({
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/folke/which-key.nvim",
   "https://github.com/nvim-mini/mini.nvim",
-  "https://github.com/chomosuke/typst-preview.nvim",
   "https://github.com/vague2k/vague.nvim",
   "https://github.com/nickkadutskyi/jb.nvim",
 })
