@@ -24,11 +24,13 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 vim.opt.list = true
 vim.opt.winborder = "single"
+vim.opt.completeopt = "menuone,noinsert,preview"
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+
 vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
-vim.cmd("colorscheme rootloops")
+
 vim.diagnostic.config({ virtual_text = true, underline = false })
 vim.lsp.document_color.enable(true, 0, { style = "virtual" })
 
@@ -67,7 +69,13 @@ vim.pack.add({
   "https://github.com/folke/which-key.nvim",
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/chomosuke/typst-preview.nvim",
+  "https://github.com/vague2k/vague.nvim",
+  "https://github.com/nickkadutskyi/jb.nvim",
 })
+
+require("vague").setup({ transparent = true })
+require("jb").setup({ transparent = false })
+vim.cmd("colorscheme jb")
 
 require("mason").setup()
 require("mini.pick").setup()
@@ -77,6 +85,7 @@ require("nvim-ts-autotag").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("blink.cmp").setup({ completion = { menu = { auto_show = false }, documentation = { auto_show = true } } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
+
 require("gitsigns").setup({
   signs = {
     add = { text = "+" },
@@ -106,6 +115,7 @@ require("gitsigns").setup({
     map("v", "<leader>hr", function()
       gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
     end, { desc = "Reset hunk" })
+
     map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage Hunk" })
     map("n", "<leader>hr", gs.reset_hunk, { desc = "Reset Hunk" })
     map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage Buffer" })
@@ -157,6 +167,10 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
+-- Experimental
+vim.keymap.set({ "n", "v", "x" }, ";", ":")
+vim.keymap.set({ "n", "v", "x" }, ":", ";")
+--
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
@@ -168,6 +182,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "grd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("n", "cr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>S", "<Cmd>vert sf #<CR>", { desc = "Split alternative file vertically" })
 vim.keymap.set("n", "<leader>q", function()
   if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
     vim.cmd.cclose()
