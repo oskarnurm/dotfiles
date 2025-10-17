@@ -71,7 +71,6 @@ vim.pack.add({
   "https://github.com/nickkadutskyi/jb.nvim",
 })
 
-require("vague").setup({ transparent = true })
 require("jb").setup({ transparent = false })
 vim.cmd("colorscheme jb")
 
@@ -165,10 +164,8 @@ require("nvim-treesitter.configs").setup({
   },
 })
 
--- Experimental
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
 vim.keymap.set({ "n", "v", "x" }, ":", ";")
---
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
