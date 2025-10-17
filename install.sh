@@ -270,10 +270,6 @@ echo "Restarting karabiner process after created symlinks"
 # https://karabiner-elements.pqrs.org/docs/manual/operation/restart/
 launchctl kickstart -k gui/$(id -u)/org.pqrs.service.agent.karabiner_console_user_server
 
-echo "Configuring Hammerspoon with VimSpoon..."
-mkdir -p ~/.hammerspoon/Spoons
-git clone https://github.com/dbalatero/VimMode.spoon $HOME/.hammerspoon/Spoons/VimMode.spoon
-
 echo "Open installed apps..."
 open -a 'Karabiner-Elements'
 open -a 'WezTerm'
