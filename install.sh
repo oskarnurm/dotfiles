@@ -254,13 +254,6 @@ cd "$HOME/dotfiles"
 echo "Running stow command..."
 stow . -t ~
 
-echo "Configuring tmux plugin manager..."
-git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-echo "
-- Install tmux plugins with:
-- 'ctrl+b' amd then 'shift+i'
-"
-
 echo "Sourcing ~/.zshrc file, please wait..."
 zsh -c "source ~/.zshrc"
 
