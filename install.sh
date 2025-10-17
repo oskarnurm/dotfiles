@@ -23,12 +23,6 @@ fi
 echo "Adding Homebrew to PATH"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# TODO: maybe not necessary if we symlink our zprofile before this
-# Only add it to zprofile if not already there
-if ! grep -qxF 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile; then
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-fi
-
 echo "Installing Brew Formulae..."
 brew install zsh
 brew install wget
