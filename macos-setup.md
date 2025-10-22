@@ -1,6 +1,7 @@
 This is a doc to keep track of settings I might have to set manually.
-Most of the stuff is borrowed from [here](https://github.com/StellarSand/privacy-settings/blob/main/Privacy%20Settings/MacOS-Sequoia.md)
+Most of the stuff is borrowed from [here](https://github.com/StellarSand/privacy-settings/blob/main/Privacy%20Settings/)
 Also check out this [video](https://youtu.be/EA4KyQBdSu8?si=7lvqjtFDZklvwdw-)
+Also checkout this [betterfox](https://github.com/yokoffing/Betterfox)
 
 Go to System Settings by any of the following methods:
 - Apple Icon on top left > System Settings
