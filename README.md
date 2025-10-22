@@ -1,8 +1,10 @@
-# Files that are important enough for version control
+# dotfiles
 
 Configured on/for macOS Apple Silicon.  Copy at your own discretion.
 
 ## How to install
+
+### Via Stow
 
 1. Install command-line tools (macOS only):
 
@@ -20,6 +22,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 3. Clone this repository:
 
 ```bash
+brew install git
 git clone https://github.com/oskarnurm/dotfiles.git ~/dotfiles
 ```
 
@@ -32,6 +35,7 @@ brew bundle --file=Brewfile
 5. Symlink the configs you want with [stow](https://www.gnu.org/software/stow/):
 
 ```bash
+brew install git stow
 cd ~/dotfiles
 stow <folder>
 ```
@@ -42,7 +46,7 @@ chmod +x settings.sh
 ./settings.sh
 ```
 
-## Via install script
+### Via install script
 ```bash
 # Install Xcode CLI tools first (if not done)
 xcode-select --install
