@@ -138,13 +138,6 @@ chflags nohidden ~/Library
 # 3: Copy RAM to disk so the system state can still be restored in case of a
 #    power failure.
 # sudo pmset -a hibernatemode 0
-
-# Remove the sleep image file to save disk space
-# sudo rm /private/var/vm/sleepimage
-# Create a zero-byte file instead…
-# sudo touch /private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
-# sudo chflags uchg /private/var/vm/sleepimage
 #
 # Make dock smaller
 defaults write com.apple.dock tilesize -int 60
@@ -205,7 +198,6 @@ defaults write com.apple.dock wvous-br-corner -int 0
 defaults write com.apple.dock wvous-br-modifier -int 0
 
 # NOTE: I'm unsure if these commands work, might have to set them manually via GUI
-defaults write /Library/Preferences/com.apple.alf globalstate -int 1 # Enable network firewall
 defaults write com.apple.CloudSubscriptionFeatures.optIn "545129924" -bool false # Turn Off Apple Intelligence
 
 defaults write com.apple.Siri StatusMenuVisible -bool false # Turn off Siri
