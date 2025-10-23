@@ -48,12 +48,5 @@ chmod +x settings.sh
 
 ### Via install script
 ```bash
-# Install Xcode CLI tools first (if not done)
-xcode-select --install
-
-# Clone and run the installer
-git clone https://github.com/oskarnurm/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-chmod +x install.sh
-./install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/oskarnurm/dotfiles/main/install.sh)"
 ```
