@@ -1,14 +1,7 @@
 [init]
 	defaultBranch = main
-[credential]
-	helper = /usr/local/share/gcm-core/git-credential-manager
 [user]
 	email = 19738295+oskarnurm@users.noreply.github.com.
 	name = oskarnurm
 [core]
 	editor = nvim
-[alias]
-	co = checkout
-	br = branch
-	gc = commit
-	st = status
