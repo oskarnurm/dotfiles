@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -28,4 +30,3 @@ vim.opt.bg = "light"
 vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
-vim.diagnostic.config({ virtual_text = true, underline = false })

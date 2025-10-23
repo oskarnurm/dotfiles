@@ -1,8 +1,5 @@
 return {
   "catgoose/nvim-colorizer.lua",
   event = "LazyFile",
-  opts = {
-    tailwind = true,
-    tailwind_opts = { update_names = true },
-  },
+  opts = { tailwind = true, tailwind_opts = { update_names = true } },
 }

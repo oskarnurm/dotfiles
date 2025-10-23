@@ -1,11 +1,11 @@
 return {
   "nvim-mini/mini.nvim",
-  version = "*",
   config = function()
     require("mini.pick").setup()
     require("mini.extra").setup()
     require("mini.git").setup()
     vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
+    vim.keymap.set("n", "<leader>b", "<cmd>Pick buffers<CR>")
     vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>")
     vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>")
     vim.keymap.set("n", "<leader>k", "<cmd>Pick keymaps<CR>")
