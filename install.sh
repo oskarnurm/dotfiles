@@ -9,16 +9,6 @@ print_header() {
     echo ""
 }
 
-# Install Xcode CLI tools
-print_header "Installing Xcode Command Line Tools"
-xcode-select --install
-
-echo "Waiting for Xcode installation to complete..."
-while ! xcode-select -p &>/dev/null; do
-  sleep 20
-done
-echo "Xcode Command Line Tools installed!"
-
 # Install Homebrew if not present
 print_header "Installing Homebrew"
 if ! command -v brew &>/dev/null; then
@@ -30,15 +20,6 @@ fi
 
 # Add Homebrew to PATH (for Apple Silicon; adjust for Intel if needed)
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Install git minimally (required for cloning dotfiles)
-print_header "Installing Git via Homebrew"
-if ! command -v git &>/dev/null; then
-  brew install git
-  echo "Git installed!"
-else
-  echo "Git is already installed"
-fi
 
 # Clone dotfiles if not present
 print_header "Cloning Dotfiles Repository"
@@ -101,36 +82,6 @@ echo "Uploading $KEY_PATH.pub to GitHub as \"$TITLE\"..."
 gh ssh-key add "$KEY_PATH.pub" --title "$TITLE"
 
 echo "SSH setup complete!"
-
-# Install symlinks via Stow
-print_header "Installing Dotfiles Symlinks"
-stow . -t ~ --verbose=1  # --verbose for better feedback; remove if too noisy
-echo "Dotfiles symlinks installed!"
-
-# Source zshrc
-print_header "Sourcing zshrc"
-zsh -c "source ~/.zshrc"
-echo "zshrc sourced!"
-
-# Restart Karabiner
-print_header "Restarting Karabiner"
-if command -v karabiner &>/dev/null; then
-  launchctl kickstart -k gui/$(id -u)/org.pqrs.service.agent.karabiner_console_user_server
-  echo "Karabiner restarted!"
-else
-  echo "Karabiner not installed; skipping restart."
-fi
-
-# Open key apps
-print_header "Opening Installed Apps"
-for app in 'Karabiner-Elements' 'WezTerm' 'Raycast' 'Mouseless' 'Mos'; do
-  if command -v "open -a '$app'" &>/dev/null; then
-    open -a "$app"
-    echo "Opened $app"
-  else
-    echo "Warning: $app not found; skipping."
-  fi
-done
 
 print_header "Installation Complete!"
 echo "NOTE: Some apps may require manual permission grants in System Settings."
