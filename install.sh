@@ -13,9 +13,7 @@ print_header() {
 set -euo pipefail
 sudo -v
 
-print_header "🔧 Starting macOS setup..."
-
-# Xcode
+print_header "Setting up Xcode"
 if ! xcode-select -p &>/dev/null; then
   echo "📦 Installing Xcode Command Line Tools..."
   xcode-select --install || true
@@ -23,19 +21,17 @@ else
   echo "✅ Xcode Command Line Tools already installed."
 fi
 
-# Homebrew
+print_header "Setting up Homebrew"
 if ! command -v brew &>/dev/null; then
-  print_header "📦 Installing Homebrew..."
+  echo "📦 Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-  print_header "📦 Installing essential packages..."
-  brew update
-  brew install git gh zsh neovim stow
+  echo "📦 Installing essential packages..."
+  brew update && brew install git gh zsh neovim stow
 fi
 
-# Git + SSH
-print_header "Setting up Git + SSH..."
+print_header "Setting up Git + SSH"
 EMAIL="19738295+oskarnurm@users.noreply.github.com"
 NAME="oskarnurm"
 KEY_PATH="$HOME/.ssh/id_ed25519"
@@ -80,37 +76,34 @@ else
   echo "✅ Git already configured."
 fi
 
-# Dotfiles
+print_header "Setting up dotfiles"
 DOTFILES_DIR="$HOME/dotfiles"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
-  print_header "📦 Cloning dotfiles repo..."
+  echo "📦 Cloning dotfiles repo..."
   git clone git@github.com:oskarnurm/dotfiles.git "$DOTFILES_DIR"
 else
   echo "🔄 Updating existing dotfiles..."
   git -C "$DOTFILES_DIR" pull --rebase
 fi
 
-# Brewfile
 if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-  print_header "📦 Installing Brewfile packages..."
+  echo "📦 Installing Brewfile packages..."
   brew bundle --file="$DOTFILES_DIR/Brewfile" || true
 fi
 
-print_header "🔗 Creating symlinks for dotfiles using Stow..."
-(cd "$DOTFILES_DIR" && brew install stow && stow zsh git tmux neovim karabiner starship ssh wezterm ripgrep)
+echo "🔗 Creating symlinks for dotfiles using Stow..."
+(cd "$DOTFILES_DIR" && brew install stow && stow zsh git tmux nvim karabiner starship ssh wezterm ripgrep)
 
-# ---------- macOS Settings ----------
+print_header "Setting up macOS settings"
 SETTINGS_SCRIPT="$DOTFILES_DIR/settings.sh"
 if [ -f "$SETTINGS_SCRIPT" ]; then
-  print_header "🔧 Applying macOS settings..."
   chmod +x "$SETTINGS_SCRIPT"
   "$SETTINGS_SCRIPT"
 fi
 
 source "$HOME/.zshrc"
-
-print_header "🎉 Setup complete!"
+print_header "Setup complete!"
 echo "NOTE: Some apps may require manual permission grants in System Settings."
 echo "       Import settings manually for apps like Raycast and Mouseless if needed."
 echo "       Some changes (e.g., Dock, Finder) require logout/restart to fully apply."
