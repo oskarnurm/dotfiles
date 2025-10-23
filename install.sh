@@ -4,11 +4,18 @@
 # Usage:
 #   sh -c "$(curl -fsSL https://raw.githubusercontent.com/oskarnurm/dotfiles/main/setup.sh)"
 
+print_header() {
+  echo ""
+  echo "=== $1 ==="
+  echo ""
+}
+
 set -euo pipefail
+sudo -v
 
-echo "🔧 Starting macOS setup..."
+print_header "🔧 Starting macOS setup..."
 
-# ---------- Xcode ----------
+# Xcode
 if ! xcode-select -p &>/dev/null; then
   echo "📦 Installing Xcode Command Line Tools..."
   xcode-select --install || true
@@ -16,18 +23,19 @@ else
   echo "✅ Xcode Command Line Tools already installed."
 fi
 
-# ---------- Homebrew ----------
+# Homebrew
 if ! command -v brew &>/dev/null; then
-  echo "📦 Installing Homebrew..."
+  print_header "📦 Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  print_header "📦 Installing essential packages..."
+  brew update
+  brew install git gh zsh neovim stow
 fi
 
-echo "📦 Installing essential packages..."
-brew update
-brew install git gh zsh neovim tmux tree wget curl
-
-# ---------- Git + SSH ----------
+# Git + SSH
+print_header "Setting up Git + SSH..."
 EMAIL="19738295+oskarnurm@users.noreply.github.com"
 NAME="oskarnurm"
 KEY_PATH="$HOME/.ssh/id_ed25519"
@@ -52,7 +60,7 @@ if gh auth status &>/dev/null; then
   echo "✅ GitHub CLI already authenticated."
 else
   echo "🔐 Please authenticate GitHub CLI..."
-  gh auth login -w -s admin:public_key
+  gh auth login
 fi
 
 if ! gh ssh-key list | grep -q "$TITLE"; then
@@ -72,43 +80,37 @@ else
   echo "✅ Git already configured."
 fi
 
-# ---------- Dotfiles ----------
+# Dotfiles
 DOTFILES_DIR="$HOME/dotfiles"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
-  echo "📦 Cloning dotfiles repo..."
+  print_header "📦 Cloning dotfiles repo..."
   git clone git@github.com:oskarnurm/dotfiles.git "$DOTFILES_DIR"
 else
   echo "🔄 Updating existing dotfiles..."
   git -C "$DOTFILES_DIR" pull --rebase
 fi
 
-echo "🔗 Creating symlinks for zsh & git..."
-ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-ln -sf "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
-
-# ---------- Shell ----------
-if [ "$SHELL" != "/bin/zsh" ]; then
-  echo "💡 Changing default shell to zsh..."
-  chsh -s /bin/zsh || true
-fi
-
-# ---------- Brewfile ----------
+# Brewfile
 if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-  echo "📦 Installing Brewfile packages..."
+  print_header "📦 Installing Brewfile packages..."
   brew bundle --file="$DOTFILES_DIR/Brewfile" || true
 fi
+
+print_header "🔗 Creating symlinks for dotfiles using Stow..."
+(cd "$DOTFILES_DIR" && brew install stow && stow zsh git tmux neovim karabiner starship ssh wezterm ripgrep)
 
 # ---------- macOS Settings ----------
 SETTINGS_SCRIPT="$DOTFILES_DIR/settings.sh"
 if [ -f "$SETTINGS_SCRIPT" ]; then
-  echo "🔧 Applying macOS settings..."
+  print_header "🔧 Applying macOS settings..."
   chmod +x "$SETTINGS_SCRIPT"
   "$SETTINGS_SCRIPT"
 fi
 
-# ---------- Done ----------
-echo "🎉 Setup complete! Open a new terminal or run 'zsh' to get started."
+source "$HOME/.zshrc"
+
+print_header "🎉 Setup complete!"
 echo "NOTE: Some apps may require manual permission grants in System Settings."
 echo "       Import settings manually for apps like Raycast and Mouseless if needed."
 echo "       Some changes (e.g., Dock, Finder) require logout/restart to fully apply."
