@@ -1,1 +1,1 @@
-return { "windwp/nvim-ts-autotag", event = "InsertEnter", opts = {} }
+return { "windwp/nvim-ts-autotag", opts = {} }
