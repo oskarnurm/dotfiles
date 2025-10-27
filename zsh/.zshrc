@@ -19,6 +19,8 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export PATH="$HOME/dotfiles/scripts:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
+export PATH="/opt/homebrew/opt/lld/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
