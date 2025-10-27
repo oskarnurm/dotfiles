@@ -20,7 +20,7 @@ local Event = require("lazy.core.handler.event")
 Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
 Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
-require("settings")
+require("options")
 require("keymaps")
 require("autocmds")
 require("lsp")
