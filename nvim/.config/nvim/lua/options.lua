@@ -26,7 +26,6 @@ vim.opt.list = true
 vim.opt.winborder = "single"
 vim.opt.completeopt = "menuone,noinsert,preview"
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.opt.bg = "light"
 vim.schedule(function()
   vim.o.clipboard = "unnamedplus"
 end)
