@@ -1,6 +1,5 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
-local theme = require("lua/vague")
 
 config.max_fps = 120
 config.font_size = 16.0
