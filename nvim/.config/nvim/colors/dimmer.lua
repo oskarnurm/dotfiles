@@ -39,7 +39,8 @@ if vim.o.background == "dark" then
   local diffadd = const_fg
   local diffdelete = muted_fg
   local diffchange = comment
-  local statusline = "#162022"
+  -- local statusline = "#162022"
+  local statusline = "none"
   local dim_comment = "#696969"
   local mistake = {
     fg = "#c33c33",
@@ -155,7 +156,8 @@ if vim.o.background == "dark" then
     SpellLocal = { undercurl = 1, sp = ansi.cyan },
     SpellRare = { undercurl = 1, sp = ansi.magenta },
     StatusLine = { bg = statusline, fg = fg },
-    StatusLineNC = { bg = statusline, fg = "#9f9f9f" },
+    -- StatusLineNC = { bg = statusline, fg = "#9f9f9f" },
+    StatusLineNC = { bg = statusline, fg = "none" },
     TabLine = { bg = statusline, fg = "#7d7d7d" },
     TabLineFill = { bg = statusline },
     TabLineSel = { bg = statusline, fg = ansi.blue },

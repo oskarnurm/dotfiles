@@ -42,4 +42,5 @@ require("lazy").setup("plugins", {
   },
 })
 
+vim.cmd.colorscheme("dimmer")
 vim.loader.enable()
