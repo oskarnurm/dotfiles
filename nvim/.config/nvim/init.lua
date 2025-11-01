@@ -42,5 +42,5 @@ require("lazy").setup("plugins", {
   },
 })
 
-vim.cmd.colorscheme("dimmer")
+vim.cmd.colorscheme("chiefdog")
 vim.loader.enable()

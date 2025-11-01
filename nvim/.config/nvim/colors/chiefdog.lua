@@ -3,7 +3,8 @@ if vim.fn.exists("syntax_on") == 1 then
   vim.cmd("syntax reset")
 end
 
-vim.g.colors_name = "dimmer"
+-- My own modified theme using y9nika as a base as per the MIT license
+vim.g.colors_name = "chiefdog"
 
 local theme
 if vim.o.background == "dark" then
@@ -31,8 +32,8 @@ if vim.o.background == "dark" then
   local muted_fg = "#aaaaaa"
   local def_fg = "#71ade7"
   local const_fg = "#95cb82"
-  -- local comment = "#dfdf8e"
-  local comment = "#696969"
+  local comment = "#dfdf8e"
+  local return_fg = "#dfdf8e"
   local active = "#cd974b"
   local string_fg = "#95cb82"
   local darker_fg = "#7d7d7d"
@@ -84,6 +85,7 @@ if vim.o.background == "dark" then
     ["@y9nika.highlight"] = { fg = comment_fg, bg = "#3f3f28" },
     ["@y9nika.highlight.foreground"] = { fg = comment_fg },
     ["@y9nika.highlight.background"] = { bg = "#3f3f28" },
+    ["@chiefdog.return"] = { fg = return_fg },
     -- Base
     ["@function"] = { link = "@y9nika.base" },
     ["@variable"] = { link = "@y9nika.base" },
@@ -102,7 +104,7 @@ if vim.o.background == "dark" then
     ["@punctuation.special"] = { link = "@y9nika.muted" },
     Operator = { link = "@y9nika.muted" },
     -- Markers
-    ["@keyword.return"] = { link = "@y9nika.marker" },
+    ["@keyword.return"] = { link = "@chiefdog.return" },
     Comment = { link = "@y9nika.marker" },
     -- ["@local.definition"] = { link = "@y9nika.declaration" },
     -- UI
@@ -411,7 +413,7 @@ else
     ["@punctuation.special"] = { link = "@y9nika.muted" },
     Operator = { link = "@y9nika.muted" },
     -- Markers
-    ["@keyword.return"] = { link = "@y9nika.marker" },
+    ["@keyword.return"] = { link = "@chiefdog.return" },
     Comment = { link = "@y9nika.marker" },
     -- UI
     --- Search
