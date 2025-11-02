@@ -47,6 +47,7 @@ alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
+alias vf="nvim -c 'Pick files'"
 # For KTH
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
