@@ -3,7 +3,7 @@ if vim.fn.exists("syntax_on") == 1 then
   vim.cmd("syntax reset")
 end
 
--- My own modified theme using y9nika as a base as per the MIT license
+-- My own modified theme using y9nika as a base under the MIT license
 vim.g.colors_name = "chiefdog"
 
 local theme
@@ -27,21 +27,22 @@ if vim.o.background == "dark" then
   vim.g.terminal_color_15 = "#ffffff"
 
   -- colors
-  local bg = "#000000"
+  local bg = "#121212"
   local fg = "#dddddd"
   local muted_fg = "#aaaaaa"
   local def_fg = "#71ade7"
   local const_fg = "#95cb82"
   local comment = "#dfdf8e"
   local return_fg = "#dfdf8e"
+  local keyword = "#aaaaaa"
   local active = "#cd974b"
   local string_fg = "#95cb82"
   local darker_fg = "#7d7d7d"
   local diffadd = const_fg
-  local diffdelete = muted_fg
+  local diffdelete = "#d13e23"
   local diffchange = comment
-  -- local statusline = "#162022"
-  local statusline = "none"
+  local statusline = "#162022"
+  -- local statusline = "none"
   local dim_comment = "#696969"
   local mistake = {
     fg = "#c33c33",
@@ -63,7 +64,7 @@ if vim.o.background == "dark" then
     yellow = "#cd974b",
   }
   local comment_fg = comment
-  local pmenu_bg = "#182325"
+  -- local pmenu_bg = "#182325"
   local float_bg = pmenu_bg
   local floatborder = {
     bg = float_bg,
@@ -71,65 +72,67 @@ if vim.o.background == "dark" then
   }
   theme = {
     -- Theme specific
-    ["@y9nika.base"] = { fg = fg },
-    ["@y9nika.variable"] = { fg = const_fg },
-    ["@y9nika.marker"] = { fg = comment_fg },
-    ["@y9nika.declaration"] = { fg = def_fg },
-    ["@y9nika.muted"] = { fg = muted_fg },
-    ["@y9nika.positive"] = { fg = const_fg, bg = "#1a2a18" },
-    ["@y9nika.positive.foreground"] = { fg = const_fg },
-    ["@y9nika.positive.background"] = { bg = "#1a2a18" },
-    ["@y9nika.negative"] = { fg = muted_fg, bg = "#2a2a2a" },
-    ["@y9nika.negative.foreground"] = { fg = muted_fg },
-    ["@y9nika.negative.background"] = { bg = "#2a2a2a" },
-    ["@y9nika.highlight"] = { fg = comment_fg, bg = "#3f3f28" },
-    ["@y9nika.highlight.foreground"] = { fg = comment_fg },
-    ["@y9nika.highlight.background"] = { bg = "#3f3f28" },
+    ["@chiefdog.base"] = { fg = fg },
+    ["@chiefdog.variable"] = { fg = const_fg },
+    ["@chiefdog.marker"] = { fg = comment_fg },
+    ["@chiefdog.declaration"] = { fg = keyword, bold = true },
+    ["@chiefdog.function.call"] = { fg = active },
+    ["@chiefdog.muted"] = { fg = muted_fg },
+    ["@chiefdog.positive"] = { fg = const_fg, bg = "#1a2a18" },
+    ["@chiefdog.positive.foreground"] = { fg = const_fg },
+    ["@chiefdog.positive.background"] = { bg = "#1a2a18" },
+    ["@chiefdog.negative"] = { fg = muted_fg, bg = "#2a2a2a" },
+    ["@chiefdog.negative.foreground"] = { fg = muted_fg },
+    ["@chiefdog.negative.background"] = { bg = "#2a2a2a" },
+    ["@chiefdog.highlight"] = { fg = comment_fg, bg = "#3f3f28" },
+    ["@chiefdog.highlight.foreground"] = { fg = comment_fg },
+    ["@chiefdog.highlight.background"] = { bg = "#3f3f28" },
     ["@chiefdog.return"] = { fg = return_fg },
     -- Base
-    ["@function"] = { link = "@y9nika.base" },
-    ["@variable"] = { link = "@y9nika.base" },
-    ["@property"] = { link = "@y9nika.base" },
-    ["@type"] = { link = "@y9nika.base" },
-    Special = { link = "@y9nika.base" },
+    ["@function"] = { link = "@chiefdog.declaration" },
+    ["@function.call"] = { link = "@chiefdog.function.call" },
+    ["@variable"] = { link = "@chiefdog.base" },
+    ["@property"] = { link = "@chiefdog.base" },
+    ["@type"] = { link = "@chiefdog.base" },
+    Special = { link = "@chiefdog.base" },
     -- Variables
-    ["@string"] = { link = "@y9nika.variable" },
-    ["@character"] = { link = "@y9nika.variable" },
-    ["@number"] = { link = "@y9nika.variable" },
-    ["@boolean"] = { link = "@y9nika.variable" },
+    ["@string"] = { link = "@chiefdog.variable" },
+    ["@character"] = { link = "@chiefdog.variable" },
+    ["@number"] = { link = "@chiefdog.variable" },
+    ["@boolean"] = { link = "@chiefdog.variable" },
     -- Muted
-    ["@keyword"] = { link = "@y9nika.muted" },
-    ["@punctuation.delimeter"] = { link = "@y9nika.muted" },
-    ["@punctuation.bracket"] = { link = "@y9nika.muted" },
-    ["@punctuation.special"] = { link = "@y9nika.muted" },
-    Operator = { link = "@y9nika.muted" },
+    ["@keyword"] = { link = "@chiefdog.muted" },
+    ["@punctuation.delimeter"] = { link = "@chiefdog.muted" },
+    ["@punctuation.bracket"] = { link = "@chiefdog.muted" },
+    ["@punctuation.special"] = { link = "@chiefdog.muted" },
+    Operator = { link = "@chiefdog.muted" },
     -- Markers
     ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { link = "@y9nika.marker" },
-    -- ["@local.definition"] = { link = "@y9nika.declaration" },
+    Comment = { link = "@chiefdog.marker" },
+    -- ["@local.definition"] = { link = "@chiefdog.declaration" },
     -- UI
-    Search = { link = "@y9nika.highlight.background" },
-    CurSearch = { link = "@y9nika.highlight" },
+    Search = { link = "@chiefdog.highlight.background" },
+    CurSearch = { link = "@chiefdog.highlight" },
     Visual = { link = "Search" },
     IncSearch = { link = "Search" },
     -- New Code Ended
-    Function = { link = "@y9nika.declaration" },
+    Function = { link = "@chiefdog.declaration" },
     ColorColumn = { bg = "#182325" },
     Conceal = { fg = "#b0b0b0" },
     Cursor = { bg = active, fg = "#000000" },
     -- lCursor      { }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
     -- CursorIM     { }, -- like Cursor, but used when in IME mode |CursorIM|
-    CursorColumn = { bg = "#182325" },
-    CursorLine = { bg = "#182325" },
+    CursorColumn = { bg = "#282828" },
+    CursorLine = { bg = "#282828" },
     Directory = { fg = ansi.blue },
-    DiffAdd = { link = "@y9nika.positive.background" },
-    DiffDelete = { link = "@y9nika.negative" },
-    DiffChange = { link = "@y9nika.positive.background" },
-    DiffText = { link = "@y9nika.highlight" },
+    DiffAdd = { link = "@chiefdog.positive.background" },
+    DiffDelete = { link = "@chiefdog.negative" },
+    DiffChange = { link = "@chiefdog.positive.background" },
+    DiffText = { link = "@chiefdog.highlight" },
     EndOfBuffer = { fg = "#354c50" },
     -- TermCursor   { }, -- cursor in a focused terminal
     TermCursorNC = { fg = bg, bg = fg },
-    ErrorMsg = { link = "@y9nika.highlight.foreground" },
+    ErrorMsg = { link = "@chiefdog.highlight.foreground" },
     VertSplit = { fg = "#2b3d40" },
     Folded = { bg = "#182325", fg = "#7d7d7d" },
     FoldColumn = { bg = bg, fg = "#4d4d4d" },
@@ -144,7 +147,7 @@ if vim.o.background == "dark" then
     MoreMsg = { fg = ansi.green, bold = 1 },
     NonText = { fg = "#696969" },
     Normal = { bg = bg, fg = fg },
-    NormalFloat = { bg = float_bg },
+    NormalFloat = { bg = bg },
     -- NormalNC     { }, -- normal text in non-current windows
     FloatBorder = floatborder,
     Pmenu = { bg = pmenu_bg },
@@ -186,7 +189,7 @@ if vim.o.background == "dark" then
     -- ("Ignore", below, may be invisible...)
     -- Ignore         { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
-    Error = { link = "@y9nika.highlight.foreground" },
+    Error = { link = "@chiefdog.highlight.foreground" },
 
     Todo = { bg = "#d0d058", fg = bg },
 
@@ -198,7 +201,7 @@ if vim.o.background == "dark" then
     LspCodeLensSeparator = { fg = "#5c5c5c" },
 
     --- Diagnostic
-    DiagnosticError = { link = "@y9nika.highlight.foreground" },
+    DiagnosticError = { link = "@chiefdog.highlight.foreground" },
     DiagnosticWarn = { fg = warn },
     DiagnosticHint = { fg = hint },
     DiagnosticInfo = { fg = info },
@@ -207,7 +210,7 @@ if vim.o.background == "dark" then
     DiagnosticVirtualTextHint = { bg = "#1D2B37", fg = "#7E9CB9" },
     DiagnosticVirtualTextInfo = { bg = "#162C0B", fg = "#7BAC62" },
 
-    ["@error"] = { link = "@y9nika.highlight.foreground" },
+    ["@error"] = { link = "@chiefdog.highlight.foreground" },
     ["@tag.delimiter"] = { fg = muted_fg },
     ["@text.note"] = { bg = "#1d292b", fg = ansi.blue },
     ["@text.warning"] = { bg = "#d0d058", fg = bg },
@@ -224,13 +227,13 @@ if vim.o.background == "dark" then
     TelescopePreviewLine = { link = "Search" },
     TelescopeMultiSelection = { link = "Search" },
     TelescopePromptPrefix = { fg = ansi.blue },
-    TelescopeSelectionCaret = { link = "@y9nika.declaration" },
-    TelescopeTitle = { link = "@y9nika.declaration" },
-    TelescopeResultsTitle = { link = "@y9nika.declaration" },
+    TelescopeSelectionCaret = { link = "@chiefdog.declaration" },
+    TelescopeTitle = { link = "@chiefdog.declaration" },
+    TelescopeResultsTitle = { link = "@chiefdog.declaration" },
     --- fzf-lua
     FzfLuaBorder = { fg = "#2b3d40" },
     --- mini.nvim
-    MiniPickMatchCurrent = { fg = "#f09942" },
+    -- MiniPickMatchCurrent = { fg = "#f09942" },
     --- Neogit
     NeogitPopupActionDisabled = { fg = darker_fg },
     NeogitPopupActionKey = { fg = ansi.magenta },
@@ -264,16 +267,16 @@ if vim.o.background == "dark" then
     --- vim-matchup
     MatchupVirtualText = { fg = ansi.yellow },
     --- For `highlight link`
-    ["y9nika.black"] = { fg = ansi.black },
-    ["y9nika.blue"] = { fg = ansi.blue },
-    ["y9nika.brightyellow"] = { fg = ansi.brightyellow },
-    ["y9nika.cyan"] = { fg = ansi.cyan },
-    ["y9nika.green"] = { fg = ansi.green },
-    ["y9nika.darkGreen"] = { fg = "#6abf40" },
-    ["y9nika.magenta"] = { fg = ansi.magenta },
-    ["y9nika.red"] = { fg = ansi.red },
-    ["y9nika.white"] = { fg = ansi.white },
-    ["y9nika.yellow"] = { fg = ansi.yellow },
+    ["chiefdog.black"] = { fg = ansi.black },
+    ["chiefdog.blue"] = { fg = ansi.blue },
+    ["chiefdog.brightyellow"] = { fg = ansi.brightyellow },
+    ["chiefdog.cyan"] = { fg = ansi.cyan },
+    ["chiefdog.green"] = { fg = ansi.green },
+    ["chiefdog.darkGreen"] = { fg = "#6abf40" },
+    ["chiefdog.magenta"] = { fg = ansi.magenta },
+    ["chiefdog.red"] = { fg = ansi.red },
+    ["chiefdog.white"] = { fg = ansi.white },
+    ["chiefdog.yellow"] = { fg = ansi.yellow },
     --- Hop
     HopNextKey = { fg = ansi.brightyellow },
     HopNextKey1 = { fg = ansi.cyan },
@@ -302,21 +305,21 @@ if vim.o.background == "dark" then
     --- nvim-dap-virtual-text
     NvimDapVirtualText = { bg = "#1d292b", fg = ansi.cyan },
     --- Noice
-    NoiceCmdlineIcon = { link = "@y9nika.darkGreen" },
-    NoiceCmdlinePopupBorder = { link = "@y9nika.darkGreen" },
-    NoiceConfirmBorder = { link = "@y9nika.darkGreen" },
-    NoiceCmdlinePopupBorderCmdline = { link = "@y9nika.darkGreen" },
-    NoiceCmdlineIconCmdline = { link = "@y9nika.darkGreen" },
-    NoiceCmdlinePopupBorderFilter = { link = "@y9nika.darkGreen" },
-    NoiceCmdlineIconFilter = { link = "@y9nika.darkGreen" },
-    NoiceCmdlinePopupBorderLua = { link = "@y9nika.darkGreen" },
-    NoiceCmdlineIconLua = { link = "@y9nika.darkGreen" },
-    NoiceCmdlinePopupBorderSearch = { link = "@y9nika.yellow" },
-    NoiceCmdlineIconSearch = { link = "@y9nika.yellow" },
+    NoiceCmdlineIcon = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlinePopupBorder = { link = "@chiefdog.darkGreen" },
+    NoiceConfirmBorder = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlinePopupBorderCmdline = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlineIconCmdline = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlinePopupBorderFilter = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlineIconFilter = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlinePopupBorderLua = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlineIconLua = { link = "@chiefdog.darkGreen" },
+    NoiceCmdlinePopupBorderSearch = { link = "@chiefdog.yellow" },
+    NoiceCmdlineIconSearch = { link = "@chiefdog.yellow" },
     -- Languages
     --- asm
     asmDirective = { fg = dim_comment },
-    nasmLabel = { link = "@y9nika.declaration" },
+    nasmLabel = { link = "@chiefdog.declaration" },
   }
 else
   -- terminal colors
@@ -381,48 +384,48 @@ else
   }
   theme = {
     -- Theme colors
-    ["@y9nika.base"] = { fg = fg },
-    ["@y9nika.variable"] = { fg = const_fg },
-    ["@y9nika.marker"] = { fg = comment_fg },
-    ["@y9nika.declaration"] = { fg = def_fg },
-    ["@y9nika.muted"] = { fg = muted_fg },
-    ["@y9nika.positive"] = { fg = const_fg, bg = "#e6f2e3" },
-    ["@y9nika.positive.foreground"] = { fg = const_fg },
-    ["@y9nika.positive.background"] = { bg = "#e6f2e3" },
-    ["@y9nika.negative"] = { fg = muted_fg, bg = "#e8e8e8" },
-    ["@y9nika.negative.foreground"] = { fg = muted_fg },
-    ["@y9nika.negative.background"] = { fg = "#e8e8e8" },
-    ["@y9nika.highlight"] = { fg = comment_fg, bg = "#f9e6e5" },
-    ["@y9nika.highlight.foreground"] = { fg = comment_fg },
-    ["@y9nika.highlight.background"] = { bg = "#f9e6e5" },
+    ["@chiefdog.base"] = { fg = fg },
+    ["@chiefdog.variable"] = { fg = const_fg },
+    ["@chiefdog.marker"] = { fg = comment_fg },
+    ["@chiefdog.declaration"] = { fg = def_fg },
+    ["@chiefdog.muted"] = { fg = muted_fg },
+    ["@chiefdog.positive"] = { fg = const_fg, bg = "#e6f2e3" },
+    ["@chiefdog.positive.foreground"] = { fg = const_fg },
+    ["@chiefdog.positive.background"] = { bg = "#e6f2e3" },
+    ["@chiefdog.negative"] = { fg = muted_fg, bg = "#e8e8e8" },
+    ["@chiefdog.negative.foreground"] = { fg = muted_fg },
+    ["@chiefdog.negative.background"] = { fg = "#e8e8e8" },
+    ["@chiefdog.highlight"] = { fg = comment_fg, bg = "#f9e6e5" },
+    ["@chiefdog.highlight.foreground"] = { fg = comment_fg },
+    ["@chiefdog.highlight.background"] = { bg = "#f9e6e5" },
     -- Base
-    ["@function"] = { link = "@y9nika.base" },
-    ["@variable"] = { link = "@y9nika.base" },
-    ["@property"] = { link = "@y9nika.base" },
-    ["@type"] = { link = "@y9nika.base" },
-    Special = { link = "@y9nika.base" },
+    ["@function"] = { link = "@chiefdog.base" },
+    ["@variable"] = { link = "@chiefdog.base" },
+    ["@property"] = { link = "@chiefdog.base" },
+    ["@type"] = { link = "@chiefdog.base" },
+    Special = { link = "@chiefdog.base" },
     -- Variables
-    ["@string"] = { link = "@y9nika.variable" },
-    ["@character"] = { link = "@y9nika.variable" },
-    ["@number"] = { link = "@y9nika.variable" },
-    ["@boolean"] = { link = "@y9nika.variable" },
+    ["@string"] = { link = "@chiefdog.variable" },
+    ["@character"] = { link = "@chiefdog.variable" },
+    ["@number"] = { link = "@chiefdog.variable" },
+    ["@boolean"] = { link = "@chiefdog.variable" },
     -- Muted
-    ["@keyword"] = { link = "@y9nika.muted" },
-    ["@punctuation.delimeter"] = { link = "@y9nika.muted" },
-    ["@punctuation.bracket"] = { link = "@y9nika.muted" },
-    ["@punctuation.special"] = { link = "@y9nika.muted" },
-    Operator = { link = "@y9nika.muted" },
+    ["@keyword"] = { link = "@chiefdog.muted" },
+    ["@punctuation.delimeter"] = { link = "@chiefdog.muted" },
+    ["@punctuation.bracket"] = { link = "@chiefdog.muted" },
+    ["@punctuation.special"] = { link = "@chiefdog.muted" },
+    Operator = { link = "@chiefdog.muted" },
     -- Markers
     ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { link = "@y9nika.marker" },
+    Comment = { link = "@chiefdog.marker" },
     -- UI
     --- Search
-    Search = { link = "@y9nika.highlight.background" },
-    CurSearch = { link = "@y9nika.highlight" },
+    Search = { link = "@chiefdog.highlight.background" },
+    CurSearch = { link = "@chiefdog.highlight" },
     Visual = { link = "Search" },
     IncSearch = { link = "Search" },
     -- New Code Ended
-    Function = { link = "@y9nika.declaration" },
+    Function = { link = "@chiefdog.declaration" },
     ColorColumn = { bg = "#E2EEEE" },
     Conceal = { fg = "#b0b0b0" },
     Cursor = { bg = "#007acc", fg = "#bfdbfe" },
@@ -431,14 +434,14 @@ else
     CursorColumn = { bg = "#E2EEEE" },
     CursorLine = { bg = "#E2EEEE" },
     Directory = { fg = ansi.blue },
-    DiffAdd = { link = "@y9nika.positive.background" },
-    DiffDelete = { link = "@y9nika.negative" },
-    DiffChange = { link = "@y9nika.positive.background" },
-    DiffText = { link = "@y9nika.highlight" },
+    DiffAdd = { link = "@chiefdog.positive.background" },
+    DiffDelete = { link = "@chiefdog.negative" },
+    DiffChange = { link = "@chiefdog.positive.background" },
+    DiffText = { link = "@chiefdog.highlight" },
     EndOfBuffer = { fg = "#b6b6b6" },
     -- TermCursor   { }, -- cursor in a focused terminal
     TermCursorNC = { fg = bg, bg = fg },
-    ErrorMsg = { link = "@y9nika.highlight.foreground" },
+    ErrorMsg = { link = "@chiefdog.highlight.foreground" },
     VertSplit = { fg = "#abbdc0" },
     Folded = { bg = "#dddddd", fg = "#7d7d7d" },
     FoldColumn = { bg = bg, fg = "#4d4d4d" },
@@ -500,7 +503,7 @@ else
     -- ("Ignore", below, may be invisible...)
     -- Ignore         { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
-    Error = { link = "@y9nika.highlight.foreground" },
+    Error = { link = "@chiefdog.highlight.foreground" },
 
     Todo = { bg = "#FFDEAA", fg = ansi.blue },
 
@@ -512,7 +515,7 @@ else
     LspCodeLensSeparator = { fg = "#999999" },
 
     --- Diagnostic
-    DiagnosticError = { link = "@y9nika.highlight.foreground" },
+    DiagnosticError = { link = "@chiefdog.highlight.foreground" },
     DiagnosticWarn = { fg = warn },
     DiagnosticHint = { fg = hint },
     DiagnosticInfo = { fg = info },
@@ -521,7 +524,7 @@ else
     DiagnosticVirtualTextHint = { fg = "#0F171D", bg = "#C3D0DA" },
     DiagnosticVirtualTextInfo = { bg = "#ADFFB7", fg = "#042F09" },
 
-    ["@error"] = { link = "@y9nika.highlight.foreground" },
+    ["@error"] = { link = "@chiefdog.highlight.foreground" },
     ["@tag.delimiter"] = { fg = muted_fg },
     ["@text.note"] = { bg = "#dddddd", fg = ansi.blue },
     ["@text.warning"] = { bg = "#FFDEAA", fg = ansi.blue },
@@ -538,9 +541,9 @@ else
     TelescopePreviewMatch = { link = "Search" },
     TelescopePreviewLine = { link = "Search" },
     TelescopePromptPrefix = { fg = ansi.blue },
-    TelescopeSelectionCaret = { link = "@y9nika.declaration" },
-    TelescopeTitle = { link = "@y9nika.declaration" },
-    TelescopeResultsTitle = { link = "@y9nika.declaration" },
+    TelescopeSelectionCaret = { link = "@chiefdog.declaration" },
+    TelescopeTitle = { link = "@chiefdog.declaration" },
+    TelescopeResultsTitle = { link = "@chiefdog.declaration" },
     --- fzf-lua
     FzfLuaBorder = { fg = "#abbdc0" },
     --- Neogit
@@ -576,16 +579,16 @@ else
     --- vim-matchup
     MatchupVirtualText = { fg = ansi.yellow },
     --- For `highlight link`
-    ["@y9nika.black"] = { fg = ansi.black },
-    ["@y9nika.blue"] = { fg = ansi.blue },
-    ["@y9nika.brightyellow"] = { fg = ansi.brightyellow },
-    ["@y9nika.cyan"] = { fg = ansi.cyan },
-    ["@y9nika.green"] = { fg = ansi.green },
-    ["@y9nika.brightGreen"] = { fg = "#60cb00" },
-    ["@y9nika.magenta"] = { fg = ansi.magenta },
-    ["@y9nika.red"] = { fg = ansi.red },
-    ["@y9nika.white"] = { fg = ansi.white },
-    ["@y9nika.yellow"] = { fg = ansi.yellow },
+    ["@chiefdog.black"] = { fg = ansi.black },
+    ["@chiefdog.blue"] = { fg = ansi.blue },
+    ["@chiefdog.brightyellow"] = { fg = ansi.brightyellow },
+    ["@chiefdog.cyan"] = { fg = ansi.cyan },
+    ["@chiefdog.green"] = { fg = ansi.green },
+    ["@chiefdog.brightGreen"] = { fg = "#60cb00" },
+    ["@chiefdog.magenta"] = { fg = ansi.magenta },
+    ["@chiefdog.red"] = { fg = ansi.red },
+    ["@chiefdog.white"] = { fg = ansi.white },
+    ["@chiefdog.yellow"] = { fg = ansi.yellow },
     --- Hop
     HopNextKey = { fg = ansi.yellow },
     HopNextKey1 = { fg = ansi.blue },
@@ -614,21 +617,21 @@ else
     --- nvim-dap-virtual-text
     NvimDapVirtualText = { bg = "#78D2C9", fg = fg },
     --- Noice
-    NoiceCmdlineIcon = { link = "@y9nika.brightGreen" },
-    NoiceCmdlinePopupBorder = { link = "@y9nika.brightGreen" },
-    NoiceConfirmBorder = { link = "@y9nika.brightGreen" },
-    NoiceCmdlinePopupBorderCmdline = { link = "@y9nika.brightGreen" },
-    NoiceCmdlineIconCmdline = { link = "@y9nika.brightGreen" },
-    NoiceCmdlinePopupBorderFilter = { link = "@y9nika.brightGreen" },
-    NoiceCmdlineIconFilter = { link = "@y9nika.brightGreen" },
-    NoiceCmdlinePopupBorderLua = { link = "@y9nika.brightGreen" },
-    NoiceCmdlineIconLua = { link = "@y9nika.brightGreen" },
-    NoiceCmdlinePopupBorderSearch = { link = "@y9nika.yellow" },
-    NoiceCmdlineIconSearch = { link = "@y9nika.yellow" },
+    NoiceCmdlineIcon = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlinePopupBorder = { link = "@chiefdog.brightGreen" },
+    NoiceConfirmBorder = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlinePopupBorderCmdline = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlineIconCmdline = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlinePopupBorderFilter = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlineIconFilter = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlinePopupBorderLua = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlineIconLua = { link = "@chiefdog.brightGreen" },
+    NoiceCmdlinePopupBorderSearch = { link = "@chiefdog.yellow" },
+    NoiceCmdlineIconSearch = { link = "@chiefdog.yellow" },
     -- Languages
     --- asm
     asmDirective = { fg = dim_comment },
-    nasmLabel = { link = "@y9nika.declaration" },
+    nasmLabel = { link = "@chiefdog.declaration" },
   }
 end
 
