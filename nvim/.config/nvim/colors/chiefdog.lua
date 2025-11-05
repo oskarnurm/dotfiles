@@ -3,7 +3,6 @@ if vim.fn.exists("syntax_on") == 1 then
   vim.cmd("syntax reset")
 end
 
--- My own modified theme using y9nika as a base under the MIT license
 vim.g.colors_name = "chiefdog"
 
 local theme
@@ -27,73 +26,77 @@ if vim.o.background == "dark" then
   vim.g.terminal_color_15 = "#ffffff"
 
   -- colors
-  local bg = "#121212"
-  local fg = "#dddddd"
-  local muted_fg = "#aaaaaa"
-  local def_fg = "#71ade7"
-  local const_fg = "#95cb82"
-  local comment = "#dfdf8e"
-  local return_fg = "#dfdf8e"
-  local keyword = "#aaaaaa"
-  local active = "#cd974b"
-  local string_fg = "#95cb82"
-  local darker_fg = "#7d7d7d"
-  local diffadd = const_fg
-  local diffdelete = "#d13e23"
-  local diffchange = comment
-  local statusline = "#162022"
-  -- local statusline = "none"
-  local dim_comment = "#696969"
-  local mistake = {
-    fg = "#c33c33",
-    bg = "#2b1d1e",
-  }
-  local error = "#d13e23"
-  local warn = "#f4b371"
-  local hint = "#8ebeec"
-  local info = "#88cc66"
+  -- local fg_muted = "#aaaaaa"
+  local night = "#121212"
+  local platinum = "#dddddd"
+  local lavender = "#CFCFEA"
+  local smoke = "#F2F2F2"
+  local jordy = "#8ebeec"
+  local pistachio = "#86CD82"
+  local pistachio_bright = "#88cc66"
+  local straw = "#dfdf8e"
+  local earth = "#E9B872"
+  local bittersweet = "#FE5F55"
+  local raisin = "#272727"
+  local gray = "#7F7F7F"
+
+  local bg = night
+  local fg = platinum
+
+  local diffadd = pistachio
+  local diffdelete = bittersweet
+  local diffchange = straw
+
+  local declaration = smoke
+  local statusline = raisin
+  local dim_comment = gray
+
+  local error = bittersweet
+  local warn = earth
+  local hint = jordy
+  local info = pistachio
+  local comment_fg = straw
+
   local ansi = {
-    black = "#333333",
-    blue = "#71aed7",
+    black = "#121212",
+    blue = "#71ade7",
     brightyellow = "#dfdf8e",
     cyan = "#47bea9",
-    green = "#95cb82",
+    green = "#86CD82",
     magenta = "#cc8bc9",
-    red = "#c33c33",
+    red = "#FE5F55",
     white = "#cecece",
-    yellow = "#cd974b",
+    yellow = "#E9B872",
   }
-  local comment_fg = comment
-  -- local pmenu_bg = "#182325"
-  local float_bg = pmenu_bg
-  local floatborder = {
-    bg = float_bg,
-    fg = float_bg,
-  }
+
+  -- TODO: need to tweak these
+  local darker_fg = "#7d7d7d"
+
   theme = {
     -- Theme specific
     ["@chiefdog.base"] = { fg = fg },
-    ["@chiefdog.variable"] = { fg = const_fg },
+    ["@chiefdog.variable"] = { fg = pistachio },
     ["@chiefdog.marker"] = { fg = comment_fg },
-    ["@chiefdog.declaration"] = { fg = keyword, bold = true },
-    ["@chiefdog.function.call"] = { fg = active },
-    ["@chiefdog.muted"] = { fg = muted_fg },
-    ["@chiefdog.positive"] = { fg = const_fg, bg = "#1a2a18" },
-    ["@chiefdog.positive.foreground"] = { fg = const_fg },
+    ["@chiefdog.declaration"] = { fg = declaration, bold = true },
+    ["@chiefdog.function.call"] = { fg = earth },
+    ["@chiefdog.muted"] = { fg = declaration },
+    ["@chiefdog.positive"] = { fg = pistachio, bg = "#1a2a18" },
+    ["@chiefdog.positive.foreground"] = { fg = pistachio },
     ["@chiefdog.positive.background"] = { bg = "#1a2a18" },
-    ["@chiefdog.negative"] = { fg = muted_fg, bg = "#2a2a2a" },
-    ["@chiefdog.negative.foreground"] = { fg = muted_fg },
+    ["@chiefdog.negative"] = { fg = declaration, bg = "#2a2a2a" },
+    ["@chiefdog.negative.foreground"] = { fg = declaration },
     ["@chiefdog.negative.background"] = { bg = "#2a2a2a" },
     ["@chiefdog.highlight"] = { fg = comment_fg, bg = "#3f3f28" },
     ["@chiefdog.highlight.foreground"] = { fg = comment_fg },
     ["@chiefdog.highlight.background"] = { bg = "#3f3f28" },
-    ["@chiefdog.return"] = { fg = return_fg },
+    ["@chiefdog.return"] = { fg = straw },
     -- Base
     ["@function"] = { link = "@chiefdog.declaration" },
     ["@function.call"] = { link = "@chiefdog.function.call" },
     ["@variable"] = { link = "@chiefdog.base" },
     ["@property"] = { link = "@chiefdog.base" },
     ["@type"] = { link = "@chiefdog.base" },
+    ["@comment.documentation"] = { fg = dim_comment },
     Special = { link = "@chiefdog.base" },
     -- Variables
     ["@string"] = { link = "@chiefdog.variable" },
@@ -108,7 +111,7 @@ if vim.o.background == "dark" then
     Operator = { link = "@chiefdog.muted" },
     -- Markers
     ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { link = "@chiefdog.marker" },
+    Comment = { fg = dim_comment },
     -- ["@local.definition"] = { link = "@chiefdog.declaration" },
     -- UI
     Search = { link = "@chiefdog.highlight.background" },
@@ -119,11 +122,11 @@ if vim.o.background == "dark" then
     Function = { link = "@chiefdog.declaration" },
     ColorColumn = { bg = "#182325" },
     Conceal = { fg = "#b0b0b0" },
-    Cursor = { bg = active, fg = "#000000" },
+    Cursor = { bg = earth, fg = "#000000" },
     -- lCursor      { }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
     -- CursorIM     { }, -- like Cursor, but used when in IME mode |CursorIM|
-    CursorColumn = { bg = "#282828" },
-    CursorLine = { bg = "#282828" },
+    CursorColumn = { bg = raisin },
+    CursorLine = { bg = raisin },
     Directory = { fg = ansi.blue },
     DiffAdd = { link = "@chiefdog.positive.background" },
     DiffDelete = { link = "@chiefdog.negative" },
@@ -140,18 +143,17 @@ if vim.o.background == "dark" then
     -- Substitute   { }, -- |:substitute| replacement text highlighting
     LineNr = { fg = "#5c5c5c" },
     CursorLineNr = { fg = ansi.blue, bold = 1 },
-    MatchParen = { underline = 1, sp = active },
+    MatchParen = { underline = 1, sp = earth },
     -- ModeMsg      { }, -- 'showmode' message (e.g., "-- INSERT -- ")
     -- MsgArea      { }, -- Area for messages and cmdline
     -- MsgSeparator { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
     MoreMsg = { fg = ansi.green, bold = 1 },
     NonText = { fg = "#696969" },
     Normal = { bg = bg, fg = fg },
-    NormalFloat = { bg = bg },
-    -- NormalNC     { }, -- normal text in non-current windows
-    FloatBorder = floatborder,
+    NormalFloat = { bg = "none" },
+    FloatBorder = { fg = fg, bg = "none" },
     Pmenu = { bg = pmenu_bg },
-    PmenuSel = { bg = "#354c50" },
+    PmenuSel = { bg = raisin },
     PmenuSbar = { bg = "#212f31" },
     PmenuThumb = { bg = "#47666b" },
     Question = { fg = diffadd },
@@ -166,7 +168,7 @@ if vim.o.background == "dark" then
     TabLine = { bg = statusline, fg = "#7d7d7d" },
     TabLineFill = { bg = statusline },
     TabLineSel = { bg = statusline, fg = ansi.blue },
-    Title = { fg = def_fg },
+    Title = { fg = lavender },
     VisualNOS = { bg = "#293334" },
     WarningMsg = { fg = "#e1ad4c" },
     WildMenu = { bg = "#354c50" },
@@ -196,7 +198,7 @@ if vim.o.background == "dark" then
     --- Diagnostic
     LspReferenceText = { bg = "#253437" },
     LspReferenceRead = { bg = "#253437" },
-    LspReferenceWrite = { bg = "#253437", underline = 1, sp = active },
+    LspReferenceWrite = { bg = "#253437", underline = 1, sp = earth },
     LspCodeLens = { fg = "#5c5c5c" },
     LspCodeLensSeparator = { fg = "#5c5c5c" },
 
@@ -205,13 +207,13 @@ if vim.o.background == "dark" then
     DiagnosticWarn = { fg = warn },
     DiagnosticHint = { fg = hint },
     DiagnosticInfo = { fg = info },
-    DiagnosticVirtualTextError = { bg = "#350B0B", fg = "#D1503A" },
-    DiagnosticVirtualTextWarn = { bg = "#3F240A", fg = "#C8935D" },
-    DiagnosticVirtualTextHint = { bg = "#1D2B37", fg = "#7E9CB9" },
-    DiagnosticVirtualTextInfo = { bg = "#162C0B", fg = "#7BAC62" },
+    DiagnosticVirtualTextError = { bg = "none", fg = "#D1503A" },
+    DiagnosticVirtualTextWarn = { bg = "none", fg = "#C8935D" },
+    DiagnosticVirtualTextHint = { bg = "none", fg = "#7E9CB9" },
+    DiagnosticVirtualTextInfo = { bg = "none", fg = "#7BAC62" },
 
     ["@error"] = { link = "@chiefdog.highlight.foreground" },
-    ["@tag.delimiter"] = { fg = muted_fg },
+    ["@tag.delimiter"] = { fg = declaration },
     ["@text.note"] = { bg = "#1d292b", fg = ansi.blue },
     ["@text.warning"] = { bg = "#d0d058", fg = bg },
 
@@ -417,7 +419,7 @@ else
     Operator = { link = "@chiefdog.muted" },
     -- Markers
     ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { link = "@chiefdog.marker" },
+    Comment = { fg = dim_comment },
     -- UI
     --- Search
     Search = { link = "@chiefdog.highlight.background" },
