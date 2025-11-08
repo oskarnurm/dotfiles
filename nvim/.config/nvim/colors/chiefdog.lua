@@ -26,18 +26,19 @@ if vim.o.background == "dark" then
   vim.g.terminal_color_15 = "#ffffff"
 
   -- colors
-  -- local fg_muted = "#aaaaaa"
   local night = "#121212"
   local platinum = "#dddddd"
+  local silver = "#cccccc"
   local lavender = "#CFCFEA"
   local smoke = "#F2F2F2"
   local jordy = "#8ebeec"
   local pistachio = "#86CD82"
-  local pistachio_bright = "#88cc66"
+  -- local pistachio_bright = "#88cc66"
   local straw = "#dfdf8e"
   local earth = "#E9B872"
   local bittersweet = "#FE5F55"
   local raisin = "#272727"
+  local onyx = "#525252" -- lighter raising
   local gray = "#7F7F7F"
 
   local bg = night
@@ -49,7 +50,7 @@ if vim.o.background == "dark" then
 
   local declaration = smoke
   local statusline = raisin
-  local dim_comment = gray
+  local comment = gray
 
   local error = bittersweet
   local warn = earth
@@ -58,15 +59,15 @@ if vim.o.background == "dark" then
   local comment_fg = straw
 
   local ansi = {
-    black = "#121212",
-    blue = "#71ade7",
-    brightyellow = "#dfdf8e",
+    black = night,
+    blue = jordy,
+    brightyellow = straw,
     cyan = "#47bea9",
-    green = "#86CD82",
+    green = pistachio,
     magenta = "#cc8bc9",
-    red = "#FE5F55",
-    white = "#cecece",
-    yellow = "#E9B872",
+    red = bittersweet,
+    white = smoke,
+    yellow = earth,
   }
 
   -- TODO: need to tweak these
@@ -75,7 +76,8 @@ if vim.o.background == "dark" then
   theme = {
     -- Theme specific
     ["@chiefdog.base"] = { fg = fg },
-    ["@chiefdog.variable"] = { fg = pistachio },
+    ["@chiefdog.variable"] = { fg = silver },
+    ["@chiefdog.green"] = { fg = pistachio },
     ["@chiefdog.marker"] = { fg = comment_fg },
     ["@chiefdog.declaration"] = { fg = declaration, bold = true },
     ["@chiefdog.function.call"] = { fg = earth },
@@ -93,16 +95,16 @@ if vim.o.background == "dark" then
     -- Base
     ["@function"] = { link = "@chiefdog.declaration" },
     ["@function.call"] = { link = "@chiefdog.function.call" },
-    ["@variable"] = { link = "@chiefdog.base" },
+    ["@variable"] = { link = "@chiefdog.variable" },
     ["@property"] = { link = "@chiefdog.base" },
     ["@type"] = { link = "@chiefdog.base" },
-    ["@comment.documentation"] = { fg = dim_comment },
+    ["@comment.documentation"] = { fg = comment },
     Special = { link = "@chiefdog.base" },
     -- Variables
-    ["@string"] = { link = "@chiefdog.variable" },
-    ["@character"] = { link = "@chiefdog.variable" },
-    ["@number"] = { link = "@chiefdog.variable" },
-    ["@boolean"] = { link = "@chiefdog.variable" },
+    ["@string"] = { link = "@chiefdog.green" },
+    ["@character"] = { link = "@chiefdog.green" },
+    ["@number"] = { link = "@chiefdog.green" },
+    ["@boolean"] = { link = "@chiefdog.green" },
     -- Muted
     ["@keyword"] = { link = "@chiefdog.muted" },
     ["@punctuation.delimeter"] = { link = "@chiefdog.muted" },
@@ -111,7 +113,7 @@ if vim.o.background == "dark" then
     Operator = { link = "@chiefdog.muted" },
     -- Markers
     ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { fg = dim_comment },
+    Comment = { fg = comment },
     -- ["@local.definition"] = { link = "@chiefdog.declaration" },
     -- UI
     Search = { link = "@chiefdog.highlight.background" },
@@ -122,7 +124,7 @@ if vim.o.background == "dark" then
     Function = { link = "@chiefdog.declaration" },
     ColorColumn = { bg = "#182325" },
     Conceal = { fg = "#b0b0b0" },
-    Cursor = { bg = earth, fg = "#000000" },
+    Cursor = { bg = smoke, fg = raisin },
     -- lCursor      { }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
     -- CursorIM     { }, -- like Cursor, but used when in IME mode |CursorIM|
     CursorColumn = { bg = raisin },
@@ -142,8 +144,8 @@ if vim.o.background == "dark" then
     SignColumn = {},
     -- Substitute   { }, -- |:substitute| replacement text highlighting
     LineNr = { fg = "#5c5c5c" },
-    CursorLineNr = { fg = ansi.blue, bold = 1 },
-    MatchParen = { underline = 1, sp = earth },
+    CursorLineNr = { fg = jordy, bold = 1 },
+    MatchParen = { bg = gray, fg = raisin },
     -- ModeMsg      { }, -- 'showmode' message (e.g., "-- INSERT -- ")
     -- MsgArea      { }, -- Area for messages and cmdline
     -- MsgSeparator { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
@@ -152,10 +154,10 @@ if vim.o.background == "dark" then
     Normal = { bg = bg, fg = fg },
     NormalFloat = { bg = "none" },
     FloatBorder = { fg = fg, bg = "none" },
-    Pmenu = { bg = pmenu_bg },
-    PmenuSel = { bg = raisin },
-    PmenuSbar = { bg = "#212f31" },
-    PmenuThumb = { bg = "#47666b" },
+    Pmenu = { bg = "none" },
+    PmenuSel = { bg = onyx },
+    PmenuSbar = { bg = onyx },
+    PmenuThumb = { bg = onyx },
     Question = { fg = diffadd },
     QuickFixLine = { bg = "#182325" },
     SpellBad = { undercurl = 1, sp = ansi.red },
@@ -192,8 +194,7 @@ if vim.o.background == "dark" then
     -- Ignore         { }, -- (preferred) left blank, hidden  |hl-Ignore|
 
     Error = { link = "@chiefdog.highlight.foreground" },
-
-    Todo = { bg = "#d0d058", fg = bg },
+    Todo = { bg = straw, fg = bg },
 
     --- Diagnostic
     LspReferenceText = { bg = "#253437" },
@@ -215,44 +216,17 @@ if vim.o.background == "dark" then
     ["@error"] = { link = "@chiefdog.highlight.foreground" },
     ["@tag.delimiter"] = { fg = declaration },
     ["@text.note"] = { bg = "#1d292b", fg = ansi.blue },
-    ["@text.warning"] = { bg = "#d0d058", fg = bg },
+    ["@text.warning"] = { bg = straw, fg = bg },
 
     --- Gitsigns
     GitSignsAdd = { fg = diffadd },
     GitSignsChange = { fg = diffchange },
     GitSignsDelete = { fg = diffdelete },
-    --- Telescope
-    TelescopeBorder = { fg = "#2b3d40" },
-    TelescopeMatching = { link = "Search" },
-    TelescopeSelection = { link = "Search" },
-    TelescopePreviewMatch = { link = "Search" },
-    TelescopePreviewLine = { link = "Search" },
-    TelescopeMultiSelection = { link = "Search" },
-    TelescopePromptPrefix = { fg = ansi.blue },
-    TelescopeSelectionCaret = { link = "@chiefdog.declaration" },
-    TelescopeTitle = { link = "@chiefdog.declaration" },
-    TelescopeResultsTitle = { link = "@chiefdog.declaration" },
-    --- fzf-lua
-    FzfLuaBorder = { fg = "#2b3d40" },
-    --- mini.nvim
-    -- MiniPickMatchCurrent = { fg = "#f09942" },
-    --- Neogit
-    NeogitPopupActionDisabled = { fg = darker_fg },
-    NeogitPopupActionKey = { fg = ansi.magenta },
-    NeogitPopupOptionDisabled = { fg = darker_fg },
-    NeogitPopupOptionKey = { fg = ansi.blue },
-    NeogitPopupSwitchDisabled = { fg = darker_fg },
-    NeogitPopupSwitchEnabled = { fg = ansi.cyan },
-    NeogitPopupSwitchKey = { fg = ansi.magenta },
+    --- Blink
+    BlinkCmpLabelMatch = { fg = earth },
     --- Fugitive
     diffAdded = { link = "DiffAdd" },
     diffRemoved = { link = "DiffDelete" },
-    --- Startify
-    StartifyBracket = { fg = darker_fg },
-    StartifyFile = { fg = ansi.white },
-    StartifySection = { fg = ansi.green },
-    StartifySlash = { fg = "#4e6e75" },
-    StartifyPath = { fg = "#4e6e75" },
     --- Statusline
     StatuslineAdd = { fg = diffadd, bg = statusline },
     StatuslineErr = { fg = error, bg = statusline },
@@ -266,8 +240,6 @@ if vim.o.background == "dark" then
     StatuslineMagenta = { fg = ansi.magenta, bg = statusline },
     --- ALE
     ALEWarningSign = { fg = warn },
-    --- vim-matchup
-    MatchupVirtualText = { fg = ansi.yellow },
     --- For `highlight link`
     ["chiefdog.black"] = { fg = ansi.black },
     ["chiefdog.blue"] = { fg = ansi.blue },
@@ -279,361 +251,8 @@ if vim.o.background == "dark" then
     ["chiefdog.red"] = { fg = ansi.red },
     ["chiefdog.white"] = { fg = ansi.white },
     ["chiefdog.yellow"] = { fg = ansi.yellow },
-    --- Hop
-    HopNextKey = { fg = ansi.brightyellow },
-    HopNextKey1 = { fg = ansi.cyan },
-    HopNextKey2 = { fg = "#297567" },
-    HopUnmatched = { fg = "#3d3d3d" },
-    --- Lightspeed
-    LightspeedGreyWash = { fg = "#3d3d3d" },
     --- checkhealth
     healthSuccess = { fg = ansi.green, bg = bg },
-    --- cmp
-    CmpItemMenuDefault = { fg = ansi.magenta },
-    --- nvim-ts-rainbow
-    rainbowcol1 = { fg = ansi.yellow },
-    rainbowcol2 = { fg = ansi.magenta },
-    rainbowcol3 = { fg = ansi.blue },
-    rainbowcol4 = { fg = ansi.green },
-    rainbowcol5 = { fg = ansi.brightyellow },
-    rainbowcol6 = { fg = ansi.red },
-    rainbowcol7 = { fg = ansi.cyan },
-    --- Iswap
-    ISwapSnipe = { bg = ansi.yellow, fg = bg },
-    ISwapGrey = { fg = "#3d3d3d" },
-    --- vim-dadbod-ui
-    dbui_help = { fg = dim_comment },
-    dbui_connection_source = { fg = dim_comment },
-    --- nvim-dap-virtual-text
-    NvimDapVirtualText = { bg = "#1d292b", fg = ansi.cyan },
-    --- Noice
-    NoiceCmdlineIcon = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlinePopupBorder = { link = "@chiefdog.darkGreen" },
-    NoiceConfirmBorder = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlinePopupBorderCmdline = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlineIconCmdline = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlinePopupBorderFilter = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlineIconFilter = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlinePopupBorderLua = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlineIconLua = { link = "@chiefdog.darkGreen" },
-    NoiceCmdlinePopupBorderSearch = { link = "@chiefdog.yellow" },
-    NoiceCmdlineIconSearch = { link = "@chiefdog.yellow" },
-    -- Languages
-    --- asm
-    asmDirective = { fg = dim_comment },
-    nasmLabel = { link = "@chiefdog.declaration" },
-  }
-else
-  -- terminal colors
-  vim.g.terminal_color_0 = "#000000"
-  vim.g.terminal_color_1 = "#aa3731"
-  vim.g.terminal_color_2 = "#448c27"
-  vim.g.terminal_color_3 = "#cb9000"
-  vim.g.terminal_color_4 = "#325cc0"
-  vim.g.terminal_color_5 = "#7a3e9d"
-  vim.g.terminal_color_6 = "#0083b2"
-  vim.g.terminal_color_7 = "#f7f7f7"
-  vim.g.terminal_color_8 = "#777777"
-  vim.g.terminal_color_9 = "#f05050"
-  vim.g.terminal_color_10 = "#60cb00"
-  vim.g.terminal_color_11 = "#ffbc5d"
-  vim.g.terminal_color_12 = "#007acc"
-  vim.g.terminal_color_13 = "#e64ce6"
-  vim.g.terminal_color_14 = "#00aacb"
-  vim.g.terminal_color_15 = "#f7f7f7"
-
-  -- colors
-  local bg = "#f7f7f7"
-  local fg = "#222222"
-  local muted_fg = "#666666"
-  local def_fg = "#325cc0"
-  local const_fg = "#448c27"
-  local comment = "#aa3731"
-  local active = "#ffbc5d"
-  local active_blue = "#007acc"
-  local string_fg = "#448c27"
-  local darker_fg = "#7d7d7d"
-  local diffadd = const_fg
-  local diffdelete = muted_fg
-  local diffchange = comment
-  local statusline = "#c9c9c9"
-  local dim_comment = "#696969"
-  local mistake = {
-    fg = "#c33c33",
-    bg = "#f8b28f",
-  }
-  local ansi = {
-    black = "#000000",
-    blue = "#325cc0",
-    brightyellow = "#ffbc5d",
-    cyan = "#0083b2",
-    green = "#448c27",
-    magenta = "#7a3e9d",
-    red = "#aa3731",
-    white = "#f7f7f7",
-    yellow = "#cb9000",
-  }
-  local error = "#d13e23"
-  local warn = "#BC7500"
-  local hint = ansi.blue
-  local info = "#278C00"
-  local comment_fg = comment
-  local pmenu_bg = "#e7e7e7"
-  local float_bg = pmenu_bg
-  local floatborder = {
-    bg = float_bg,
-    fg = float_bg,
-  }
-  theme = {
-    -- Theme colors
-    ["@chiefdog.base"] = { fg = fg },
-    ["@chiefdog.variable"] = { fg = const_fg },
-    ["@chiefdog.marker"] = { fg = comment_fg },
-    ["@chiefdog.declaration"] = { fg = def_fg },
-    ["@chiefdog.muted"] = { fg = muted_fg },
-    ["@chiefdog.positive"] = { fg = const_fg, bg = "#e6f2e3" },
-    ["@chiefdog.positive.foreground"] = { fg = const_fg },
-    ["@chiefdog.positive.background"] = { bg = "#e6f2e3" },
-    ["@chiefdog.negative"] = { fg = muted_fg, bg = "#e8e8e8" },
-    ["@chiefdog.negative.foreground"] = { fg = muted_fg },
-    ["@chiefdog.negative.background"] = { fg = "#e8e8e8" },
-    ["@chiefdog.highlight"] = { fg = comment_fg, bg = "#f9e6e5" },
-    ["@chiefdog.highlight.foreground"] = { fg = comment_fg },
-    ["@chiefdog.highlight.background"] = { bg = "#f9e6e5" },
-    -- Base
-    ["@function"] = { link = "@chiefdog.base" },
-    ["@variable"] = { link = "@chiefdog.base" },
-    ["@property"] = { link = "@chiefdog.base" },
-    ["@type"] = { link = "@chiefdog.base" },
-    Special = { link = "@chiefdog.base" },
-    -- Variables
-    ["@string"] = { link = "@chiefdog.variable" },
-    ["@character"] = { link = "@chiefdog.variable" },
-    ["@number"] = { link = "@chiefdog.variable" },
-    ["@boolean"] = { link = "@chiefdog.variable" },
-    -- Muted
-    ["@keyword"] = { link = "@chiefdog.muted" },
-    ["@punctuation.delimeter"] = { link = "@chiefdog.muted" },
-    ["@punctuation.bracket"] = { link = "@chiefdog.muted" },
-    ["@punctuation.special"] = { link = "@chiefdog.muted" },
-    Operator = { link = "@chiefdog.muted" },
-    -- Markers
-    ["@keyword.return"] = { link = "@chiefdog.return" },
-    Comment = { fg = dim_comment },
-    -- UI
-    --- Search
-    Search = { link = "@chiefdog.highlight.background" },
-    CurSearch = { link = "@chiefdog.highlight" },
-    Visual = { link = "Search" },
-    IncSearch = { link = "Search" },
-    -- New Code Ended
-    Function = { link = "@chiefdog.declaration" },
-    ColorColumn = { bg = "#E2EEEE" },
-    Conceal = { fg = "#b0b0b0" },
-    Cursor = { bg = "#007acc", fg = "#bfdbfe" },
-    -- lCursor      { }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
-    -- CursorIM     { }, -- like Cursor, but used when in IME mode |CursorIM|
-    CursorColumn = { bg = "#E2EEEE" },
-    CursorLine = { bg = "#E2EEEE" },
-    Directory = { fg = ansi.blue },
-    DiffAdd = { link = "@chiefdog.positive.background" },
-    DiffDelete = { link = "@chiefdog.negative" },
-    DiffChange = { link = "@chiefdog.positive.background" },
-    DiffText = { link = "@chiefdog.highlight" },
-    EndOfBuffer = { fg = "#b6b6b6" },
-    -- TermCursor   { }, -- cursor in a focused terminal
-    TermCursorNC = { fg = bg, bg = fg },
-    ErrorMsg = { link = "@chiefdog.highlight.foreground" },
-    VertSplit = { fg = "#abbdc0" },
-    Folded = { bg = "#dddddd", fg = "#7d7d7d" },
-    FoldColumn = { bg = bg, fg = "#4d4d4d" },
-    SignColumn = {},
-    -- Substitute   { }, -- |:substitute| replacement text highlighting
-    LineNr = { fg = "#7d7c7c" },
-    CursorLineNr = { fg = ansi.blue, bold = 1 },
-    MatchParen = { underline = 1, sp = active },
-    -- ModeMsg      { }, -- 'showmode' message (e.g., "-- INSERT -- ")
-    -- MsgArea      { }, -- Area for messages and cmdline
-    -- MsgSeparator { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-    MoreMsg = { fg = ansi.green, bold = 1 },
-    NonText = { fg = "#696969" },
-    Normal = { bg = bg, fg = fg },
-    NormalFloat = { bg = float_bg },
-    -- NormalNC     { }, -- normal text in non-current windows
-    FloatBorder = floatborder,
-    Pmenu = { bg = pmenu_bg },
-    PmenuSel = { bg = "#c7c7c7" },
-    PmenuSbar = { bg = "#777777" },
-    PmenuThumb = { bg = "#333333" },
-    Question = { fg = ansi.green },
-    QuickFixLine = { bg = "#E2EEEE" },
-    SpellBad = { undercurl = 1, sp = ansi.red },
-    SpellCap = { undercurl = 1, sp = ansi.blue },
-    SpellLocal = { undercurl = 1, sp = ansi.cyan },
-    SpellRare = { undercurl = 1, sp = ansi.magenta },
-    StatusLine = { bg = statusline, fg = fg },
-    StatusLineNC = { bg = statusline, fg = "#9f9f9f" },
-    TabLine = { bg = statusline, fg = "#7d7d7d" },
-    TabLineFill = { bg = statusline },
-    TabLineSel = { bg = statusline, fg = ansi.blue },
-    Title = { fg = def_fg },
-    VisualNOS = { bg = "#bfdbfe" },
-    WarningMsg = { fg = "#e1ad4c" },
-    WildMenu = { bg = "#999999" },
-    WinBar = { bg = bg, fg = ansi.black, bold = true },
-    WinBarNC = { bg = bg, fg = "#7d7d7d" },
-
-    --- SYNTAX I: TS groups link to these
-
-    -- TODO better color than diffchange, try reddish
-    -- SpecialChar = { fg = diffchange }, --  special character in a constant
-    -- Tag            { }, --    you can use CTRL-] on this
-    -- Delimiter      { },
-    SpecialComment = { bg = "#FFDEAA", fg = ansi.blue },
-    debugPc = { bg = "#C7C7EE" },
-    debugBreakpoint = { bg = "#F8B28F" },
-    helpHyperTextJump = { fg = ansi.magenta },
-    helpSectionDelim = { fg = ansi.magenta },
-    helpExample = { fg = ansi.cyan },
-    helpCommand = { fg = ansi.cyan },
-    helpHeadline = { fg = ansi.blue },
-    helpHeader = { fg = ansi.magenta },
-
-    Underlined = { underline = 1 }, -- (preferred) text that stands out, HTML links
-    Italic = { italic = 1 },
-
-    -- ("Ignore", below, may be invisible...)
-    -- Ignore         { }, -- (preferred) left blank, hidden  |hl-Ignore|
-
-    Error = { link = "@chiefdog.highlight.foreground" },
-
-    Todo = { bg = "#FFDEAA", fg = ansi.blue },
-
-    --- Diagnostic
-    LspReferenceText = { bg = "#dadada" },
-    LspReferenceRdad = { bg = "#dadada" },
-    LspReferenceWrite = { bg = "#dadada", underline = 1, sp = active_blue },
-    LspCodeLens = { fg = "#999999" },
-    LspCodeLensSeparator = { fg = "#999999" },
-
-    --- Diagnostic
-    DiagnosticError = { link = "@chiefdog.highlight.foreground" },
-    DiagnosticWarn = { fg = warn },
-    DiagnosticHint = { fg = hint },
-    DiagnosticInfo = { fg = info },
-    DiagnosticVirtualTextError = { bg = "#F8B28F", fg = "#411414" },
-    DiagnosticVirtualTextWarn = { bg = "#fff987", fg = fg },
-    DiagnosticVirtualTextHint = { fg = "#0F171D", bg = "#C3D0DA" },
-    DiagnosticVirtualTextInfo = { bg = "#ADFFB7", fg = "#042F09" },
-
-    ["@error"] = { link = "@chiefdog.highlight.foreground" },
-    ["@tag.delimiter"] = { fg = muted_fg },
-    ["@text.note"] = { bg = "#dddddd", fg = ansi.blue },
-    ["@text.warning"] = { bg = "#FFDEAA", fg = ansi.blue },
-
-    --- Gitsigns
-    GitSignsAdd = { fg = "#6abf40" },
-    GitSignsChange = { fg = diffchange },
-    GitSignsDelete = { fg = diffdelete },
-    --- Telescope
-    TelescopeBorder = { fg = "#abbdc0" },
-    TelescopeMatching = { link = "Search" },
-    TelescopeSelection = { link = "Search" },
-    TelescopeMultiSelection = { link = "Search" },
-    TelescopePreviewMatch = { link = "Search" },
-    TelescopePreviewLine = { link = "Search" },
-    TelescopePromptPrefix = { fg = ansi.blue },
-    TelescopeSelectionCaret = { link = "@chiefdog.declaration" },
-    TelescopeTitle = { link = "@chiefdog.declaration" },
-    TelescopeResultsTitle = { link = "@chiefdog.declaration" },
-    --- fzf-lua
-    FzfLuaBorder = { fg = "#abbdc0" },
-    --- Neogit
-    NeogitPopupActionDisabled = { fg = darker_fg },
-    NeogitPopupActionKey = { fg = ansi.magenta },
-    NeogitPopupOptionDisabled = { fg = darker_fg },
-    NeogitPopupOptionKey = { fg = ansi.blue },
-    NeogitPopupSwitchDisabled = { fg = darker_fg },
-    NeogitPopupSwitchEnabled = { fg = ansi.cyan },
-    NeogitPopupSwitchKey = { fg = ansi.magenta },
-    --- Fugitive
-    diffAdded = { link = "DiffAdd" },
-    diffRemoved = { link = "DiffDelete" },
-    --- Startify
-    StartifyBracket = { fg = darker_fg },
-    StartifyFile = { fg = ansi.black },
-    StartifySection = { fg = ansi.green },
-    StartifySlash = { fg = "#4e6e75" },
-    StartifyPath = { fg = "#4e6e75" },
-    --- Statusline
-    StatuslineAdd = { fg = diffadd, bg = statusline },
-    StatuslineErr = { fg = "#8E1410", bg = statusline },
-    StatuslineHint = { fg = hint, bg = statusline },
-    StatuslineInfo = { fg = info, bg = statusline },
-    StatuslineWarn = { fg = warn, bg = statusline },
-    StatuslineBlue = { fg = ansi.blue, bg = statusline },
-    StatuslineRed = { fg = ansi.red, bg = statusline },
-    StatuslineGreen = { fg = ansi.green, bg = statusline },
-    StatuslineCyan = { fg = ansi.cyan, bg = statusline },
-    StatuslineMagenta = { fg = ansi.magenta, bg = statusline },
-    --- ALE
-    ALEWarningSign = { fg = warn },
-    --- vim-matchup
-    MatchupVirtualText = { fg = ansi.yellow },
-    --- For `highlight link`
-    ["@chiefdog.black"] = { fg = ansi.black },
-    ["@chiefdog.blue"] = { fg = ansi.blue },
-    ["@chiefdog.brightyellow"] = { fg = ansi.brightyellow },
-    ["@chiefdog.cyan"] = { fg = ansi.cyan },
-    ["@chiefdog.green"] = { fg = ansi.green },
-    ["@chiefdog.brightGreen"] = { fg = "#60cb00" },
-    ["@chiefdog.magenta"] = { fg = ansi.magenta },
-    ["@chiefdog.red"] = { fg = ansi.red },
-    ["@chiefdog.white"] = { fg = ansi.white },
-    ["@chiefdog.yellow"] = { fg = ansi.yellow },
-    --- Hop
-    HopNextKey = { fg = ansi.yellow },
-    HopNextKey1 = { fg = ansi.blue },
-    HopNextKey2 = { fg = "#17A2D6" },
-    HopUnmatched = { fg = "#bfbfbf" },
-    --- Lightspeed
-    LightspeedGreyWash = { fg = "#bfbfbf" },
-    --- checkhealth
-    healthSuccess = { fg = ansi.green, bg = bg },
-    --- cmp
-    CmpItemMenuDefault = { fg = ansi.magenta },
-    --- nvim-ts-rainbow
-    rainbowcol1 = { fg = ansi.yellow },
-    rainbowcol2 = { fg = ansi.magenta },
-    rainbowcol3 = { fg = ansi.blue },
-    rainbowcol4 = { fg = ansi.green },
-    rainbowcol5 = { fg = ansi.brightyellow },
-    rainbowcol6 = { fg = ansi.red },
-    rainbowcol7 = { fg = ansi.cyan },
-    --- Iswap
-    ISwapSnipe = { bg = ansi.yellow, fg = bg },
-    ISwapGrey = { fg = "#bfbfbf" },
-    --- vim-dadbod-ui
-    dbui_help = { fg = dim_comment },
-    dbui_connection_source = { fg = dim_comment },
-    --- nvim-dap-virtual-text
-    NvimDapVirtualText = { bg = "#78D2C9", fg = fg },
-    --- Noice
-    NoiceCmdlineIcon = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlinePopupBorder = { link = "@chiefdog.brightGreen" },
-    NoiceConfirmBorder = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlinePopupBorderCmdline = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlineIconCmdline = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlinePopupBorderFilter = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlineIconFilter = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlinePopupBorderLua = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlineIconLua = { link = "@chiefdog.brightGreen" },
-    NoiceCmdlinePopupBorderSearch = { link = "@chiefdog.yellow" },
-    NoiceCmdlineIconSearch = { link = "@chiefdog.yellow" },
-    -- Languages
-    --- asm
-    asmDirective = { fg = dim_comment },
-    nasmLabel = { link = "@chiefdog.declaration" },
   }
 end
 
