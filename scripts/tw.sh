@@ -4,7 +4,6 @@ DIRS=(
   "$HOME"
   "$HOME/dotfiles"
   "$HOME/kth"
-  "$HOME/projects"
   "$HOME/odin/"
 )
 
@@ -16,7 +15,7 @@ selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 |
 selected="$HOME/$selected"
 selected_name=$(basename "$selected" | tr . _)
 
-if [[ -z "$TMUX" ]]; then 
+if [[ -z "$TMUX" ]]; then
   if tmux has-session 2>/dev/null; then
     tmux new-window -d -n "$selected_name" -c "$selected"
     tmux attach-session
