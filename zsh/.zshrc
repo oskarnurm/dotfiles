@@ -49,7 +49,7 @@ alias ...='cd ../..'
 alias rmdir='rm -rf'
 alias vf="nvim -c 'Pick files'"
 alias venv="python3 -m venv .venv"
-# For KTH
+# KTH
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
 # Fallback prompt
