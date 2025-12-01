@@ -3,7 +3,6 @@ return {
   config = function()
     require("mini.pick").setup()
     require("mini.extra").setup()
-    require("mini.git").setup()
 
     vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>")
     vim.keymap.set("n", "<leader>fb", "<cmd>Pick buffers<CR>")
