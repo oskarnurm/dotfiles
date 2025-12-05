@@ -97,7 +97,7 @@ if vim.o.background == "dark" then
     ["@function.call"] = { link = "@chiefdog.function.call" },
     ["@variable"] = { link = "@chiefdog.variable" },
     ["@property"] = { link = "@chiefdog.base" },
-    ["@type"] = { link = "@chiefdog.base" },
+    ["@type"] = { fg = lavender },
     ["@comment.documentation"] = { fg = comment },
     Special = { link = "@chiefdog.base" },
     -- Variables
