@@ -1,10 +1,16 @@
 return {
   "nvim-mini/mini.nvim",
   config = function()
-    require("mini.pick").setup()
+    local pick = require("mini.pick")
     require("mini.extra").setup()
+    pick.setup()
 
-    vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>")
+    pick.registry.project_files = function(opts)
+      local root = vim.fs.root(0, ".git") or vim.uv.cwd()
+      return pick.builtin.files(opts, { source = { cwd = root } })
+    end
+
+    vim.keymap.set("n", "<leader>ff", "<cmd>Pick project_files<CR>")
     vim.keymap.set("n", "<leader>fb", "<cmd>Pick buffers<CR>")
     vim.keymap.set("n", "<leader>fh", "<cmd>Pick help<CR>")
     vim.keymap.set("n", "<leader>fg", "<cmd>Pick grep_live<CR>")
@@ -14,7 +20,7 @@ return {
     vim.keymap.set("n", "<leader>:", "<cmd>Pick history<CR>")
     vim.keymap.set("n", "<leader>.", "<cmd>Pick oldfiles<CR>")
     vim.keymap.set("n", "<leader>fn", function()
-      require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } })
+      pick.builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } })
     end, { desc = "Pick config" })
   end,
 }
