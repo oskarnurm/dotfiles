@@ -38,7 +38,7 @@ if vim.o.background == "dark" then
   local earth = "#E9B872"
   local bittersweet = "#FE5F55"
   local raisin = "#272727"
-  local onyx = "#525252" -- lighter raising
+  local onyx = "#525252" -- lighter raisin
   local gray = "#7F7F7F"
 
   local bg = night
@@ -94,7 +94,8 @@ if vim.o.background == "dark" then
     ["@chiefdog.return"] = { fg = straw },
     -- Base
     ["@function"] = { link = "@chiefdog.declaration" },
-    ["@function.call"] = { link = "@chiefdog.function.call" },
+    -- TODO: test different colors
+    ["@function.call"] = { fg = straw },
     ["@variable"] = { link = "@chiefdog.variable" },
     ["@property"] = { link = "@chiefdog.base" },
     ["@type"] = { fg = lavender },
@@ -102,10 +103,13 @@ if vim.o.background == "dark" then
     ["@comment.documentation"] = { fg = comment },
     Special = { link = "@chiefdog.base" },
     -- Variables
-    ["@string"] = { link = "@chiefdog.green" },
-    ["@character"] = { link = "@chiefdog.green" },
-    ["@number"] = { link = "@chiefdog.green" },
-    ["@boolean"] = { link = "@chiefdog.green" },
+    ["@string"] = { fg = pistachio, italic = true },
+    ["@character"] = { fg = pistachio, italic = true },
+    -- TODO: test different colors
+    ["@number"] = { fg = straw },
+    ["@float"] = { fg = straw },
+    ["@boolean"] = { fg = straw },
+    ["@constant"] = { fg = lavender },
     -- Muted
     ["@keyword"] = { link = "@chiefdog.muted" },
     ["@punctuation.delimeter"] = { link = "@chiefdog.muted" },
