@@ -11,13 +11,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("n", "grd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
 vim.keymap.set("n", "<leader>sw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Substitue word" })
-vim.keymap.set("n", "<leader>S", "<Cmd>vert sf #<CR>", { desc = "Split alternative file vertically" })
-vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>")
-vim.keymap.set("n", "<M-q>", "<cmd>update | quit<CR>")
-vim.keymap.set("n", "<M-t>", "<cmd>tabnew<CR>")
-for i = 1, 8 do
-  vim.keymap.set({ "n", "t" }, "<M-" .. i .. ">", "<Cmd>tabnext " .. i .. "<CR>")
-end
+vim.keymap.set("n", "<leader>S", "<Cmd>vert sf #<CR>", { desc = "Split alternative file" })
 vim.keymap.set("n", "<leader>q", function()
   if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
     vim.cmd.cclose()
@@ -25,3 +19,17 @@ vim.keymap.set("n", "<leader>q", function()
     vim.cmd.copen()
   end
 end, { desc = "Toggle quickfix" })
+
+-- Harpoon replacement
+vim.keymap.set("n", "<leader>a", "<cmd>$argadd % | argdedup<CR>", { desc = "Harpoon file" })
+vim.keymap.set("n", "<leader>e", "<cmd>args<CR>", { desc = "Show Harpoons" })
+for i = 1, 8 do
+  vim.keymap.set({ "n", "t" }, "<M-" .. i .. ">", "<cmd>" .. i .. "argument<CR>")
+end
+
+-- vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>")
+-- vim.keymap.set("n", "<M-q>", "<cmd>update | quit<CR>")
+-- vim.keymap.set("n", "<M-t>", "<cmd>tabnew<CR>")
+-- for i = 1, 8 do
+--   vim.keymap.set({ "n", "t" }, "<M-" .. i .. ">", "<cmd>tabnext " .. i .. "<CR>")
+-- end
