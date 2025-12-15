@@ -4,7 +4,8 @@ DIRS=(
   "$HOME"
   "$HOME/dotfiles"
   "$HOME/kth"
-  "$HOME/odin/"
+  "$HOME/odin"
+  "$HOME/dotfiles/nvim/.config/nvim"
 )
 
 selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 |
