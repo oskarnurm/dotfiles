@@ -19,6 +19,9 @@ vim.keymap.set("n", "<leader>q", function()
     vim.cmd.copen()
   end
 end, { desc = "Toggle quickfix" })
+vim.keymap.set("n", "<leader>td", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })
 
 -- Harpoon replacement
 vim.keymap.set("n", "<leader>a", "<cmd>$argadd % | argdedup<CR>", { desc = "Harpoon file" })
