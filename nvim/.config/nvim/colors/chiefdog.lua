@@ -9,7 +9,7 @@ local night = "#121212" -- Background
 local platinum = "#DDDDDD" -- Foreground
 local silver = "#CCCCCC" -- Variables
 local smoke = "#F2F2F2" -- Brighter (properties)
-local gray = "#7F7F7F" -- Comments/Delimiters
+local muted = "#7F7F7F" -- Comments/Delimiters
 local raisin = "#272727" -- UI Backgrounds (Statusline, CursorLine)
 local charcoal = "#525252" -- Lighter UI (PmenuSel)
 local lavender = "#CFCFEA" -- Types, Structure, Tags
@@ -48,13 +48,13 @@ local groups = {
   CursorLine = { bg = raisin },
   CursorColumn = { bg = raisin },
   ColorColumn = { bg = raisin },
-  LineNr = { fg = gray },
+  LineNr = { fg = muted },
   CursorLineNr = { fg = jordy, bold = true },
   VertSplit = { fg = charcoal },
   StatusLine = { bg = raisin, fg = platinum },
   StatusLineNC = { bg = raisin, fg = "none" },
   WinBar = { bg = night, fg = smoke, bold = true },
-  WinBarNC = { bg = night, fg = gray },
+  WinBarNC = { bg = night, fg = muted },
   Directory = { fg = jordy },
   Pmenu = { bg = "none" },
   PmenuSel = { bg = charcoal },
@@ -64,13 +64,13 @@ local groups = {
   Search = { bg = charcoal },
   IncSearch = { link = "Search" },
   CurSearch = { fg = earth, bg = raisin },
-  MatchParen = { bg = gray, fg = raisin },
+  MatchParen = { bg = muted, fg = raisin },
   NonText = { fg = charcoal },
-  EndOfBuffer = { fg = night },
-  Comment = { fg = gray },
+  EndOfBuffer = { fg = muted },
+  Comment = { fg = muted, italic = true },
   Title = { fg = lavender, bold = true },
   Todo = { fg = raisin, bg = straw, bold = true },
-  Conceal = { fg = gray }, -- Make hidden chars subtle
+  Conceal = { fg = muted }, -- Make hidden chars subtle
   Underlined = { underline = true }, -- HTML links
   Special = { fg = jordy }, -- Special characters (regex, etc.)
 
@@ -82,7 +82,7 @@ local groups = {
   ModeMsg = { fg = straw, bold = true },
 
   QuickFixLine = { bg = "none", fg = straw },
-  qfLineNr = { fg = gray },
+  qfLineNr = { fg = muted },
 
   -- Keywords & Operators (Muted)
   Keyword = { fg = smoke, bold = true }, -- "function", "return"
@@ -114,14 +114,14 @@ local groups = {
   ["@tag"] = { fg = lavender },
   ["@tag.builtin"] = { fg = lavender },
   ["@tag.attribute"] = { fg = silver }, --'className=', 'lang=', 'key='
-  ["@tag.delimiter"] = { fg = gray },
+  ["@tag.delimiter"] = { fg = muted },
 
   -- Punctuation (Muted)
-  ["@punctuation.delimiter"] = { fg = gray },
-  ["@punctuation.bracket"] = { fg = gray },
-  ["@punctuation.member"] = { fg = gray },
-  ["@punctuation.special"] = { fg = gray },
-  ["@punctuation.section.embedded"] = { fg = gray },
+  ["@punctuation.delimiter"] = { fg = smoke },
+  ["@punctuation.bracket"] = { fg = muted },
+  ["@punctuation.member"] = { fg = muted },
+  ["@punctuation.special"] = { fg = muted },
+  ["@punctuation.section.embedded"] = { fg = muted },
 
   -- DIAGNOSTICS & GIT
   DiagnosticError = { fg = bittersweet },
