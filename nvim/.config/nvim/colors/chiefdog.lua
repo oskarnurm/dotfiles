@@ -3,153 +3,147 @@ if vim.fn.exists("syntax_on") == 1 then
   vim.cmd("syntax reset")
 end
 
+-- stylua: ignore start
 vim.g.colors_name = "chiefdog"
 
-local night = "#121212" -- Background
-local platinum = "#DDDDDD" -- Foreground
-local silver = "#CCCCCC" -- Variables
-local smoke = "#F2F2F2" -- Brighter (properties)
-local muted = "#7F7F7F" -- Comments/Delimiters
-local raisin = "#272727" -- UI Backgrounds (Statusline, CursorLine)
-local charcoal = "#525252" -- Lighter UI (PmenuSel)
-local lavender = "#CFCFEA" -- Types, Structure, Tags
-local jordy = "#8EBEEC" -- Hints, Directories
-local pistachio = "#86CD82" -- Strings, Success
-local straw = "#DFDF8E" --  Numbers, Return
-local earth = "#E9B872" --  Functions, Attributes
-local bittersweet = "#FE5F55" -- Errors
-local cinnabar = "#FE4134"
-local rose = "#ffa69e"
-local orchid = "#D4ADCF"
-local teal = "#037171"
+-- Palette Mapping
+local colors = {
+  black     = "#121212",
+  darkgray  = "#272727", -- UI Backgrounds
+  gray      = "#b3b3b3",
+  lightgray = "#fafafa",
+  white     = "#ffffff",
+  red       = "#ff7676",
+  green     = "#a3d6a3",
+  pink      = "#f4b8e4",
+  blue      = "#a5adce",
+}
+local darker = {
+  gray   = "#666666",
+  red    = "#ff5733",
+  green  = "#8ec772",
+  yellow = "#d9ba73",
+  white  = "#ffffff",
+  pink   = "#f2a4db",
+  cyan   = "#5abfb5",
+  blue   = "#b5bfe2",
+}
 
-vim.g.terminal_color_0 = "#121122"
-vim.g.terminal_color_1 = "#FE4134"
-vim.g.terminal_color_2 = "#72C56D"
-vim.g.terminal_color_3 = "#D7D770"
-vim.g.terminal_color_4 = "#62A5E4"
-vim.g.terminal_color_5 = "#C794C0"
-vim.g.terminal_color_6 = "#049F9F"
-vim.g.terminal_color_7 = "#CCCCCC"
-vim.g.terminal_color_8 = "#272727"
-vim.g.terminal_color_9 = "#FE5F55"
-vim.g.terminal_color_10 = "#86CD82"
-vim.g.terminal_color_11 = "#DFDF8E"
-vim.g.terminal_color_12 = "#8EBEEC"
-vim.g.terminal_color_13 = "#D4ADCF"
-vim.g.terminal_color_14 = "#037171"
-vim.g.terminal_color_15 = "#F2F2F2"
+-- Terminal Colors
+vim.g.terminal_color_0 = colors.black
+vim.g.terminal_color_1 = colors.red
+vim.g.terminal_color_2 = colors.green
+vim.g.terminal_color_3 = colors.white
+vim.g.terminal_color_4 = colors.gray
+vim.g.terminal_color_5 = colors.pink
+vim.g.terminal_color_6 = colors.lightgray
+vim.g.terminal_color_7 = colors.blue
+vim.g.terminal_color_8  = darker.gray
+vim.g.terminal_color_9  = darker.red
+vim.g.terminal_color_10 = darker.green
+vim.g.terminal_color_11 = darker.yellow
+vim.g.terminal_color_12 = darker.blue
+vim.g.terminal_color_13 = darker.pink
+vim.g.terminal_color_14 = darker.cyan
+vim.g.terminal_color_15 = darker.white
 
 local groups = {
-  Normal = { bg = night, fg = platinum },
-  NormalFloat = { bg = "none" },
-  FloatBorder = { bg = "none", fg = platinum },
-  Cursor = { bg = smoke, fg = raisin },
-  CursorLine = { bg = raisin },
-  CursorColumn = { bg = raisin },
-  ColorColumn = { bg = raisin },
-  LineNr = { fg = muted },
-  CursorLineNr = { fg = jordy, bold = true },
-  VertSplit = { fg = charcoal },
-  StatusLine = { bg = raisin, fg = platinum },
-  StatusLineNC = { bg = raisin, fg = "none" },
-  WinBar = { bg = night, fg = smoke, bold = true },
-  WinBarNC = { bg = night, fg = muted },
-  Directory = { fg = jordy },
-  Pmenu = { bg = "none" },
-  PmenuSel = { bg = charcoal },
-  PmenuSbar = { bg = charcoal },
-  PmenuThumb = { bg = charcoal },
-  Visual = { bg = charcoal }, -- Visual selection
-  Search = { bg = charcoal },
-  IncSearch = { link = "Search" },
-  CurSearch = { fg = earth, bg = raisin },
-  MatchParen = { bg = muted, fg = raisin },
-  NonText = { fg = charcoal },
-  EndOfBuffer = { fg = muted },
-  Comment = { fg = muted, italic = true },
-  Title = { fg = lavender, bold = true },
-  Todo = { fg = raisin, bg = straw, bold = true },
-  Conceal = { fg = muted }, -- Make hidden chars subtle
-  Underlined = { underline = true }, -- HTML links
-  Special = { fg = jordy }, -- Special characters (regex, etc.)
+  -- General
+  Normal        = { bg = colors.black, fg = colors.gray },
+  NormalFloat   = { bg = "none" },
+  FloatBorder   = { bg = "none", fg = colors.gray },
+  Cursor        = { bg = colors.lightgray, fg = colors.darkgray },
+  CursorLine    = { bg = colors.darkgray },
+  CursorColumn  = { bg = colors.darkgray },
+  ColorColumn   = { bg = colors.darkgray },
+  LineNr        = { fg = darker.gray },
+  CursorLineNr  = { fg = darker.blue, bold = true },
+  VertSplit     = { fg = darker.gray },
+  StatusLine    = { bg = "none", fg = colors.white },
+  StatusLineNC  = { bg = colors.darkgray, fg = "none" },
+  WinBar        = { bg = colors.black, fg = colors.lightgray, bold = true },
+  WinBarNC      = { bg = colors.black, fg = colors.gray },
+  Directory     = { fg = darker.blue },
+  Pmenu         = { bg = "none" },
+  PmenuSel      = { bg = darker.gray },
+  Visual        = { bg = darker.gray },
+  Search        = { bg = darker.gray },
+  IncSearch     = { link = "Search" },
+  CurSearch     = { fg = darker.yellow, bg = colors.darkgray },
+  MatchParen    = { bg = colors.gray, fg = colors.darkgray },
+  NonText       = { fg = darker.gray },
+  EndOfBuffer   = { fg = darker.gray },
+  Comment       = { fg = darker.gray, italic = true },
+  Title         = { fg = colors.blue, bold = true },
+  Todo          = { fg = colors.darkgray, bg = darker.yellow, bold = true },
+  Underlined    = { underline = true },
+  Special       = { fg = colors.blue },
 
-  -- "Confirmation" text (Save? Yes/No)
-  Question = { fg = straw, bold = true },
-  MoreMsg = { fg = straw, bold = true },
-  ErrorMsg = { fg = bittersweet, bold = true },
-  WarningMsg = { fg = straw, bold = true },
-  ModeMsg = { fg = straw, bold = true },
 
-  QuickFixLine = { bg = "none", fg = straw },
-  qfLineNr = { fg = muted },
+    -- Statusline text
+  Question   = { fg = darker.yellow, bold = true },
+  MoreMsg    = { fg = darker.yellow, bold = true },
+  ErrorMsg   = { fg = darker.red, bold = true },
+  WarningMsg = { fg = darker.yellow, bold = true },
+  ModeMsg    = { fg = darker.yellow, bold = true },
 
-  -- Keywords & Operators (Muted)
-  Keyword = { fg = smoke, bold = true }, -- "function", "return"
-  Operator = { fg = smoke, bold = true },
-  ["@keyword.return"] = { fg = straw }, -- Special return color
+  QuickFixLine = { bg = "none", fg = darker.yellow },
+  qfLineNr     = { fg = colors.gray },
 
-  -- Functions (Action -> Earth/Brighter colors)
-  Function = { fg = orchid },
-  ["@function"] = { fg = smoke, bold = true }, -- Definition
-  ["@function.call"] = { fg = orchid }, -- Invocation
+  -- Syntax
+  Keyword = { fg = colors.white, bold = true },
+  Operator = { fg = colors.lightgray, bold = true },
+  ["@keyword.return"] = { fg = darker.yellow },
 
-  -- Variables (Data -> Silver/White colors)
-  ["@variable"] = { fg = silver },
-  ["@variable.member"] = { fg = smoke }, -- Properties (inter.className)
-  ["@property"] = { fg = smoke },
+  Function = { fg = darker.pink },
+  ["@function"] = { fg = colors.lightgray, bold = true },
+  ["@function.call"] = { fg = darker.pink },
+  ["@function.builtin"] = { fg = darker.blue },
+  ["@lsp.type.method"] = { fg = colors.gray },
 
-  -- Types
-  ["@type"] = { fg = lavender }, -- User Types
-  ["@type.builtin"] = { fg = lavender }, -- string, boolean
-  ["@constructor"] = { fg = lavender }, -- new User()
+  ["@variable"] = { fg = colors.gray },
+  ["@variable.member"] = { fg = colors.lightgray },
+  ["@property"] = { fg = colors.lightgray },
 
-  -- Constant
-  ["@string"] = { fg = pistachio, italic = true },
-  ["@number"] = { fg = straw },
-  ["@boolean"] = { fg = straw },
-  ["@constant"] = { fg = lavender }, -- NONE, nil
+  ["@type"] = { fg = colors.blue },
+  ["@type.builtin"] = { fg = colors.blue },
+  ["@constructor"] = { fg = colors.blue },
 
-  -- HTML/JSX Tags
-  ["@tag"] = { fg = lavender },
-  ["@tag.builtin"] = { fg = lavender },
-  ["@tag.attribute"] = { fg = silver }, --'className=', 'lang=', 'key='
-  ["@tag.delimiter"] = { fg = muted },
+  ["@string"] = { fg = colors.green, italic = true },
+  ["@number"] = { fg = darker.yellow },
+  ["@boolean"] = { fg = darker.yellow },
+  ["@constant"] = { fg = colors.blue },
 
-  -- Punctuation (Muted)
-  ["@punctuation.delimiter"] = { fg = smoke },
-  ["@punctuation.bracket"] = { fg = muted },
-  ["@punctuation.member"] = { fg = muted },
-  ["@punctuation.special"] = { fg = muted },
-  ["@punctuation.section.embedded"] = { fg = muted },
+  ["@tag"] = { fg = colors.blue },
+  ["@tag.builtin"] = { fg = colors.blue },
+  ["@tag.attribute"] = { fg = colors.gray },
+  ["@tag.delimiter"] = { fg = darker.gray },
 
-  -- DIAGNOSTICS & GIT
-  DiagnosticError = { fg = bittersweet },
-  DiagnosticWarn = { fg = earth },
-  DiagnosticHint = { fg = jordy },
-  DiagnosticInfo = { fg = pistachio },
+  ["@punctuation.delimiter"] = { fg = colors.lightgray },
+  ["@punctuation.bracket"] = { fg = colors.gray },
+  ["@punctuation.special"] = { fg = darker.blue },
 
-  DiagnosticVirtualTextError = { bg = "none", fg = bittersweet },
-  DiagnosticVirtualTextWarn = { bg = "none", fg = earth },
-  DiagnosticVirtualTextHint = { bg = "none", fg = jordy },
-  DiagnosticVirtualTextInfo = { bg = "none", fg = pistachio },
+  -- Diagnostics
+  DiagnosticError = { fg = colors.red },
+  DiagnosticWarn = { fg = darker.yellow },
+  DiagnosticHint = { fg = darker.blue },
+  DiagnosticInfo = { fg = darker.green },
 
-  GitSignsAdd = { fg = pistachio },
-  GitSignsChange = { fg = straw },
-  GitSignsDelete = { fg = bittersweet },
+  -- Git
+  GitSignsAdd = { fg = darker.green },
+  GitSignsChange = { fg = darker.yellow },
+  GitSignsDelete = { fg = colors.red },
 
-  DiffAdd = { bg = raisin, fg = pistachio },
-  DiffChange = { bg = raisin, fg = straw },
-  DiffDelete = { bg = raisin, fg = bittersweet },
-  DiffText = { bg = charcoal, fg = straw },
+  DiffAdd = { bg = colors.darkgray, fg = darker.green },
+  DiffChange = { bg = colors.darkgray, fg = darker.yellow },
+  DiffDelete = { bg = colors.darkgray, fg = colors.red },
 
-  -- PLUGINS
-  --
-  -- Cmp / Blink
-  BlinkCmpLabelMatch = { fg = earth },
+  -- Plugins
+  BlinkCmpLabelMatch = { fg = darker.yellow },
 
-  -- Checkhealth
-  healthSuccess = { fg = pistachio, bg = night },
+  --- Fugitive
+  diffAdded = { link = "DiffAdd" },
+  diffRemoved = { link = "DiffDelete" },
 }
 
 for group, hl in pairs(groups) do
