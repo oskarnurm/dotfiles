@@ -3,147 +3,175 @@ if vim.fn.exists("syntax_on") == 1 then
   vim.cmd("syntax reset")
 end
 
--- stylua: ignore start
 vim.g.colors_name = "chiefdog"
 
--- Palette Mapping
-local colors = {
-  black     = "#121212",
-  darkgray  = "#272727", -- UI Backgrounds
-  gray      = "#b3b3b3",
-  lightgray = "#fafafa",
-  white     = "#ffffff",
-  red       = "#ff7676",
-  green     = "#a3d6a3",
-  pink      = "#f4b8e4",
-  blue      = "#a5adce",
-}
-local darker = {
-  gray   = "#666666",
-  red    = "#ff5733",
-  green  = "#8ec772",
-  yellow = "#d9ba73",
-  white  = "#ffffff",
-  pink   = "#f2a4db",
-  cyan   = "#5abfb5",
-  blue   = "#b5bfe2",
+-- stylua: ignore
+local c = {
+  transparent = "none",
+  bg          = "#101010",
+  comment     = "#444444",
+  text        = "#b0b0b0",
+  keyword     = "#777777",
+  definition  = "#ffffff",
+  -- string      = "#86CD82",
+  string      = "#ffffff",
+  constant    = "#d9ba73",
+  cursor      = "#272727",
+  selection   = "#222E58",
+  search      = "#333333",
+  error       = "#ff7676",
+  hint        = "#2e2e2e",
+  add         = "#26332c",
+  delete      = "#332626",
+  change      = "#262e33",
 }
 
--- Terminal Colors
-vim.g.terminal_color_0 = colors.black
-vim.g.terminal_color_1 = colors.red
-vim.g.terminal_color_2 = colors.green
-vim.g.terminal_color_3 = colors.white
-vim.g.terminal_color_4 = colors.gray
-vim.g.terminal_color_5 = colors.pink
-vim.g.terminal_color_6 = colors.lightgray
-vim.g.terminal_color_7 = colors.blue
-vim.g.terminal_color_8  = darker.gray
-vim.g.terminal_color_9  = darker.red
-vim.g.terminal_color_10 = darker.green
-vim.g.terminal_color_11 = darker.yellow
-vim.g.terminal_color_12 = darker.blue
-vim.g.terminal_color_13 = darker.pink
-vim.g.terminal_color_14 = darker.cyan
-vim.g.terminal_color_15 = darker.white
-
+-- stylua: ignore
 local groups = {
-  -- General
-  Normal        = { bg = colors.black, fg = colors.gray },
-  NormalFloat   = { bg = "none" },
-  FloatBorder   = { bg = "none", fg = colors.gray },
-  Cursor        = { bg = colors.lightgray, fg = colors.darkgray },
-  CursorLine    = { bg = colors.darkgray },
-  CursorColumn  = { bg = colors.darkgray },
-  ColorColumn   = { bg = colors.darkgray },
-  LineNr        = { fg = darker.gray },
-  CursorLineNr  = { fg = darker.blue, bold = true },
-  VertSplit     = { fg = darker.gray },
-  StatusLine    = { bg = "none", fg = colors.white },
-  StatusLineNC  = { bg = colors.darkgray, fg = "none" },
-  WinBar        = { bg = colors.black, fg = colors.lightgray, bold = true },
-  WinBarNC      = { bg = colors.black, fg = colors.gray },
-  Directory     = { fg = darker.blue },
-  Pmenu         = { bg = "none" },
-  PmenuSel      = { bg = darker.gray },
-  Visual        = { bg = darker.gray },
-  Search        = { bg = darker.gray },
-  IncSearch     = { link = "Search" },
-  CurSearch     = { fg = darker.yellow, bg = colors.darkgray },
-  MatchParen    = { bg = colors.gray, fg = colors.darkgray },
-  NonText       = { fg = darker.gray },
-  EndOfBuffer   = { fg = darker.gray },
-  Comment       = { fg = darker.gray, italic = true },
-  Title         = { fg = colors.blue, bold = true },
-  Todo          = { fg = colors.darkgray, bg = darker.yellow, bold = true },
-  Underlined    = { underline = true },
-  Special       = { fg = colors.blue },
-
-
-    -- Statusline text
-  Question   = { fg = darker.yellow, bold = true },
-  MoreMsg    = { fg = darker.yellow, bold = true },
-  ErrorMsg   = { fg = darker.red, bold = true },
-  WarningMsg = { fg = darker.yellow, bold = true },
-  ModeMsg    = { fg = darker.yellow, bold = true },
-
-  QuickFixLine = { bg = "none", fg = darker.yellow },
-  qfLineNr     = { fg = colors.gray },
+  Normal       = { bg = c.bg, fg = c.text },
+  NormalFloat  = { bg = c.bg, fg = c.text },
+  FloatBorder  = { bg = c.bg, fg = c.comment },
+  Cursor       = { bg = "#ffffff", fg = c.bg },
+  CursorLine   = { bg = c.cursor },
+  CursorLineNr = { fg = c.definition, bold = true },
+  LineNr       = { fg = c.comment },
+  StatusLine   = { bg = c.cursor, fg = c.text },
+  StatusLineNC = { bg = c.bg, fg = c.comment },
+  StatusLineTerm = { bg = c.cursor, fg = c.text },
+  StatusLineTermNC = { bg = c.bg, fg = c.comment },
+  WinBar       = { bg = c.bg, fg = c.text, bold = true },
+  WinBarNC     = { bg = c.bg, fg = c.comment },
+  WinSeparator = { fg = c.comment },
+  Pmenu        = { bg = c.cursor, fg = c.text },
+  PmenuSel     = { bg = c.comment, fg = c.definition, bold = true },
+  PmenuThumb   = { bg = c.text },
+  Visual       = { bg = c.selection },
+  Search       = { bg = c.constant, fg = c.bg },
+  IncSearch    = { link = "Search" },
+  CurSearch    = { link = "Search" },
+  MatchParen   = { fg = c.definition, bold = true, underline = true },
+  NonText      = { fg = c.cursor },
+  EndOfBuffer  = { fg = c.bg },
+  Question     = { fg = c.constant },
+  MoreMsg      = { fg = c.constant },
+  ErrorMsg     = { fg = c.error },
+  WarningMsg   = { fg = c.constant },
+  ModeMsg      = { fg = c.constant },
+  QuickFixLine = { fg = c.definition, underline = true },
+  qfLineNr     = { fg = c.comment },
 
   -- Syntax
-  Keyword = { fg = colors.white, bold = true },
-  Operator = { fg = colors.lightgray, bold = true },
-  ["@keyword.return"] = { fg = darker.yellow },
+  Keyword      = { fg = c.keyword },
+  Conditional  = { link = "Keyword" },
+  Repeat       = { link = "Keyword" },
+  Label        = { link = "Keyword" },
+  Exception    = { link = "Keyword" },
+  Statement    = { link = "Keyword" },
+  Operator     = { link = "Keyword" },
+  Delimiter    = { fg = c.definition },
+  Type         = { link = "Keyword" },
+  Structure    = { link = "Keyword" },
+  Identifier   = { fg = c.text },
+  PreProc      = { link = "Keyword" },
+  Include      = { link = "Keyword" },
+  Define       = { link = "Keyword" },
+  PreCondit    = { link = "Keyword" },
+  StorageClass = { link = "Keyword" },
+  Typedef      = { link = "Keyword" },
+  Tag          = { link = "Keyword" },
+  Function     = { fg = c.definition, bold = true },
+  Title        = { fg = c.definition, bold = true },
+  String       = { fg = c.string },
+  Character    = { link = "String" },
+  Number       = { fg = c.keyword },
+  Boolean      = { fg = c.constant },
+  Float        = { fg = c.constant },
+  Constant     = { fg = c.constant },
+  Macro        = { fg = c.constant },
+  Comment      = { fg = c.comment, italic = true },
+  Todo         = { fg = c.bg, bg = c.constant, bold = true },
+  Special      = { fg = c.text },
+  SpecialChar  = { link = "Special" },
+  SpecialComment = { link = "Comment" },
+  Underlined   = { underline = true },
+  Error        = { fg = c.error },
+  Debug        = { fg = c.constant },
 
-  Function = { fg = darker.pink },
-  ["@function"] = { fg = colors.lightgray, bold = true },
-  ["@function.call"] = { fg = darker.pink },
-  ["@function.builtin"] = { fg = darker.blue },
-  ["@lsp.type.method"] = { fg = colors.gray },
+  -- Treesitter
+  ["@function"]              = { link = "Function" },
+  ["@function.call"]         = { fg = c.text },
+  ["@function.builtin"]      = { fg = c.text },
+  ["@function.macro"]        = { link = "Macro" },
+  ["@function.method"]       = { link = "Function" },
+  ["@function.method.call"]  = { fg = c.text },
 
-  ["@variable"] = { fg = colors.gray },
-  ["@variable.member"] = { fg = colors.lightgray },
-  ["@property"] = { fg = colors.lightgray },
+  ["@keyword"]               = { link = "Keyword" },
+  ["@keyword.function"]      = { link = "Keyword" },
+  ["@keyword.return"]        = { fg = c.definition },
+  ["@keyword.conditional"]   = { link = "Conditional" },
+  ["@keyword.exception"]     = { link = "Exception" },
+  ["@keyword.import"]        = { link = "Include" },
+  ["@keyword.operator"]      = { link = "Operator" },
+  ["@operator"]              = { link = "Operator" },
+  ["@punctuation"]           = { link = "Keyword" },
+  ["@punctuation.delimiter"] = { fg = c.definition },
+  ["@punctuation.bracket"]   = { fg = c.definition },
+  ["@punctuation.special"]   = { fg = c.definition },
 
-  ["@type"] = { fg = colors.blue },
-  ["@type.builtin"] = { fg = colors.blue },
-  ["@constructor"] = { fg = colors.blue },
+  ["@variable"]              = { link = "Identifier" },
+  ["@variable.builtin"]      = { link = "Constant" },
+  ["@variable.parameter"]    = { link = "Identifier" },
+  ["@variable.member"]       = { link = "Identifier" },
+  ["@property"]              = { link = "Identifier" },
+  ["@attribute"]             = { link = "Keyword" },
+  ["@module"]                = { link = "Structure" },
 
-  ["@string"] = { fg = colors.green, italic = true },
-  ["@number"] = { fg = darker.yellow },
-  ["@boolean"] = { fg = darker.yellow },
-  ["@constant"] = { fg = colors.blue },
+  ["@constant"]              = { link = "Constant" },
+  ["@constant.builtin"]      = { link = "Constant" },
+  ["@string"]                = { link = "String" },
+  ["@string.regexp"]         = { link = "String" },
+  ["@string.escape"]         = { link = "Special" },
+  ["@string.special"]        = { link = "Special" },
+  ["@character"]             = { link = "Character" },
+  ["@number"]                = { link = "Number" },
+  ["@boolean"]               = { link = "Boolean" },
+  ["@constructor"]           = { link = "Identifier" },
 
-  ["@tag"] = { fg = colors.blue },
-  ["@tag.builtin"] = { fg = colors.blue },
-  ["@tag.attribute"] = { fg = colors.gray },
-  ["@tag.delimiter"] = { fg = darker.gray },
+  ["@tag"]                   = { link = "Keyword" },
+  ["@tag.delimiter"]         = { link = "Keyword" },
+  ["@tag.attribute"]         = { link = "Keyword" },
 
-  ["@punctuation.delimiter"] = { fg = colors.lightgray },
-  ["@punctuation.bracket"] = { fg = colors.gray },
-  ["@punctuation.special"] = { fg = darker.blue },
+  ["@markup.heading"]        = { link = "Title" },
+  ["@markup.italic"]         = { fg = c.text, italic = true },
+  ["@markup.strong"]         = { fg = c.text, bold = true },
+  ["@markup.link"]           = { link = "Underlined" },
+  ["@markup.link.uri"]       = { link = "Underlined" },
+  ["@markup.list"]           = { fg = c.constant },
+  ["@markup.raw"]            = { link = "Constant" },
+  ["@markup.quote"]          = { link = "Comment" },
+
+  -- Diff / Git
+  DiffAdd      = { bg = c.add },
+  DiffChange   = { bg = c.change },
+  DiffDelete   = { bg = c.delete },
+  GitSignsAdd    = { fg = c.string },
+  GitSignsChange = { fg = c.constant },
+  GitSignsDelete = { fg = c.error },
+
+  ["@text.diff.add"]    = { link = "DiffAdd" },
+  ["@text.diff.delete"] = { link = "DiffDelete" },
+  ["@diff.plus"]        = { link = "GitSignsAdd" },
+  ["@diff.minus"]       = { link = "GitSignsDelete" },
+  ["@diff.delta"]       = { link = "GitSignsChange" },
 
   -- Diagnostics
-  DiagnosticError = { fg = colors.red },
-  DiagnosticWarn = { fg = darker.yellow },
-  DiagnosticHint = { fg = darker.blue },
-  DiagnosticInfo = { fg = darker.green },
-
-  -- Git
-  GitSignsAdd = { fg = darker.green },
-  GitSignsChange = { fg = darker.yellow },
-  GitSignsDelete = { fg = colors.red },
-
-  DiffAdd = { bg = colors.darkgray, fg = darker.green },
-  DiffChange = { bg = colors.darkgray, fg = darker.yellow },
-  DiffDelete = { bg = colors.darkgray, fg = colors.red },
+  DiagnosticError = { fg = c.error },
+  DiagnosticWarn  = { fg = c.constant },
+  DiagnosticHint  = { fg = c.comment },
+  DiagnosticInfo  = { fg = c.text },
 
   -- Plugins
-  BlinkCmpLabelMatch = { fg = darker.yellow },
-
-  --- Fugitive
-  diffAdded = { link = "DiffAdd" },
-  diffRemoved = { link = "DiffDelete" },
+  BlinkCmpLabelMatch = { fg = c.constant },
 }
 
 for group, hl in pairs(groups) do
