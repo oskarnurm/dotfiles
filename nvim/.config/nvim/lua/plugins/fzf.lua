@@ -1,7 +1,12 @@
 return {
   "ibhagwan/fzf-lua",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
-    require("fzf-lua").setup()
+    local fzf = require("fzf-lua")
+    fzf.setup()
+    fzf.register_ui_select()
+    -- fzf.register_ui_input()
+    vim.keymap.set("n", "<leader><space>", "<cmd>FzfLua git_files<CR>", { desc = "Git Files" })
     vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<CR>", { desc = "Files" })
     vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<CR>", { desc = "Buffers" })
     vim.keymap.set("n", "<leader>fh", "<cmd>FzfLua help_tags<CR>", { desc = "Help" })
@@ -13,7 +18,7 @@ return {
     vim.keymap.set("n", "<leader>fw", "<cmd>FzfLua grep_cword<CR>", { desc = "cWord" })
     vim.keymap.set("n", "<leader>fc", "<cmd>FzfLua colorschemes<CR>", { desc = "Colorschemes" })
     vim.keymap.set("n", "<leader>fn", function()
-      require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
+      fzf.files({ cwd = vim.fn.stdpath("config") })
     end, { desc = "Neovim" })
   end,
 }
