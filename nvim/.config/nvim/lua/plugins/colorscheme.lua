@@ -11,8 +11,15 @@ return {
     lazy = false,
   },
   {
-    "vague-theme/vague.nvim",
+    "oskarnurm/chiefdog.nvim",
     priority = 1000,
+    lazy = false,
+    config = function()
+      vim.cmd("colorscheme chiefdog")
+    end,
+  },
+  {
+    "vague-theme/vague.nvim",
     lazy = false,
     config = function()
       require("vague").setup({ transparent = false })

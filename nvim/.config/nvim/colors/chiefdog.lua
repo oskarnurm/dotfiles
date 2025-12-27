@@ -23,7 +23,7 @@ local c = {
   hint        = "#2e2e2e",
   add         = "#26332c",
   delete      = "#332626",
-  change      = "#262e33",
+  change      = "#894B0A",
 }
 
 -- stylua: ignore
