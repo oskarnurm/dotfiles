@@ -11,7 +11,7 @@ sudo -v
 
 print_header "Setting up Xcode"
 if ! xcode-select -p &>/dev/null; then
-  echo "📦 Installing Xcode Command Line Tools"
+  echo "Installing Xcode Command Line Tools"
   xcode-select --install || true
 else
   echo "Xcode Command Line Tools already installed."
@@ -19,11 +19,11 @@ fi
 
 print_header "Setting up Homebrew"
 if ! command -v brew &>/dev/null; then
-  echo "📦 Installing Homebrew"
+  echo "Installing Homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-  echo "📦 Installing essential packages..."
+  echo "Installing essential packages..."
   brew update && brew install git gh zsh neovim stow
 fi
 
@@ -37,7 +37,7 @@ mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"
 
 if [ ! -f "$KEY_PATH" ]; then
-  echo "🔑 Generating SSH key..."
+  echo "Generating SSH key..."
   ssh-keygen -t ed25519 -C "$EMAIL" -f "$KEY_PATH" -N ""
   eval "$(ssh-agent -s)"
   ssh-add --apple-use-keychain "$KEY_PATH"
@@ -78,14 +78,14 @@ print_header "Managing Dotfiles"
 DOTFILES_DIR="$HOME/dotfiles"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
-  echo "📦 Cloning dotfiles repo..."
+  echo "Cloning dotfiles repo..."
   git clone git@github.com:oskarnurm/dotfiles.git "$DOTFILES_DIR"
 else
-    echo "Repo already installed"
+  echo "Repo already installed"
 fi
 
 if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-  echo "📦 Installing Brewfile packages..."
+  echo "Installing Brewfile packages..."
   brew bundle --file="$DOTFILES_DIR/Brewfile" || true
 fi
 
@@ -103,7 +103,7 @@ DOTFILES_PACKAGES=(
 cd "$DOTFILES_DIR" || exit 1
 
 for package in "${DOTFILES_PACKAGES[@]}"; do
-  echo -n "🔗 Symlinking $package... " 
+  echo -n "Symlinking $package... "
   if stow "$package"; then
     echo "Done."
   else
@@ -111,6 +111,14 @@ for package in "${DOTFILES_PACKAGES[@]}"; do
   fi
 done
 echo "All dotfiles symlinked via Stow."
+
+if ! command -v rustc &>/dev/null; then
+  echo "Rust not found. Installing..."
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  source "$HOME/.cargo/env"
+else
+  echo "Rust is already installed. Skipping."
+fi
 
 print_header "Applying macOS Settings"
 SETTINGS_SCRIPT="$DOTFILES_DIR/settings.sh"
