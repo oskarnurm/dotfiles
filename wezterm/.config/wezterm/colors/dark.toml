@@ -1,14 +1,13 @@
 [colors]
 foreground = "#ffffff"
-background = "#121212"
-# background = "#000000"
+background = "#101010"
 
 cursor_bg = "#efefef"
 cursor_fg = "#000000"
 cursor_border = "#efefef"
 
 ansi = [
-  "#000000", 
+  "#121212", 
   "#ff7676", 
   "#a3d6a3", 
   "#ffffff", 
