@@ -213,7 +213,6 @@ map("n", "<leader>sb", function() Snacks.picker.buffers() end, { desc = "Buffer"
 -- snacks: utility
 map("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 map("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
-map("n", "<leader>cr", function() Snacks.rename.rename_file() end, { desc = "Rename File" })
 map("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
 map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
 map("n", "<c-/>", function() Snacks.terminal() end, { desc = "Toggle Terminal" })
