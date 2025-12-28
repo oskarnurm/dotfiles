@@ -1,0 +1,73 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
+      "src": "https://github.com/saghen/blink.cmp.git",
+      "version": ">=0.0.0"
+    },
+    "chiefdog.nvim": {
+      "rev": "76c76bfb72880a648e13deee7572a4a9d9a2245d",
+      "src": "https://github.com/oskarnurm/chiefdog.nvim.git"
+    },
+    "conform.nvim": {
+      "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
+      "src": "https://github.com/stevearc/conform.nvim.git"
+    },
+    "fff.nvim": {
+      "rev": "f6af8353c3cb02ddde1588f24f27ff8b3a4037cf",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim.git"
+    },
+    "friendly-snippets": {
+      "rev": "572f5660cf05f8cd8834e096d7b4c921ba18e175",
+      "src": "https://github.com/rafamadriz/friendly-snippets.git"
+    },
+    "gitsigns.nvim": {
+      "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
+      "src": "https://github.com/lewis6991/gitsigns.nvim.git"
+    },
+    "grapple.nvim": {
+      "rev": "b41ddfc1c39f87f3d1799b99c2f0f1daa524c5f7",
+      "src": "https://github.com/cbochs/grapple.nvim.git"
+    },
+    "mini.ai": {
+      "rev": "bfb26d9072670c3aaefab0f53024b2f3729c8083",
+      "src": "https://github.com/nvim-mini/mini.ai.git"
+    },
+    "mini.nvim": {
+      "rev": "e7a8e5a0920df1435172d42fb32e474bbb30d021",
+      "src": "https://github.com/nvim-mini/mini.nvim.git"
+    },
+    "nvim-treesitter": {
+      "rev": "36fcb4a4238928f0b627e1ab84ade0acc1facc2c",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter.git"
+    },
+    "nvim-ts-autotag": {
+      "rev": "c4ca798ab95b316a768d51eaaaee48f64a4a46bc",
+      "src": "https://github.com/windwp/nvim-ts-autotag.git"
+    },
+    "oil.nvim": {
+      "rev": "bbfa7cba85967dc9dbfe0ca486fd4b17084bf846",
+      "src": "https://github.com/stevearc/oil.nvim.git"
+    },
+    "snacks.nvim": {
+      "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
+      "src": "https://github.com/folke/snacks.nvim.git"
+    },
+    "undotree": {
+      "rev": "0f1c9816975b5d7f87d5003a19c53c6fd2ff6f7f",
+      "src": "https://github.com/mbbill/undotree.git"
+    },
+    "vim-fugitive": {
+      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
+      "src": "https://github.com/tpope/vim-fugitive.git"
+    },
+    "vim-startuptime": {
+      "rev": "b6f0d93f6b8cf6eee0b4c94450198ba2d6a05ff6",
+      "src": "https://github.com/dstein64/vim-startuptime.git"
+    },
+    "which-key.nvim": {
+      "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
+      "src": "https://github.com/folke/which-key.nvim.git"
+    }
+  }
+}
