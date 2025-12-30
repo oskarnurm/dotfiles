@@ -15,34 +15,37 @@ o.updatetime = 250
 o.timeoutlen = 300
 
 -- ui
-o.list = true
-o.number = true
 o.scrolloff = 10
+o.number = true
+o.relativenumber = true
 o.cursorline = true
 o.splitright = true
 o.splitbelow = true
+o.termguicolors = true
 o.signcolumn = "yes"
 o.winborder = "single"
-o.termguicolors = true
-o.relativenumber = true
-vim.opt.statuscolumn = "%l  "
+o.list = true -- show tabs, trailing spaces and blanks
 o.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+vim.lsp.document_color.enable(true, 0, { style = "virtual" }) -- virtual style LSP support for highlighting color references in a document
 vim.diagnostic.config({ virtual_text = true, underline = false })
+o.wildoptions = "pum"
 
 -- editing
-o.tabstop = 2
 o.wrap = false
-o.shiftwidth = 2
-o.smartcase = true
 o.expandtab = true -- convert tabs to spaces
+o.tabstop = 2 -- size of tab
+o.shiftwidth = 0 -- size of indentation (0 = size of tabstop)
+o.smartcase = true
 o.ignorecase = true
 o.smartindent = true
 o.inccommand = "split" -- preview substitutions live
 o.virtualedit = "block"
 o.spelloptions = "camel" -- treat camelCase word parts as separate words
+o.grepprg = "git grep -n"
+o.grepformat = "%f:%l:%m"
 o.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
-o.completeopt = "menuone,noinsert,preview,fuzzy"
+o.wildmode = "noselect:lastused,full"
+o.completeopt = "menuone,noinsert,preview,fuzzy" -- buffer matches are sorted by time last used
 
 -- disable some default providers
 g.loaded_node_provider = 0
@@ -63,41 +66,39 @@ vim.schedule(function() vim.o.clipboard = "unnamedplus" end) -- to avoid increas
 
 -- plugins
 vim.pack.add({
-  { src = "https://github.com/mbbill/undotree.git" },
-  { src = "https://github.com/stevearc/oil.nvim.git" },
-  { src = "https://github.com/nvim-mini/mini.ai.git" },
-  { src = "https://github.com/folke/snacks.nvim.git" },
-  { src = "https://github.com/tpope/vim-fugitive.git" },
-  { src = "https://github.com/cbochs/grapple.nvim.git" },
-  { src = "https://github.com/folke/which-key.nvim.git" },
-  { src = "https://github.com/stevearc/conform.nvim.git" },
-  { src = "https://github.com/dmtrKovalenko/fff.nvim.git" },
-  { src = "https://github.com/windwp/nvim-ts-autotag.git" }, -- TODO: consider removing this plugin
-  { src = "https://github.com/lewis6991/gitsigns.nvim.git" },
-  { src = "https://github.com/oskarnurm/chiefdog.nvim.git" },
-  { src = "https://github.com/rafamadriz/friendly-snippets.git" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
+  "https://github.com/mbbill/undotree.git",
+  "https://github.com/folke/snacks.nvim.git",
+  "https://github.com/stevearc/oil.nvim.git",
+  "https://github.com/tpope/vim-fugitive.git",
+  "https://github.com/nvim-mini/mini.nvim.git",
+  "https://github.com/cbochs/grapple.nvim.git",
+  "https://github.com/mason-org/mason.nvim.git",
+  "https://github.com/folke/which-key.nvim.git",
+  "https://github.com/stevearc/conform.nvim.git",
+  "https://github.com/lewis6991/gitsigns.nvim.git",
+  "https://github.com/rafamadriz/friendly-snippets.git",
+  "https://github.com/nvim-treesitter/nvim-treesitter.git",
+  "https://github.com/christoomey/vim-tmux-navigator.git",
   { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") },
 })
 
--- Setup
+vim.opt.runtimepath:prepend("~/odin/chiefdog.nvim")
 vim.cmd("colorscheme chiefdog")
-
+-- Setup
+require("mason").setup()
 require("mini.ai").setup()
-require("blink.cmp").setup()
-require("nvim-ts-autotag").setup()
-require("fff").setup({ prompt = "> " })
+require("mini.surround").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("grapple").setup({ scope = "git_branch", icons = false })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
 
 require("snacks").setup({
-  input = { enabled = true },
-  words = { enabled = true },
-  scope = { enabled = true },
-  picker = { enabled = true },
   indent = { enabled = true },
+  picker = { enabled = true },
   quickfile = { enabled = true },
+  scope = { enabled = true },
+})
+
 require("blink.cmp").setup({
   keymap = {
     ["<CR>"] = { "accept", "fallback" },
@@ -138,20 +139,33 @@ require("gitsigns").setup({
 -- Mappings
 local map = vim.keymap.set
 
+-- quality of life
 map({ "n", "v", "x" }, ";", ":")
 map({ "n", "v", "x" }, ":", ";")
 map({ "n", "v" }, "x", '"_x')
 map({ "n", "v" }, "c", [["_c]])
 map({ "n", "v" }, "C", [["_C]])
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("t", "<Esc><Esc>", "<C-\\><C-n>") -- TODO: remove if never use terminal
+
+-- location & quickfix list
 map("n", "<C-n>", "<cmd>cnext<CR>zz")
 map("n", "<C-p>", "<cmd>cprev<CR>zz")
+map("n", "<leader>q", "<cmd>copen<CR>")
+map("n", "<leader>Q", "<cmd>cclose<CR>")
+map("n", "<leader>l", "<cmd>lopen<CR>")
+map("n", "<leader>L", "<cmd>lclose<CR>")
+
+-- move lines
 map("v", "K", ":m '<-2<CR>gv=gv")
 map("v", "J", ":m '>+1<CR>gv=gv")
-map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
-map("n", "<leader>af", "<cmd>vert sf #<CR>", { desc = "Split Alternative File" })
-map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- file navigation
 -- map("n", "<leader>b", ":ls<CR>:b ", { desc = "Show Buffers" })
+map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+map("n", "<leader>av", "<cmd>vert sf #<CR>", { desc = "Alternative File Split" })
+map("n", "<leader>b", ":b ", { desc = "Show Buffers" })
+map("n", "<leader>g", ":copen | :silent :grep! ", { desc = "Grep" })
 
 -- better find
 vim.cmd([[
@@ -185,45 +199,45 @@ vim.cmd([[
 ]])
 map("n", "<leader>f", ":find<C-z><Space>")
 
+-- plugin specific
 map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 map("n", "<leader>o", "<cmd>Oil<CR>")
-map("n", "<leader>sf", function() require("fff").find_files() end, { desc = "FFFind files" })
 
--- snacks: pickers
+-- picker
 ---@diagnostic disable: undefined-global
--- map("n", "<leader>sf", function() Snacks.picker.smart() end, { desc = "Smart Find Files" })
-map("n", "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Find Config" })
-map("n", "<leader>sh", function() Snacks.picker.help() end, { desc = "Help Pages" })
-map("n", "<leader>sH", function() Snacks.picker.highlights() end, { desc = "Highlights" })
-map("n", "<leader>si", function() Snacks.picker.icons() end, { desc = "Icons" })
-map("n", "<leader>sk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
-map("n", "<leader>sc", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
-map("n", "<leader>/", function() Snacks.picker.lines() end, { desc = "Buffer Lines" })
+map("n", "<leader>sf", function() Snacks.picker.files() end, { desc = "Files" })
+map("n", "<leader>sb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
 map("n", "<leader>sg", function() Snacks.picker.grep() end, { desc = "Grep" })
-map("n", "<leader>sb", function() Snacks.picker.buffers() end, { desc = "Buffer" })
-
--- snacks: utility
+map("n", "<leader>sh", function() Snacks.picker.help() end, { desc = "Help" })
+map("n", "<leader>si", function() Snacks.picker.icons() end, { desc = "Icons" })
+map("n", "<leader>sc", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
+map("n", "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Neovim" })
 map("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 map("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
-map("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
-map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
-map("n", "<c-/>", function() Snacks.terminal() end, { desc = "Toggle Terminal" })
-map("n", "<c-_>", function() Snacks.terminal() end, { desc = "Toggle Terminal" })
+map(
+  "n",
+  "<leader>/",
+  function() Snacks.picker.lines({ layout = { preset = "select" } }) end,
+  { desc = "Search Buffer" }
+)
 
--- snacks: toggle
-Snacks.toggle.dim():map("<leader>tD")
-Snacks.toggle.indent():map("<leader>ti")
-Snacks.toggle.diagnostics():map("<leader>td")
-Snacks.toggle.treesitter():map("<leader>tt")
-Snacks.toggle.line_number():map("<leader>tl")
-Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
-Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
-Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
+-- toggles
+local t = Snacks.toggle
+t.dim():map("<leader>tm")
+t.indent():map("<leader>ti")
+t.treesitter():map("<leader>tT")
+t.diagnostics():map("<leader>td")
+t.line_number():map("<leader>tl")
+t.inlay_hints():map("<leader>th")
+t.option("wrap", { name = "Wrap" }):map("<leader>tw")
+t.option("spell", { name = "Spelling" }):map("<leader>ts")
+t.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
+t.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
+t.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>tc")
 
 -- grapple
 map("n", "<leader>m", "<cmd>Grapple toggle<cr>", { desc = "Tag file" })
 map("n", "<leader>M", "<cmd>Grapple toggle_tags<cr>", { desc = "Tags Menu" })
-
 for i = 1, 9 do
   map("n", "<M-" .. i .. ">", function() require("grapple").select({ index = i }) end, { desc = "Select tag " .. i })
 end
@@ -262,6 +276,7 @@ require("gitsigns").setup({
   end,
 })
 
+-- Autocommands
 -- highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
