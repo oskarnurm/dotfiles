@@ -275,26 +275,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- stolen from SylvanFranklin
-local function pack_clean()
-  local active_plugins = {}
-  local unused_plugins = {}
-
-  for _, plugin in ipairs(vim.pack.get()) do
-    active_plugins[plugin.spec.name] = plugin.active
-  end
-
-  for _, plugin in ipairs(vim.pack.get()) do
-    if not active_plugins[plugin.spec.name] then table.insert(unused_plugins, plugin.spec.name) end
-  end
-
-  if #unused_plugins == 0 then
-    print("No unused plugins.")
-    return
-  end
-
-  local choice = vim.fn.confirm("Remove unused plugins?", "&Yes\n&No", 2)
-  if choice == 1 then vim.pack.del(unused_plugins) end
-end
-
-vim.keymap.set("n", "<leader>pc", pack_clean)
+-- Go to last loc when opening a buffer
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
+  callback = function(event)
+    local exclude = { "gitcommit" }
+    local buf = event.buf
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then return end
+    vim.b[buf].lazyvim_last_loc = true
+    local mark = vim.api.nvim_buf_get_mark(buf, '"')
+    local lcount = vim.api.nvim_buf_line_count(buf)
+    if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
+  end,
+})
