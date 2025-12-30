@@ -153,23 +153,37 @@ map("n", "<leader>af", "<cmd>vert sf #<CR>", { desc = "Split Alternative File" }
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 -- map("n", "<leader>b", ":ls<CR>:b ", { desc = "Show Buffers" })
 
--- toggle quickfix list
-map("n", "<leader>q", function()
-  if vim.fn.getqflist({ winid = 0 }).winid ~= 0 then
-    vim.cmd.cclose()
-  else
-    vim.cmd.copen()
-  end
-end, { desc = "Quickfix List" })
+-- better find
+vim.cmd([[
+  set wildcharm=<C-z> " set Ctrl-z to trigger wildmenu completion
+  let s:cache = [] " use cached results to avoid calling fd again on every keystroke
+  
+  func! FindFiles(cmdarg, cmdcomplete)
+    if empty(s:cache) " only run fd if the cachce is empty
+      let s:cache = systemlist('fd --type f --hidden --exclude .git')
+    endif
+     " return filtered copy of cache to allow backtracking
+    return copy(s:cache)->filter('v:val =~? a:cmdarg')
+  endfunc
 
--- toggle location list
-map("n", "<leader>l", function()
-  if vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 then
-    vim.cmd.lclose()
-  else
-    pcall(vim.cmd.lopen) -- lopen can fail if the location list is empty, so 'pcall' or a check is useful here.
-  end
-end, { desc = "Location List" })
+  set findfunc=FindFiles
+  
+  " clear cache when leaving the command line (exiting search)
+  " this ensures we get fresh results next time we call find
+  augroup FindFilesCache
+    autocmd!
+    autocmd CmdlineLeave : let s:files_cache = []
+  augroup END
+  
+  " automatically call Ctrl-z to force the menu to update as you filter the list
+  augroup AutoWildmenuFind
+    autocmd!
+    autocmd CmdlineChanged : if getcmdline() =~ '^find \S' && !wildmenumode() | call feedkeys("\<C-z>", 'n') | endif
+  augroup END
+  
+  "nnoremap <leader>f :find<C-z><Space>
+]])
+map("n", "<leader>f", ":find<C-z><Space>")
 
 map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 map("n", "<leader>o", "<cmd>Oil<CR>")
