@@ -3,9 +3,8 @@
 ---
 --- `css-languageserver` can be installed via `npm`:
 ---
---- ```sh
---- npm i -g vscode-langservers-extracted
---- ```
+--- install with: npm i -g vscode-langservers-extracted
+--- or `brew install brew install vscode-langservers-extracted`
 
 ---@type vim.lsp.Config
 return {

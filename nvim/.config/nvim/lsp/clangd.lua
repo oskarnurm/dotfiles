@@ -1,6 +1,5 @@
 ---@brief
 --
--- 'clangd' can be installed via:
 -- macOS: `brew install llvm`
 -- Arch: `pacman -S clang`
 -- Ubuntu: `apt install clangd`
