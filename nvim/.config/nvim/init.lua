@@ -98,6 +98,16 @@ require("snacks").setup({
   picker = { enabled = true },
   indent = { enabled = true },
   quickfile = { enabled = true },
+require("blink.cmp").setup({
+  keymap = {
+    ["<CR>"] = { "accept", "fallback" },
+    ["<C-\\>"] = { "hide", "fallback" },
+    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+    ["<C-n>"] = { "select_next", "show" },
+    ["<C-p>"] = { "select_prev" },
+    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+  },
 })
 
 require("conform").setup({
