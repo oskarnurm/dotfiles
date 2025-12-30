@@ -239,7 +239,7 @@ end
 
 -- highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
   callback = function() vim.highlight.on_yank() end,
 })
 
@@ -257,7 +257,7 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 
 -- auto create dir when saving a file, in case some intermediate directory does not exist
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
+  group = vim.api.nvim_create_augroup("AutoCreateDir", { clear = true }),
   callback = function(event)
     if event.match:match("^%w%w+:[\\/][\\/]") then return end
     local file = vim.uv.fs_realpath(event.match) or event.match
@@ -267,7 +267,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
+  group = vim.api.nvim_create_augroup("WrapSpell", { clear = true }),
   pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
   callback = function()
     vim.opt_local.wrap = true
