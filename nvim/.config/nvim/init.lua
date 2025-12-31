@@ -24,6 +24,7 @@ o.splitbelow = true
 o.termguicolors = true
 o.signcolumn = "yes"
 o.winborder = "single"
+o.pumborder = "single"
 o.list = true -- show tabs, trailing spaces and blanks
 o.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.lsp.document_color.enable(true, 0, { style = "virtual" }) -- virtual style LSP support for highlighting color references in a document
