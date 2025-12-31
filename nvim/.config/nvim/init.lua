@@ -171,35 +171,35 @@ map("n", "<leader>g", ":copen | :silent :grep! ", { desc = "Grep" })
 
 -- better find
 vim.cmd([[
-  set wildcharm=<C-z> " set Ctrl-z to trigger wildmenu completion
-  let s:cache = [] " use cached results to avoid calling fd again on every keystroke
-  
-  func! FindFiles(cmdarg, cmdcomplete)
-    if empty(s:cache) " only run fd if the cachce is empty
-      let s:cache = systemlist('fd --type f --hidden --exclude .git')
-    endif
-     " return filtered copy of cache to allow backtracking
-    return copy(s:cache)->filter('v:val =~? a:cmdarg')
-  endfunc
+  let s:file_cache = []
 
-  set findfunc=FindFiles
-  
-  " clear cache when leaving the command line (exiting search)
-  " this ensures we get fresh results next time we call find
-  augroup FindFilesCache
+  function! FdFindFiles(cmdarg, cmdcomplete)
+    " populate cache once per session
+    if empty(s:file_cache)
+      let s:file_cache = systemlist('fd --type f --hidden --exclude .git')
+    endif
+
+    " handle empty query
+    if empty(a:cmdarg)
+      return s:file_cache
+    endif
+
+    " fuzzy match against the cached list
+    return matchfuzzy(s:file_cache, a:cmdarg, {'limit': 100})
+  endfunction
+
+  set findfunc=FdFindFiles
+
+  augroup FdFuzzyLogic
     autocmd!
-    autocmd CmdlineLeave : let s:files_cache = []
+    " trigger wildmenu automatically when typing ':find '
+    autocmd CmdlineChanged * if getcmdline() =~# '^find\s' | call wildtrigger() | endif
+    " clear memory when the command line is closed
+    autocmd CmdlineLeave * let s:file_cache = []
   augroup END
-  
-  " automatically call Ctrl-z to force the menu to update as you filter the list
-  augroup AutoWildmenuFind
-    autocmd!
-    autocmd CmdlineChanged : if getcmdline() =~ '^find \S' && !wildmenumode() | call feedkeys("\<C-z>", 'n') | endif
-  augroup END
-  
-  "nnoremap <leader>f :find<C-z><Space>
+
+  nnoremap <leader>f :find<Space>
 ]])
-map("n", "<leader>f", ":find<C-z><Space>")
 
 -- plugin specific
 map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
