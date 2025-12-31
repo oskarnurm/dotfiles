@@ -152,10 +152,11 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>") -- TODO: remove if never use terminal
 -- location & quickfix list
 map("n", "<C-n>", "<cmd>cnext<CR>zz")
 map("n", "<C-p>", "<cmd>cprev<CR>zz")
-map("n", "<leader>q", "<cmd>copen<CR>")
-map("n", "<leader>Q", "<cmd>cclose<CR>")
-map("n", "<leader>l", "<cmd>lopen<CR>")
-map("n", "<leader>L", "<cmd>lclose<CR>")
+map("n", "<leader>l", "<cmd>lclose<CR>") -- almost always only need to close the location list
+map("n", "<leader>q", function() -- toggle quickfix list
+  local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+  vim.cmd(qf_exists and "cclose" or "copen")
+end)
 
 -- move lines
 map("v", "K", ":m '<-2<CR>gv=gv")
