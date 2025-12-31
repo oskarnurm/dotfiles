@@ -21,6 +21,7 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
 export PATH="/opt/homebrew/opt/lld/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
