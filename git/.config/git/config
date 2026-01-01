@@ -5,7 +5,6 @@
 	name = oskarnurm
 [core]
 	editor = nvim
-	excludesfile = ~/.global_gitignore
 [push]
   autoSetupRemote = true
 [merge]
