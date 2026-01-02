@@ -1,6 +1,6 @@
 vim.loader.enable()
 
--- Options
+-- options
 local o = vim.opt
 local g = vim.g
 
@@ -85,7 +85,8 @@ vim.pack.add({
 
 vim.opt.runtimepath:prepend("~/odin/chiefdog.nvim")
 vim.cmd("colorscheme chiefdog")
--- Setup
+
+-- setup
 require("mason").setup()
 require("mini.ai").setup()
 require("mini.surround").setup()
@@ -94,9 +95,9 @@ require("grapple").setup({ scope = "git_branch", icons = false })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
 
 require("snacks").setup({
+  quickfile = { enabled = true },
   indent = { enabled = true },
   picker = { enabled = true },
-  quickfile = { enabled = true },
   scope = { enabled = true },
 })
 
@@ -137,7 +138,7 @@ require("gitsigns").setup({
   },
 })
 
--- Mappings
+-- mappings
 local map = vim.keymap.set
 
 -- quality of life
@@ -280,7 +281,7 @@ require("gitsigns").setup({
   end,
 })
 
--- Autocommands
+-- autocommands
 -- highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
@@ -319,7 +320,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Go to last loc when opening a buffer
+-- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
   callback = function(event)
