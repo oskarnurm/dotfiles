@@ -14,7 +14,7 @@ setopt hist_find_no_dups
 unsetopt BEEP
 
 export EDITOR='nvim'
-export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 
 export PATH="$HOME/dotfiles/scripts:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
@@ -48,7 +48,6 @@ alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
-alias vf="nvim -c 'Pick files'"
 alias venv="python3 -m venv .venv"
 # KTH
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
