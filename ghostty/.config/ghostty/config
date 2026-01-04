@@ -1,9 +1,8 @@
 # vim set ft=conf
-theme = rootloops
-macos-titlebar-style = hidden
-
+background = #101010
+macos-titlebar-style = transparent
 font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
-font-size = 14
+font-size = 15
 
