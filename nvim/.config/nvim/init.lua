@@ -47,6 +47,17 @@ o.grepformat = "%f:%l:%m"
 o.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
 o.wildmode = "noselect:lastused,full"
 o.completeopt = "menuone,noinsert,preview,fuzzy" -- buffer matches are sorted by time last used
+-- some useful autocmnds
+vim.cmd([[
+augroup init
+  autocmd!
+  autocmd BufNewFile * autocmd BufWritePre <buffer> ++once call mkdir(expand('%:h'), 'p')
+  autocmd FileType text,plaintex,typst,gitcommit,markdown setlocal wrap spell
+  autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup="Visual"} 
+  autocmd CmdlineChanged [:\/\?] call wildtrigger()
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=o
+augroup END
+]])
 
 -- disable some default providers
 g.loaded_node_provider = 0
