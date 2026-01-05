@@ -1,12 +1,13 @@
 vim.loader.enable()
 
--- options
 local o = vim.opt
 local g = vim.g
+local map = vim.keymap.set
+local autocmd = vim.api.nvim_create_autocmd
 
--- general
 g.mapleader = " "
 
+-- general
 o.mouse = "a"
 o.confirm = true
 o.undofile = true
@@ -15,9 +16,9 @@ o.updatetime = 250
 o.timeoutlen = 300
 
 -- ui
-o.scrolloff = 10
+o.rnu = true
 o.number = true
-o.relativenumber = true
+o.scrolloff = 10
 o.cursorline = true
 o.splitright = true
 o.splitbelow = true
@@ -25,28 +26,31 @@ o.termguicolors = true
 o.signcolumn = "yes"
 o.winborder = "single"
 o.pumborder = "single"
+o.pumheight = 20
 o.list = true -- show tabs, trailing spaces and blanks
 o.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.lsp.document_color.enable(true, 0, { style = "virtual" }) -- virtual style LSP support for highlighting color references in a document
+vim.lsp.document_color.enable(true, 0, { style = "virtual" })
 vim.diagnostic.config({ virtual_text = true, underline = false })
-o.wildoptions = "pum"
 
 -- editing
 o.wrap = false
 o.expandtab = true -- convert tabs to spaces
 o.tabstop = 2 -- size of tab
-o.shiftwidth = 0 -- size of indentation (0 = size of tabstop)
+o.shiftwidth = 2 -- size of indentation
 o.smartcase = true
 o.ignorecase = true
 o.smartindent = true
 o.inccommand = "split" -- preview substitutions live
-o.virtualedit = "block"
+o.virtualedit = "block" -- allow virtual editing in visual block mode
 o.spelloptions = "camel" -- treat camelCase word parts as separate words
-o.grepprg = "rg --vimgrep --hidden -g '!.git/*'"
-o.grepformat = "%f:%l:%m"
 o.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
 o.wildmode = "noselect:lastused,full"
 o.completeopt = "menuone,noinsert,preview,fuzzy" -- buffer matches are sorted by time last used
+o.grepprg = "rg --vimgrep" -- TODO: maybe I should set ignore files explicitly...
+
+-- avoid increasing startup-time
+vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
+
 -- some useful autocmnds
 vim.cmd([[
 augroup init
@@ -133,119 +137,6 @@ require("gitsigns").setup({
     topdelete = { text = "‾" },
     changedelete = { text = "~" },
   },
-})
-
--- mappings
-local map = vim.keymap.set
-
--- quality of life
-map({ "n", "v", "x" }, ";", ":")
-map({ "n", "v", "x" }, ":", ";")
-map({ "n", "v" }, "x", '"_x')
-map({ "n", "v" }, "c", [["_c]])
-map({ "n", "v" }, "C", [["_C]])
-map("n", "<Esc>", "<cmd>nohlsearch<CR>")
-map("t", "<Esc><Esc>", "<C-\\><C-n>") -- TODO: remove if never use terminal
-
--- location & quickfix list
-map("n", "<C-n>", "<cmd>cnext<CR>zz")
-map("n", "<C-p>", "<cmd>cprev<CR>zz")
-map("n", "<leader>l", "<cmd>lclose<CR>") -- almost always only need to close the location list
-map("n", "<leader>q", function() -- toggle quickfix list
-  local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
-  vim.cmd(qf_exists and "cclose" or "copen")
-end)
-
--- move lines
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("v", "J", ":m '>+1<CR>gv=gv")
-
--- file navigation
--- map("n", "<leader>b", ":ls<CR>:b ", { desc = "Show Buffers" })
-map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
-map("n", "<leader>av", "<cmd>vert sf #<CR>", { desc = "Alternative File Split" })
-map("n", "<leader>b", ":b ", { desc = "Show Buffers" })
-map("n", "<leader>g", ":copen | :silent :grep! ", { desc = "Grep" })
-
--- better find
-vim.cmd([[
-  let s:file_cache = []
-
-  function! FdFindFiles(cmdarg, cmdcomplete)
-    " populate cache once per session
-    if empty(s:file_cache)
-      let s:file_cache = systemlist('fd --type f --hidden --exclude .git')
-    endif
-
-    " handle empty query
-    if empty(a:cmdarg)
-      return s:file_cache
-    endif
-
-    " fuzzy match against the cached list
-    return matchfuzzy(s:file_cache, a:cmdarg, {'limit': 100})
-  endfunction
-
-  set findfunc=FdFindFiles
-
-  augroup FdFuzzyLogic
-    autocmd!
-    " trigger wildmenu automatically when typing ':find '
-    autocmd CmdlineChanged * if getcmdline() =~# '^find\s' | call wildtrigger() | endif
-    " clear memory when the command line is closed
-    autocmd CmdlineLeave * let s:file_cache = []
-  augroup END
-
-  nnoremap <leader>f :find<Space>
-]])
-
--- plugin specific
-map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
-map("n", "<leader>o", "<cmd>Oil<CR>")
-
--- picker
----@diagnostic disable: undefined-global
-map("n", "<leader>sf", function() Snacks.picker.files() end, { desc = "Files" })
-map("n", "<leader>sb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
-map("n", "<leader>sg", function() Snacks.picker.grep() end, { desc = "Grep" })
-map("n", "<leader>sh", function() Snacks.picker.help() end, { desc = "Help" })
-map("n", "<leader>sH", function() Snacks.picker.highlights() end, { desc = "highlights" })
-map("n", "<leader>sk", function() Snacks.picker.keymaps() end, { desc = "Keymaps" })
-map("n", "<leader>si", function() Snacks.picker.icons() end, { desc = "Icons" })
-map("n", "<leader>sc", function() Snacks.picker.colorschemes() end, { desc = "Colorschemes" })
-map("n", "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, { desc = "Neovim" })
-map("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
-map("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
-map(
-  "n",
-  "<leader>/",
-  function() Snacks.picker.lines({ layout = { preset = "select" } }) end,
-  { desc = "Search Buffer" }
-)
-
--- toggles
-local t = Snacks.toggle
-t.dim():map("<leader>tm")
-t.indent():map("<leader>ti")
-t.treesitter():map("<leader>tT")
-t.diagnostics():map("<leader>td")
-t.line_number():map("<leader>tl")
-t.inlay_hints():map("<leader>th")
-t.option("wrap", { name = "Wrap" }):map("<leader>tw")
-t.option("spell", { name = "Spelling" }):map("<leader>ts")
-t.option("relativenumber", { name = "Relative Number" }):map("<leader>tL")
-t.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
-t.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>tc")
-
--- grapple
-map("n", "<leader>m", "<cmd>Grapple toggle<cr>", { desc = "Tag file" })
-map("n", "<leader>M", "<cmd>Grapple toggle_tags<cr>", { desc = "Tags Menu" })
-for i = 1, 9 do
-  map("n", "<M-" .. i .. ">", function() require("grapple").select({ index = i }) end, { desc = "Select tag " .. i })
-end
-
--- gitsigns
-require("gitsigns").setup({
   on_attach = function(bufnr)
     local gs = require("gitsigns")
     local function map(mode, l, r, opts)
@@ -278,55 +169,73 @@ require("gitsigns").setup({
   end,
 })
 
--- autocommands
--- highlight when yanking
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
-  callback = function() vim.highlight.on_yank() end,
+-- keymaps
+-- plugin specific
+map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+map("n", "<leader>o", "<cmd>Oil<CR>")
+
+-- quality of life
+map({ "n", "v", "x" }, ";", ":")
+map({ "n", "v", "x" }, ":", ";")
+map({ "n", "v" }, "x", '"_x')
+map({ "n", "v" }, "c", [["_c]])
+map({ "n", "v" }, "C", [["_C]])
+map("n", "<Esc>", "<cmd>nohlsearch<CR>")
+map("n", "<leader>td", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, { desc = "Diagnostics" })
+
+-- location & quickfix list
+map("n", "<C-n>", "<cmd>cnext<CR>zz")
+map("n", "<C-p>", "<cmd>cprev<CR>zz")
+map("n", "<leader>l", "<cmd>lclose<CR>") -- almost always only need to close the location list
+map("n", "<leader>q", function() -- toggle quickfix list
+  local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+  vim.cmd(qf_exists and "cclose" or "copen")
+end, { desc = "Quickfix Toggle" })
+
+-- move lines
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv")
+
+-- files n' stuff
+map("n", "<leader>sa", "<cmd>vert sf #<CR>", { desc = "Split Alt File" })
+map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+map("n", "<leader>e", "<cmd>e $MYVIMRC<CR>")
+map("n", "<leader>b", ":buffer ")
+map("n", "<leader>f", ":find ")
+map("n", "<leader>g", ":Grep ")
+
+-- enhance the :find command with fd, fuzzy file completion and auto-selection, see :h fuzzy-file-picker
+local filescache = {}
+function _G.FindFiles(arg, _)
+  if #filescache == 0 then filescache = vim.fn.systemlist("fd --type f --follow --hidden --exclude .git") end
+  return #arg == 0 and filescache or vim.fn.matchfuzzy(filescache, arg)
+end
+vim.o.findfunc = "v:lua.FindFiles"
+autocmd({ "CmdlineLeave", "CmdlineLeavePre" }, {
+  pattern = ":",
+  callback = function(ev)
+    if ev.event == "CmdlineLeavePre" then
+      local info = vim.fn.cmdcomplete_info()
+      if info.matches and #info.matches > 0 then
+        if vim.fn.getcmdline():match("^%s*fin[d]?%s") and info.selected == -1 then
+          vim.fn.setcmdline("find " .. info.matches[1])
+        end
+      end
+    elseif ev.event == "CmdlineLeave" then
+      filescache = {}
+    end
+  end,
 })
 
--- auto-detect and enable all server configs in 'lua/lsp/'
-vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
-  once = true,
+-- grep with live updating quickfix list
+autocmd("CmdlineChanged", {
+  pattern = ":",
   callback = function()
-    local server_configs = vim
-      .iter(vim.api.nvim_get_runtime_file("lsp/*.lua", true))
-      :map(function(file) return vim.fn.fnamemodify(file, ":t:r") end)
-      :totable()
-    vim.lsp.enable(server_configs)
-  end,
-})
-
--- auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("AutoCreateDir", { clear = true }),
-  callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then return end
-    local file = vim.uv.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-  end,
-})
-
--- wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("WrapSpell", { clear = true }),
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
-
--- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
-  callback = function(event)
-    local exclude = { "gitcommit" }
-    local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then return end
-    vim.b[buf].lazyvim_last_loc = true
-    local mark = vim.api.nvim_buf_get_mark(buf, '"')
-    local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
+    local words = vim.split(vim.fn.getcmdline(), " ", { trimempty = true })
+    if words[1] == "Grep" and #words > 1 then
+      vim.cmd("silent grep! " .. vim.fn.escape(words[2], " "))
+      vim.cmd("cwindow")
+      vim.cmd.redraw()
+    end
   end,
 })
