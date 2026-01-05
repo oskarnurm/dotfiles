@@ -87,17 +87,14 @@ autocmd({ "BufReadPre", "BufNewFile" }, {
 })
 
 -- plugins
+vim.cmd.packadd("cfilter")
 vim.pack.add({
   "https://github.com/mbbill/undotree.git",
-  "https://github.com/folke/snacks.nvim.git",
   "https://github.com/stevearc/oil.nvim.git",
-  "https://github.com/tpope/vim-fugitive.git",
-  "https://github.com/nvim-mini/mini.nvim.git",
-  "https://github.com/cbochs/grapple.nvim.git",
-  "https://github.com/mason-org/mason.nvim.git",
   "https://github.com/folke/which-key.nvim.git",
   "https://github.com/stevearc/conform.nvim.git",
   "https://github.com/lewis6991/gitsigns.nvim.git",
+  "https://github.com/nvim-mini/mini.indentscope.git",
   "https://github.com/rafamadriz/friendly-snippets.git",
   "https://github.com/nvim-treesitter/nvim-treesitter.git",
   "https://github.com/christoomey/vim-tmux-navigator.git",
@@ -108,31 +105,10 @@ vim.opt.runtimepath:prepend("~/odin/chiefdog.nvim")
 vim.cmd("colorscheme chiefdog")
 
 -- setup
-require("mason").setup()
-require("mini.ai").setup()
-require("mini.surround").setup()
+require("blink.cmp").setup()
+require("mini.indentscope").setup() -- nice to have sometimes
 require("oil").setup({ view_options = { show_hidden = true } })
-require("grapple").setup({ scope = "git_branch", icons = false })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
-
-require("snacks").setup({
-  quickfile = { enabled = true },
-  indent = { enabled = true },
-  picker = { enabled = true },
-  scope = { enabled = true },
-})
-
-require("blink.cmp").setup({
-  keymap = {
-    ["<CR>"] = { "accept", "fallback" },
-    ["<C-\\>"] = { "hide", "fallback" },
-    ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
-    ["<C-n>"] = { "select_next", "show" },
-    ["<C-p>"] = { "select_prev" },
-    ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-    ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-  },
-})
 
 require("conform").setup({
   format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
