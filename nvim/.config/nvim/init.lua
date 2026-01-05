@@ -74,7 +74,17 @@ g.loaded_zipPlugin = 1
 g.loaded_2html_plugin = 1
 g.loaded_remote_plugins = 1
 
-vim.schedule(function() vim.o.clipboard = "unnamedplus" end) -- to avoid increasing startup-time
+-- LSP: auto-detect and enable all server configs in 'lua/lsp/'
+autocmd({ "BufReadPre", "BufNewFile" }, {
+  once = true,
+  callback = function()
+    local server_configs = vim
+      .iter(vim.api.nvim_get_runtime_file("lsp/*.lua", true))
+      :map(function(file) return vim.fn.fnamemodify(file, ":t:r") end)
+      :totable()
+    vim.lsp.enable(server_configs)
+  end,
+})
 
 -- plugins
 vim.pack.add({
