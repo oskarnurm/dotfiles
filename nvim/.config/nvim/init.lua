@@ -63,21 +63,6 @@ augroup init
 augroup END
 ]])
 
--- disable some default providers
-g.loaded_node_provider = 0
-g.loaded_perl_provider = 0
-g.loaded_ruby_provider = 0
-g.loaded_python3_provider = 0
-
--- see full list:
--- https://github.com/neovim/neovim/tree/master/runtime/plugin
-g.loaded_man = 1
-g.loaded_gzip = 1
-g.loaded_tarPlugin = 1
-g.loaded_zipPlugin = 1
-g.loaded_2html_plugin = 1
-g.loaded_remote_plugins = 1
-
 -- LSP: auto-detect and enable all server configs in 'lua/lsp/'
 autocmd({ "BufReadPre", "BufNewFile" }, {
   once = true,
