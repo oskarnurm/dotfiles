@@ -14,5 +14,6 @@ fish/.config/fish/fish_variables
 
 hammerspoon/Spoons/
 .DS_Store
-*.bak*/ 
+*.bak/ 
 *.log
+..vimrc.un~
