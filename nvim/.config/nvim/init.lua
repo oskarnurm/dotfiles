@@ -1,19 +1,22 @@
 vim.loader.enable()
 
+-- Settings
 local o = vim.opt
 local g = vim.g
 local map = vim.keymap.set
-local autocmd = vim.api.nvim_create_autocmd
-
-g.mapleader = " "
 
 -- general
+g.mapleader = " "
+
 o.mouse = "a"
 o.confirm = true
 o.undofile = true
 o.swapfile = false
 o.updatetime = 250
 o.timeoutlen = 300
+vim.schedule(function() -- avoid increasing startup-time
+  vim.o.clipboard = "unnamedplus"
+end)
 
 -- ui
 o.rnu = true
@@ -48,23 +51,20 @@ o.wildmode = "noselect:lastused,full"
 o.completeopt = "menuone,noinsert,preview,fuzzy" -- buffer matches are sorted by time last used
 o.grepprg = "rg --vimgrep" -- TODO: maybe I should set ignore files explicitly...
 
--- avoid increasing startup-time
-vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
-
--- some useful autocmnds
+-- Autocmds: much less verbose if done in Vimscript
 vim.cmd([[
 augroup init
-  autocmd!
+  au!
+  autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup="Visual"} 
   autocmd BufNewFile * autocmd BufWritePre <buffer> ++once call mkdir(expand('%:h'), 'p')
   autocmd FileType text,plaintex,typst,gitcommit,markdown setlocal wrap spell
-  autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup="Visual"} 
   autocmd CmdlineChanged [:\/\?] call wildtrigger()
-  autocmd FileType * setlocal formatoptions-=c formatoptions-=o
+  autocmd FileType * setlocal formatoptions-=o
 augroup END
 ]])
 
--- LSP: auto-detect and enable all server configs in 'lua/lsp/'
-autocmd({ "BufReadPre", "BufNewFile" }, {
+-- Auto-detect and enable all server configs in 'lua/lsp/'
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
   once = true,
   callback = function()
     local server_configs = vim
@@ -75,30 +75,29 @@ autocmd({ "BufReadPre", "BufNewFile" }, {
   end,
 })
 
--- plugins
+-- Plugins
 vim.cmd.packadd("cfilter")
 vim.pack.add({
   "https://github.com/mbbill/undotree.git",
   "https://github.com/stevearc/oil.nvim.git",
+  "https://github.com/tpope/vim-fugitive.git",
+  "https://github.com/nvim-mini/mini.nvim.git",
   "https://github.com/folke/which-key.nvim.git",
   "https://github.com/stevearc/conform.nvim.git",
   "https://github.com/lewis6991/gitsigns.nvim.git",
-  "https://github.com/nvim-mini/mini.indentscope.git",
   "https://github.com/rafamadriz/friendly-snippets.git",
-  "https://github.com/nvim-treesitter/nvim-treesitter.git",
   "https://github.com/christoomey/vim-tmux-navigator.git",
+  "https://github.com/nvim-treesitter/nvim-treesitter.git",
   { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") },
 })
 
-vim.opt.runtimepath:prepend("~/odin/chiefdog.nvim")
-vim.cmd("colorscheme chiefdog")
+vim.opt.runtimepath:prepend("~/odin/koda.nvim")
+require("koda").setup() -- only while in dev
+vim.cmd("colorscheme koda")
 
--- setup
 require("blink.cmp").setup()
-require("mini.indentscope").setup() -- nice to have sometimes
 require("oil").setup({ view_options = { show_hidden = true } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
-
 require("conform").setup({
   format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
   formatters_by_ft = {
@@ -113,7 +112,6 @@ require("conform").setup({
     ["_"] = { "prettierd" },
   },
 })
-
 require("gitsigns").setup({
   signs = {
     add = { text = "+" },
@@ -154,66 +152,82 @@ require("gitsigns").setup({
   end,
 })
 
--- keymaps
--- plugin specific
-map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
-map("n", "<leader>o", "<cmd>Oil<CR>")
-
--- quality of life
+-- Keymaps
 map({ "n", "v", "x" }, ";", ":")
 map({ "n", "v", "x" }, ":", ";")
 map({ "n", "v" }, "x", '"_x')
 map({ "n", "v" }, "c", [["_c]])
 map({ "n", "v" }, "C", [["_C]])
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
-map("n", "<leader>td", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, { desc = "Diagnostics" })
-
--- location & quickfix list
 map("n", "<C-n>", "<cmd>cnext<CR>zz")
 map("n", "<C-p>", "<cmd>cprev<CR>zz")
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
+map("n", "<leader>sa", "<cmd>vert sf #<CR>", { desc = "Split Alt File" })
 map("n", "<leader>l", "<cmd>lclose<CR>") -- almost always only need to close the location list
+map("n", "<leader>e", "<cmd>e $MYVIMRC<CR>")
+map("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+map("n", "<leader>o", "<cmd>Oil<CR>")
+map("n", "<leader>b", ":buffer ")
+map("n", "<leader>f", ":find ")
+map("n", "<leader>g", ":Grep ")
+
 map("n", "<leader>q", function() -- toggle quickfix list
   local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
   vim.cmd(qf_exists and "cclose" or "copen")
 end, { desc = "Quickfix Toggle" })
 
--- move lines
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("n", "<leader>td", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  local msg = vim.diagnostic.is_enabled() and "Enabled" or "Disabled"
+  vim.notify("Diagnostics " .. msg)
+end, { desc = "Diagnostics" })
 
--- files n' stuff
-map("n", "<leader>sa", "<cmd>vert sf #<CR>", { desc = "Split Alt File" })
-map("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
-map("n", "<leader>e", "<cmd>e $MYVIMRC<CR>")
-map("n", "<leader>b", ":buffer ")
-map("n", "<leader>f", ":find ")
-map("n", "<leader>g", ":Grep ")
-
--- enhance the :find command with fd, fuzzy file completion and auto-selection, see :h fuzzy-file-picker
+-- Enhance the :find command with `fd`, fuzzy file completion and auto-selection
+-- call fd once per call store results in cache
 local filescache = {}
-function _G.FindFiles(arg, _)
+function _G.Find(arg, _)
   if #filescache == 0 then filescache = vim.fn.systemlist("fd --type f --follow --hidden --exclude .git") end
   return #arg == 0 and filescache or vim.fn.matchfuzzy(filescache, arg)
 end
-vim.o.findfunc = "v:lua.FindFiles"
-autocmd({ "CmdlineLeave", "CmdlineLeavePre" }, {
+vim.o.findfunc = "v:lua.Find"
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  callback = function() filescache = {} end,
+})
+
+-- Auto-select first match for :find
+vim.api.nvim_create_autocmd("CmdlineLeavePre", {
+  group = vim.api.nvim_create_augroup("AutoSelectFind", { clear = true }),
   pattern = ":",
-  callback = function(ev)
-    if ev.event == "CmdlineLeavePre" then
-      local info = vim.fn.cmdcomplete_info()
-      if info.matches and #info.matches > 0 then
-        if vim.fn.getcmdline():match("^%s*fin[d]?%s") and info.selected == -1 then
-          vim.fn.setcmdline("find " .. info.matches[1])
-        end
+  callback = function()
+    local info = vim.fn.cmdcomplete_info()
+    if info.matches and #info.matches > 0 then
+      if vim.fn.getcmdline():match("^%s*fin[d]?%s") and info.selected == -1 then
+        vim.fn.setcmdline("find " .. info.matches[1])
       end
-    elseif ev.event == "CmdlineLeave" then
-      filescache = {}
     end
   end,
 })
 
--- grep with live updating quickfix list
-autocmd("CmdlineChanged", {
+-- Auto-select first match for :buffers
+vim.api.nvim_create_autocmd("CmdlineLeavePre", {
+  group = vim.api.nvim_create_augroup("AutoSelectBuffers", { clear = true }),
+  pattern = ":",
+  callback = function()
+    local info = vim.fn.cmdcomplete_info()
+    if info.matches and #info.matches > 0 then
+      if vim.fn.getcmdline():match("^%s*b[uffer]?%s") and info.selected == -1 then
+        vim.fn.setcmdline("find " .. info.matches[1])
+      end
+    end
+  end,
+})
+
+-- Live grep updates quickfix list as you type
+-- create the 'Grep' user command to avoid errors
+vim.api.nvim_create_user_command("Grep", "copen", { nargs = "*" })
+vim.api.nvim_create_autocmd("CmdlineChanged", {
   pattern = ":",
   callback = function()
     local words = vim.split(vim.fn.getcmdline(), " ", { trimempty = true })
