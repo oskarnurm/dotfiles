@@ -7,5 +7,7 @@
 	editor = nvim
 [push]
   autoSetupRemote = true
+[pull]
+	rebase = true
 [merge]
     tool = nvimdiff
