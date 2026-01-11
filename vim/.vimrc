@@ -3,12 +3,12 @@ colorscheme habamax
 let mapleader = " "
 
 set mouse=a
+set clipboard=unnamedplus
 set confirm
 set undofile
 set noswapfile
 set updatetime=250
 set timeoutlen=300
-set wildmode=noselect:lastused,full
 
 " ui
 set scrolloff=10
@@ -21,6 +21,9 @@ set termguicolors
 set signcolumn=yes
 set list
 set listchars=tab:\ \ ,trail:·,nbsp:␣
+set wildmode=noselect:lastused,full
+set wildoptions=pum
+
 
 " editing
 set nowrap
@@ -33,20 +36,7 @@ set smartindent
 set spelloptions=camel 
 set iskeyword=@,48-57,_,192-255,-
 set completeopt=menuone,noinsert,preview
-
-" disable some default providers
-let g:loaded_node_provider = 0
-let g:loaded_perl_provider = 0
-let g:loaded_ruby_provider = 0
-let g:loaded_python3_provider = 0
-
-let g:loaded_man = 1
-let g:loaded_gzip = 1
-let g:loaded_tarPlugin = 1
-let g:loaded_zipPlugin = 1
-let g:loaded_2html_plugin = 1
-
-autocmd VimEnter * set clipboard=unnamedplus
+set grepprg=rg\ --vimgrep\ --hidden\ --smart-case
 
 " mappings
 nnoremap ; :
@@ -67,14 +57,11 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" search & quickfix
+" grep & quickfix
 nnoremap <Esc> :nohlsearch<CR>
 nnoremap <C-n> :cnext<CR>zz
 nnoremap <C-p> :cprev<CR>zz
-nnoremap q :copen<CR>
-nnoremap Q :cclose<CR>
-nnoremap l :lopen<CR>
-nnoremap L :lclose<CR>
+nnoremap <leader>g :copen <bar> silent grep!<space>
 
 " move Lines
 vnoremap K :m '<-2<CR>gv=gv
@@ -83,34 +70,27 @@ vnoremap J :m '>+1<CR>gv=gv
 " file Navigation
 nnoremap <leader>av :vert sf #<CR>
 nnoremap <leader>b :b 
-
-let s:file_cache = []
-
-function! FdFindFiles(cmdarg, cmdcomplete)
-  " populate cache once per session
-  if empty(s:file_cache)
-    let s:file_cache = systemlist('fd --type f --hidden --exclude .git')
-  endif
-
-  " handle empty query
-  if empty(a:cmdarg)
-    return s:file_cache
-  endif
-
-  " fuzzy match against the cached list
-  return matchfuzzy(s:file_cache, a:cmdarg, {'limit': 100})
-endfunction
-
-set findfunc=FdFindFiles
-
-augroup FdFuzzyLogic
-  autocmd!
-  " trigger wildmenu automatically when typing ':find '
-  autocmd CmdlineChanged * if getcmdline() =~# '^find\s' | call wildtrigger() | endif
-  " clear memory when the command line is closed
-  autocmd CmdlineLeave * let s:file_cache = []
-augroup END
-
 nnoremap <leader>f :find<Space>
+
+
+func Find(arg, _)
+  if empty(s:filescache)
+    let s:filescache = systemlist('fd --type f --color=never --follow --hidden --exclude .git')
+  endif
+  return a:arg == '' ? s:filescache : matchfuzzy(s:filescache, a:arg)
+endfunc
+let s:filescache = []
+set findfunc=Find
+
+autocmd CmdlineEnter : let s:filescache = []
+autocmd CmdlineChanged [:\/\?] call wildtrigger()
+autocmd CmdlineLeavePre :
+      \ if get(cmdcomplete_info(), 'matches', []) != [] |
+      \   let s:info = cmdcomplete_info() |
+      \   if getcmdline() =~ '^\s*fin\%[d]\s' && s:info.selected == -1 |
+      \     call setcmdline($'find {s:info.matches[0]}') |
+      \   endif |
+      \ endif
+
 
 
