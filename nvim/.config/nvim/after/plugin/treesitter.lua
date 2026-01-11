@@ -1,5 +1,6 @@
 local ensure_installed = {
   "c",
+  "go",
   "lua",
   "vim",
   "css",
