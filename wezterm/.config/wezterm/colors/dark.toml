@@ -7,7 +7,7 @@ cursor_fg = "#000000"
 cursor_border = "#efefef"
 
 ansi = [
-  "#121212", 
+  "#101010", 
   "#ff7676", 
   "#a3d6a3", 
   "#ffffff", 
