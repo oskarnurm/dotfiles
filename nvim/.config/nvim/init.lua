@@ -65,6 +65,7 @@ vim.opt.runtimepath:prepend("~/odin/koda.nvim") -- while in dev
 require("koda").setup()
 vim.cmd("colorscheme koda")
 
+require("mini.ai").setup()
 require("mini.pick").setup()
 require("mini.extra").setup()
 require("blink.cmp").setup()
