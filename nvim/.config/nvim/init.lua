@@ -16,17 +16,17 @@ vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
 -- UI
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.termguicolors = true
+-- vim.opt.termguicolors = true
 vim.opt.cursorline = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.signcolumn = "yes"
-vim.opt.winborder = "single"
-vim.opt.pumborder = "single"
+vim.opt.winborder = "bold"
+vim.opt.pumborder = "bold"
 vim.opt.scrolloff = 10
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.diagnostic.config({ virtual_text = true, underline = false })
+vim.diagnostic.config({ virtual_text = true, severity_sort = true })
 vim.lsp.document_color.enable(true, vim.api.nvim_get_current_buf(), { style = "virtual" })
 
 -- Editing
@@ -47,8 +47,10 @@ vim.opt.formatoptions:remove("o") -- dont add comment after hitting 'o'
 
 -- Plugins
 -- NOTE: on lazyloading, see https://github.com/neovim/neovim/issues/35303
-vim.cmd.packadd("cfilter")
 vim.pack.add({
+  -- "https://github.com/oskarnurm/koda.nvim.git",
+  "https://github.com/folke/tokyonight.nvim.git", -- testing plugin hl
+  "https://github.com/vague-theme/vague.nvim.git", -- testing plugin hl
   "https://github.com/mbbill/undotree.git",
   "https://github.com/stevearc/oil.nvim.git",
   "https://github.com/tpope/vim-fugitive.git",
@@ -62,15 +64,14 @@ vim.pack.add({
   { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") },
 })
 
+-- Benchmark with =MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))
 vim.opt.runtimepath:prepend("~/odin/koda.nvim") -- while in dev
-require("koda").setup()
+require("koda").setup({ auto = true })
 vim.cmd("colorscheme koda")
 
+vim.opt.runtimepath:prepend("~/odin/win.nvim")
 require("mini.ai").setup()
-require("mini.pick").setup()
-require("mini.extra").setup()
 require("blink.cmp").setup()
-require("mini.files").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
 
@@ -149,6 +150,7 @@ vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader>b", ":buffer ")
 vim.keymap.set("n", "<leader>f", ":find ")
 vim.keymap.set("n", "<leader>g", ":Grep ")
+vim.keymap.set("n", "<leader>w", "<cmd>WinMode<CR>")
 vim.keymap.set("n", "<leader>k", function()
   vim.cmd("KodaFetch")
   if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then vim.cmd("lsp restart") end
@@ -161,12 +163,13 @@ vim.keymap.set("n", "<leader>q", function()
   vim.cmd(qf_exists and "cclose" or "copen")
 end, { desc = "Quickfix Toggle" })
 
--- Toggle diagnostic list
-vim.keymap.set("n", "<leader>td", function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-  local msg = vim.diagnostic.is_enabled() and "Enabled" or "Disabled"
-  vim.notify("Diagnostics " .. msg)
-end, { desc = "Diagnostics" })
+-- Toggle diagnostics
+-- vim.keymap.set("n", "<leader>td", function()
+--   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+--   local msg = vim.diagnostic.is_enabled() and "Enabled" or "Disabled"
+--   vim.notify("Diagnostics " .. msg)
+-- end, { desc = "Diagnostics" })
+
 vim.keymap.set("n", "<leader>tv", function()
   local enabled = vim.diagnostic.config().virtual_text
   vim.diagnostic.config({ virtual_text = not enabled })
@@ -174,7 +177,6 @@ end, { desc = "Toggle virtual text" })
 
 -- Enhance the :find command with `fd`, fuzzy file completion and auto-selection.
 -- we store results from fd in cache once per call to optimize performance
--- TODO: add support for git files using `git ls-files` for example. Is it worth the added complexity? Maybe sometimes nicer if we can get to root faster
 local filescache = {}
 function _G.Find(arg, _)
   if #filescache == 0 then filescache = vim.fn.systemlist("fd --type f --follow --hidden --exclude .git") end
@@ -208,7 +210,7 @@ vim.api.nvim_create_autocmd("CmdlineLeavePre", {
 
 -- Auto-select first match for :buffer
 vim.api.nvim_create_autocmd("CmdlineLeavePre", {
-  group = vim.api.nvim_create_augroup("AutoSelectBuffers", { clear = true }),
+  group = vim.api.nvim_create_augroup("AutoSelectBuf", { clear = true }),
   pattern = ":",
   callback = function()
     local info = vim.fn.cmdcomplete_info()
@@ -221,7 +223,7 @@ vim.api.nvim_create_autocmd("CmdlineLeavePre", {
 })
 
 -- Live grep updates quickfix list as you type
--- create the 'Grep' user command to avoid errors
+-- Create the 'Grep' user command to avoid errors
 vim.api.nvim_create_user_command("Grep", "copen", { nargs = "*" })
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   pattern = ":",
@@ -237,7 +239,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
+  group = vim.api.nvim_create_augroup("HlYank", { clear = true }),
   callback = function() vim.hl.on_yank() end,
 })
 
@@ -263,7 +265,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.api.nvim_create_augroup("last_loc", { clear = true }),
+  group = vim.api.nvim_create_augroup("LastLoc", { clear = true }),
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf
