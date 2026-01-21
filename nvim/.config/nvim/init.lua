@@ -167,6 +167,10 @@ vim.keymap.set("n", "<leader>td", function()
   local msg = vim.diagnostic.is_enabled() and "Enabled" or "Disabled"
   vim.notify("Diagnostics " .. msg)
 end, { desc = "Diagnostics" })
+vim.keymap.set("n", "<leader>tv", function()
+  local enabled = vim.diagnostic.config().virtual_text
+  vim.diagnostic.config({ virtual_text = not enabled })
+end, { desc = "Toggle virtual text" })
 
 -- Enhance the :find command with `fd`, fuzzy file completion and auto-selection.
 -- we store results from fd in cache once per call to optimize performance
