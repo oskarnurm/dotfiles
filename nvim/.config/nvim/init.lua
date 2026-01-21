@@ -146,7 +146,6 @@ vim.keymap.set("n", "<leader>l", "<cmd>lclose<CR>")
 vim.keymap.set("n", "<leader>c", "<cmd>e $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
-vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>") -- experimental
 vim.keymap.set("n", "<leader>b", ":buffer ")
 vim.keymap.set("n", "<leader>f", ":find ")
 vim.keymap.set("n", "<leader>g", ":Grep ")
