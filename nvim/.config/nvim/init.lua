@@ -149,6 +149,11 @@ vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>") -- experimenta
 vim.keymap.set("n", "<leader>b", ":buffer ")
 vim.keymap.set("n", "<leader>f", ":find ")
 vim.keymap.set("n", "<leader>g", ":Grep ")
+vim.keymap.set("n", "<leader>k", function()
+  vim.cmd("KodaFetch")
+  if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then vim.cmd("lsp restart") end
+end)
+vim.keymap.set("n", "<leader>vg", ":lua print(vim.inspect(vim.pack.get()))<CR>")
 
 -- Toggle quickfix list
 vim.keymap.set("n", "<leader>q", function()
