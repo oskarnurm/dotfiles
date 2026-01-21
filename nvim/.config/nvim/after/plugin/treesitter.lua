@@ -1,44 +1,44 @@
 local ensure_installed = {
-  "c",
-  "go",
-  "lua",
-  "vim",
-  "css",
-  "cpp",
-  "tsx",
-  "yaml",
-  "toml",
-  "json",
-  "rust",
   "bash",
-  "make",
-  "html",
-  "jsdoc",
+  "c",
   "diff",
-  "svelte",
-  "query",
-  "luadoc",
-  "vimdoc",
-  "python",
-  "comment",
-  "markdown",
-  "gitcommit",
-  "gitignore",
-  "git_config",
-  "git_rebase",
+  "html",
   "javascript",
-  "typescript",
-  "gitattributes",
-  "editorconfig",
+  "jsdoc",
+  "json",
+  "jsonc",
+  "lua",
+  "luadoc",
+  "luap",
+  "markdown",
   "markdown_inline",
+  "printf",
+  "python",
+  "query",
+  "regex",
+  "toml",
+  "tsx",
+  "typescript",
+  "vim",
+  "vimdoc",
+  "xml",
+  "yaml",
 }
 
-require("nvim-treesitter").install(ensure_installed)
+local TS = require("nvim-treesitter")
+TS.install(ensure_installed)
 
-local filetypes = vim.iter(ensure_installed):map(vim.treesitter.language.get_filetypes):flatten():totable()
-
--- enable treesitter for all installed languages
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = filetypes,
-  callback = function(event) vim.treesitter.start(event.buf) end,
+  group = vim.api.nvim_create_augroup("TSAutoInstall", { clear = true }),
+  callback = function(args)
+    local buffer = args.buf
+    local lang = args.match
+
+    TS.install(lang):await(function()
+      if not vim.api.nvim_buf_is_loaded(buffer) then return end
+
+      local installed = TS.get_installed()
+      if vim.list_contains(installed, lang) then vim.treesitter.start(buffer) end
+    end)
+  end,
 })
