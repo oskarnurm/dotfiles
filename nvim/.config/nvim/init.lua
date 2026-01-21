@@ -239,7 +239,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 -- Highlight when yanking
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
-  callback = function() vim.hl.on_yank({ higroup = "Visual" }) end,
+  callback = function() vim.hl.on_yank() end,
 })
 
 -- Create missing parent directories automatically
