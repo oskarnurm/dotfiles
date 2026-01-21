@@ -43,6 +43,7 @@ vim.opt.wildmode = "noselect:lastused,full"
 vim.opt.completeopt = "menuone,noinsert,preview,fuzzy"
 vim.opt.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
 vim.opt.grepprg = "rg --vimgrep --glob='!.git/*' --glob='!node_modules/*'"
+vim.opt.formatoptions:remove("o") -- dont add comment after hitting 'o'
 
 -- Plugins
 -- NOTE: on lazyloading, see https://github.com/neovim/neovim/issues/35303
@@ -273,12 +274,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     local lcount = vim.api.nvim_buf_line_count(buf)
     if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
   end,
-})
-
--- Don't automatically insert the current comment leader after hitting 'o'
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("BetterComments", { clear = true }),
-  callback = function() vim.cmd("setlocal formatoptions-=c formatoptions-=o") end,
 })
 
 -- Auto-detect and enable all server configs in 'lua/lsp/'
