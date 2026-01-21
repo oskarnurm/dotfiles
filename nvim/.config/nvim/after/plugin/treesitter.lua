@@ -39,6 +39,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
       local installed = TS.get_installed()
       if vim.list_contains(installed, lang) then vim.treesitter.start(buffer) end
+      vim.bo[buffer].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end)
   end,
 })
