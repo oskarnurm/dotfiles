@@ -43,7 +43,6 @@ vim.opt.wildmode = "noselect:lastused,full"
 vim.opt.completeopt = "menuone,noinsert,preview,fuzzy"
 vim.opt.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
 vim.opt.grepprg = "rg --vimgrep --glob='!.git/*' --glob='!node_modules/*'"
-vim.opt.formatoptions:remove("o") -- dont add comment after hitting 'o'
 
 -- Plugins
 -- NOTE: on lazyloading, see https://github.com/neovim/neovim/issues/35303
@@ -243,14 +242,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function() vim.hl.on_yank() end,
 })
 
--- Create missing parent directories automatically
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = vim.api.nvim_create_augroup("AutoCreateDir", { clear = true }),
-  callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then return end
-    local file = vim.uv.fs_realpath(event.match) or event.match
-    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-  end,
+-- Don't automatically insert the current comment leader after hitting 'o'
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function() vim.opt_local.formatoptions:remove({ "r", "o" }) end,
 })
 
 -- Wrap and check for spell in text filetypes
