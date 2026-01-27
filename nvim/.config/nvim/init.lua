@@ -23,11 +23,22 @@ vim.opt.splitbelow = true
 vim.opt.signcolumn = "yes"
 vim.opt.winborder = "bold"
 vim.opt.pumborder = "bold"
-vim.opt.scrolloff = 10
-vim.opt.list = true
-vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
-vim.diagnostic.config({ virtual_text = true, severity_sort = true })
-vim.lsp.document_color.enable(true, vim.api.nvim_get_current_buf(), { style = "virtual" })
+vim.opt.scrolloff = 999
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+-- vim.diagnostic.config({ underline = false, virtual_text = true, severity_sort = true })
+vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+local diagnostic_opts = {
+  signs = { priority = 9999, severity = { min = "WARN", max = "ERROR" } },
+  underline = { severity = { min = "HINT", max = "ERROR" } },
+  virtual_lines = false,
+  virtual_text = {
+    current_line = true,
+    severity = { min = "ERROR", max = "ERROR" },
+  },
+  update_in_insert = false,
+}
+vim.schedule(function() vim.diagnostic.config(diagnostic_opts) end)
 
 -- Editing
 vim.opt.wrap = false
@@ -42,25 +53,26 @@ vim.opt.virtualedit = "block"
 vim.opt.wildmode = "noselect:lastused,full"
 vim.opt.completeopt = "menuone,noinsert,preview,fuzzy"
 vim.opt.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
-vim.opt.grepprg = "rg --vimgrep --glob='!.git/*' --glob='!node_modules/*'"
+vim.opt.grepprg = "rg --vimgrep"
 
 -- Plugins
 -- NOTE: on lazyloading, see https://github.com/neovim/neovim/issues/35303
 vim.pack.add({
   -- "https://github.com/oskarnurm/koda.nvim.git",
-  "https://github.com/folke/tokyonight.nvim.git", -- testing plugin hl
-  "https://github.com/vague-theme/vague.nvim.git", -- testing plugin hl
-  "https://github.com/mbbill/undotree.git",
-  "https://github.com/stevearc/oil.nvim.git",
-  "https://github.com/tpope/vim-fugitive.git",
-  "https://github.com/nvim-mini/mini.nvim.git",
-  "https://github.com/folke/which-key.nvim.git",
-  "https://github.com/stevearc/conform.nvim.git",
-  "https://github.com/lewis6991/gitsigns.nvim.git",
-  "https://github.com/rafamadriz/friendly-snippets.git",
-  "https://github.com/christoomey/vim-tmux-navigator.git",
-  "https://github.com/nvim-treesitter/nvim-treesitter.git",
-  { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") },
+  { src = "https://github.com/folke/tokyonight.nvim" },
+  { src = "https://github.com/vague-theme/vague.nvim" },
+  { src = "https://github.com/Mofiqul/vscode.nvim.git" },
+  { src = "https://github.com/mbbill/undotree" },
+  { src = "https://github.com/stevearc/oil.nvim" },
+  { src = "https://github.com/tpope/vim-fugitive" },
+  { src = "https://github.com/nvim-mini/mini.nvim" },
+  { src = "https://github.com/folke/which-key.nvim" },
+  { src = "https://github.com/stevearc/conform.nvim" },
+  { src = "https://github.com/lewis6991/gitsigns.nvim" },
+  { src = "https://github.com/rafamadriz/friendly-snippets" },
+  { src = "https://github.com/christoomey/vim-tmux-navigator" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 })
 
 -- Benchmark with =MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))
@@ -68,8 +80,10 @@ vim.opt.runtimepath:prepend("~/odin/koda.nvim") -- while in dev
 require("koda").setup({ auto = true })
 vim.cmd("colorscheme koda")
 
-vim.opt.runtimepath:prepend("~/odin/win.nvim")
+-- vim.opt.runtimepath:prepend("~/odin/win.nvim")
 require("mini.ai").setup()
+require("mini.pick").setup()
+require("mini.extra").setup()
 require("blink.cmp").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
@@ -84,7 +98,7 @@ require("conform").setup({
     javascript = { "prettierd" },
     typescript = { "prettierd" },
     c = { lsp_format = "prefer" },
-    java = { "google-java-format" },
+    java = { lsp_format = "prefer" },
     ["_"] = { "prettierd" },
   },
 })
@@ -143,20 +157,20 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("n", "<leader>sa", "<cmd>vert sf #<CR>", { desc = "Split Alt File" })
 vim.keymap.set("n", "<leader>l", "<cmd>lclose<CR>")
-vim.keymap.set("n", "<leader>c", "<cmd>e $MYVIMRC<CR>")
+vim.keymap.set("n", "<leader>e", "<cmd>e $MYVIMRC<CR>")
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader>b", ":buffer ")
 vim.keymap.set("n", "<leader>f", ":find ")
 vim.keymap.set("n", "<leader>g", ":Grep ")
 vim.keymap.set("n", "<leader>w", "<cmd>WinMode<CR>")
+vim.keymap.set("n", "<leader>vg", ":lua print(vim.inspect(vim.pack.get()))<CR>")
+
 vim.keymap.set("n", "<leader>k", function()
   vim.cmd("KodaFetch")
   if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then vim.cmd("lsp restart") end
 end)
-vim.keymap.set("n", "<leader>vg", ":lua print(vim.inspect(vim.pack.get()))<CR>")
 
--- Toggle quickfix list
 vim.keymap.set("n", "<leader>q", function()
   local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
   vim.cmd(qf_exists and "cclose" or "copen")
@@ -174,8 +188,7 @@ vim.keymap.set("n", "<leader>tv", function()
   vim.diagnostic.config({ virtual_text = not enabled })
 end, { desc = "Toggle virtual text" })
 
--- Enhance the :find command with `fd`, fuzzy file completion and auto-selection.
--- we store results from fd in cache once per call to optimize performance
+-- Pluginless pickers
 local filescache = {}
 function _G.Find(arg, _)
   if #filescache == 0 then filescache = vim.fn.systemlist("fd --type f --follow --hidden --exclude .git") end
@@ -193,30 +206,17 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
   callback = function() vim.cmd([[ setlocal pumheight=15 | call wildtrigger()]]) end,
 })
 
--- Auto-select first match for :find
+-- Auto-select first match for pickers
 vim.api.nvim_create_autocmd("CmdlineLeavePre", {
   group = vim.api.nvim_create_augroup("AutoSelectFind", { clear = true }),
   pattern = ":",
   callback = function()
     local info = vim.fn.cmdcomplete_info()
-    if info.matches and #info.matches > 0 then
-      if vim.fn.getcmdline():match("^%s*fin[d]?%s") and info.selected == -1 then
-        vim.fn.setcmdline("find " .. info.matches[1])
-      end
-    end
-  end,
-})
-
--- Auto-select first match for :buffer
-vim.api.nvim_create_autocmd("CmdlineLeavePre", {
-  group = vim.api.nvim_create_augroup("AutoSelectBuf", { clear = true }),
-  pattern = ":",
-  callback = function()
-    local info = vim.fn.cmdcomplete_info()
-    if info.matches and #info.matches > 0 then
-      if vim.fn.getcmdline():match("^%s*bu?f?f?e?r?%s") and info.selected == -1 then
-        vim.fn.setcmdline("buffer " .. info.matches[1])
-      end
+    if info.matches and #info.matches > 0 and info.selected == -1 then
+      local cmd = vim.fn.getcmdline()
+      if cmd:match("^find") then vim.fn.setcmdline("find " .. info.matches[1]) end
+      if cmd:match("^Recent") then vim.fn.setcmdline("Recent " .. info.matches[1]) end
+      if cmd:match("^buffer") then vim.fn.setcmdline("buffer " .. info.matches[1]) end
     end
   end,
 })
@@ -225,11 +225,9 @@ vim.api.nvim_create_autocmd("CmdlineLeavePre", {
 -- Create the 'Grep' user command to avoid errors
 vim.api.nvim_create_user_command("Grep", "copen", { nargs = "*" })
 vim.api.nvim_create_autocmd("CmdlineChanged", {
-  pattern = ":",
   callback = function()
-    local words = vim.split(vim.fn.getcmdline(), " ", { trimempty = true })
-    if words[1] == "Grep" and #words > 1 then
-      vim.cmd("silent grep! " .. vim.fn.escape(words[2], " "))
+    if vim.fn.getcmdline():match("^Grep") then
+      vim.cmd("silent grep! " .. vim.fn.getcmdline():sub(6))
       vim.cmd("cwindow")
       vim.cmd.redraw()
     end
@@ -258,6 +256,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Create missing parent directories automatically
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("AutoCreateDir", { clear = true }),
+  callback = function(event)
+    if event.match:match("^%w%w+:[\\/][\\/]") then return end
+    local file = vim.uv.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+  end,
+})
+
 -- Go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup("LastLoc", { clear = true }),
@@ -283,3 +291,14 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
     vim.lsp.enable(server_configs)
   end,
 })
+
+vim.keymap.set("n", "<leader>c", function()
+  vim.ui.input({}, function(c)
+    if c and c ~= "" then
+      vim.cmd("noswapfile vnew")
+      vim.bo.buftype = "nofile"
+      vim.bo.bufhidden = "wipe"
+      vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.systemlist(c))
+    end
+  end)
+end)
