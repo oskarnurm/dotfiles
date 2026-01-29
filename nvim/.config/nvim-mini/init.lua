@@ -1,4 +1,6 @@
 vim.g.mapleader = " "
+
+-- settings
 vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -9,17 +11,21 @@ vim.opt.cursorline = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.signcolumn = "yes:1"
+vim.opt.signcolumn = "yes"
 vim.opt.winborder = "bold"
 vim.opt.pumborder = "bold"
 vim.opt.scrolloff = 999
 vim.opt.inccommand = "split"
 vim.opt.virtualedit = "block"
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 vim.opt.wildmode = "noselect:lastused,full"
 vim.opt.completeopt = "menuone,noinsert,preview,fuzzy"
 vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
 vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+vim.opt.grepprg = "rg --vimgrep"
 
+-- plugins
 vim.opt.runtimepath:prepend("~/odin/koda.nvim")
 vim.pack.add({
   "https://github.com/stevearc/oil.nvim",
@@ -43,23 +49,28 @@ require("conform").setup({
   },
 })
 
+-- keymaps
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
 vim.keymap.set({ "n", "v", "x" }, ":", ";")
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("i", "<C-space>", "<C-x><C-o>", { noremap = true, silent = true })
+vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
 vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("n", "<leader>k", "<cmd>KodaFetch<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+
 vim.keymap.set("n", "<leader>q", function()
   local is_qf = vim.fn.getqflist({ winid = 0 }).winid ~= 0
   vim.cmd(is_qf and "cclose" or "copen")
 end)
+
 vim.keymap.set("n", "<leader>c", function()
   vim.ui.input({}, function(c)
     if c and c ~= "" then
@@ -71,6 +82,7 @@ vim.keymap.set("n", "<leader>c", function()
   end)
 end)
 
+-- autocommands
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function() vim.hl.on_yank() end,
 })
@@ -97,16 +109,17 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
   end,
 })
 
+-- Automatically install and enable parsers
 local TS = require("nvim-treesitter")
 vim.api.nvim_create_autocmd("FileType", {
-  callback = function(args)
-    local buffer = args.buf
-    local lang = args.match
-    TS.install(lang):await(function()
-      if not vim.api.nvim_buf_is_loaded(buffer) then return end
-      local installed = TS.get_installed()
-      if vim.list_contains(installed, lang) then vim.treesitter.start(buffer) end
-      vim.bo[buffer].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end)
+  callback = function(ev)
+    local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+    if not lang then return end
+    local has_parser = #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) > 0
+    if has_parser then
+      pcall(vim.treesitter.start, ev.buf)
+    else
+      TS.install({ lang })
+    end
   end,
 })
