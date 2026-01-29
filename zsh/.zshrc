@@ -39,8 +39,9 @@ function mkcd() {
   mkdir -p $@ && cd ${@:$#}
 }
 
-alias v="nvim"
-alias vv='NVIM_APPNAME="nvim.bak" nvim'
+alias vi="nvim"
+alias v='NVIM_APPNAME=nvim-mini nvim'
+alias vl='NVIM_APPNAME=nvim-lazy nvim'
 alias lg="lazygit"
 alias ll='eza -lha --icons=auto --sort=name --group-directories-first' 
 alias ls='eza -1 --icons=auto'
