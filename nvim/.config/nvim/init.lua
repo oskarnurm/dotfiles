@@ -1,10 +1,7 @@
 vim.loader.enable()
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
--- General settings
+-- General
 vim.g.mapleader = " "
-
 vim.opt.mouse = "a"
 vim.opt.confirm = true
 vim.opt.timeoutlen = 300
@@ -16,7 +13,6 @@ vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
 -- UI
 vim.opt.number = true
 vim.opt.relativenumber = true
--- vim.opt.termguicolors = true
 vim.opt.cursorline = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -24,10 +20,10 @@ vim.opt.signcolumn = "yes"
 vim.opt.winborder = "bold"
 vim.opt.pumborder = "bold"
 vim.opt.scrolloff = 999
--- vim.opt.list = true
--- vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
--- vim.diagnostic.config({ underline = false, virtual_text = true, severity_sort = true })
+vim.opt.list = true
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 vim.lsp.document_color.enable(true, 0, { style = "virtual" })
+
 local diagnostic_opts = {
   signs = { priority = 9999, severity = { min = "WARN", max = "ERROR" } },
   underline = { severity = { min = "HINT", max = "ERROR" } },
@@ -52,42 +48,52 @@ vim.opt.inccommand = "split"
 vim.opt.virtualedit = "block"
 vim.opt.wildmode = "noselect:lastused,full"
 vim.opt.completeopt = "menuone,noinsert,preview,fuzzy"
-vim.opt.iskeyword = "@,48-57,_,192-255,-" -- treat dash as `word` textobject part
+vim.opt.iskeyword = "@,48-57,_,192-255,-"
 vim.opt.grepprg = "rg --vimgrep"
 
 -- Plugins
--- NOTE: on lazyloading, see https://github.com/neovim/neovim/issues/35303
+-- lazyloading: https://github.com/neovim/neovim/issues/35303
+-- Benchmark with `=MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))`
+vim.opt.runtimepath:prepend("~/odin/koda.nvim")
 vim.pack.add({
-  -- "https://github.com/oskarnurm/koda.nvim.git",
-  { src = "https://github.com/folke/tokyonight.nvim" },
-  { src = "https://github.com/vague-theme/vague.nvim" },
-  { src = "https://github.com/Mofiqul/vscode.nvim.git" },
   { src = "https://github.com/mbbill/undotree" },
   { src = "https://github.com/stevearc/oil.nvim" },
-  { src = "https://github.com/tpope/vim-fugitive" },
   { src = "https://github.com/nvim-mini/mini.nvim" },
   { src = "https://github.com/folke/which-key.nvim" },
   { src = "https://github.com/stevearc/conform.nvim" },
-  { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/rafamadriz/friendly-snippets" },
-  { src = "https://github.com/christoomey/vim-tmux-navigator" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 })
 
--- Benchmark with =MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))
-vim.opt.runtimepath:prepend("~/odin/koda.nvim") -- while in dev
-require("koda").setup({ auto = true })
+require("koda").setup()
 vim.cmd("colorscheme koda")
 
--- vim.opt.runtimepath:prepend("~/odin/win.nvim")
 require("mini.ai").setup()
 require("mini.pick").setup()
 require("mini.extra").setup()
+require("mini.git").setup()
+require("mini.diff").setup({
+  view = {
+    style = "sign",
+    signs = { add = "+", change = "~", delete = "_" },
+  },
+  mappings = { reset = "gr" },
+})
+-- - `saiw)` - *s*urround *a*dd for *i*nside *w*ord parenthesis (`)`)
+-- - `sdf`   - *s*urround *d*elete *f*unction call (like `f(var)` -> `var`)
+-- - `srb[`  - *s*urround *r*eplace *b*racket (any of [], (), {}) with padded `[`
+-- - `sf*`   - *s*urround *f*ind right part of `*` pair (like bold in markdown)
+-- - `shf`   - *s*urround *h*ighlight current *f*unction call
+-- - `srn{{` - *s*urround *r*eplace *n*ext curly bracket `{` with padded `{`
+-- - `sdl'`  - *s*urround *d*elete *l*ast quote pair (`'`)
+-- - `vaWsa<Space>` - *v*isually select *a*round *W*ORD and *s*urround *a*dd
+--                    spaces (`<Space>`)
+require("mini.surround").setup()
+
 require("blink.cmp").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("which-key").setup({ preset = "helix", icons = { mappings = false } })
-
 require("conform").setup({
   format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
   formatters_by_ft = {
@@ -103,68 +109,22 @@ require("conform").setup({
   },
 })
 
-require("gitsigns").setup({
-  signs = {
-    add = { text = "+" },
-    change = { text = "~" },
-    delete = { text = "_" },
-    topdelete = { text = "‾" },
-    changedelete = { text = "~" },
-  },
-  on_attach = function(bufnr)
-    local gs = require("gitsigns")
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
-    map("n", "]h", function() gs.nav_hunk("next") end, { desc = "Next Hunk" })
-    map("n", "[h", function() gs.nav_hunk("prev") end, { desc = "Previous Hunk" })
-    map(
-      "v",
-      "<leader>hs",
-      function() gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-      { desc = "Stage hunk" }
-    )
-    map(
-      "v",
-      "<leader>hr",
-      function() gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
-      { desc = "Reset hunk" }
-    )
-    map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage Hunk" })
-    map("n", "<leader>hr", gs.reset_hunk, { desc = "Reset Hunk" })
-    map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage Buffer" })
-    map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset Buffer" })
-    map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview Hunk" })
-    map("n", "<leader>hb", gs.blame_line, { desc = "Blame Line" })
-    map("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "Blame Line" })
-    map({ "o", "x" }, "ih", gs.select_hunk, { desc = "Hunk" })
-  end,
-})
-
 -- Keymaps
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
 vim.keymap.set({ "n", "v", "x" }, ":", ";")
 vim.keymap.set({ "n", "v" }, "x", '"_x')
 vim.keymap.set({ "n", "v" }, "c", [["_c]])
 vim.keymap.set({ "n", "v" }, "C", [["_C]])
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-p>", "<cmd>cprev<CR>zz")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("n", "<leader>sa", "<cmd>vert sf #<CR>", { desc = "Split Alt File" })
-vim.keymap.set("n", "<leader>l", "<cmd>lclose<CR>")
-vim.keymap.set("n", "<leader>e", "<cmd>e $MYVIMRC<CR>")
+vim.keymap.set("n", "<leader>b", ":buffer ")
 vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
-vim.keymap.set("n", "<leader>b", ":buffer ")
-vim.keymap.set("n", "<leader>f", ":find ")
-vim.keymap.set("n", "<leader>g", ":Grep ")
-vim.keymap.set("n", "<leader>w", "<cmd>WinMode<CR>")
-vim.keymap.set("n", "<leader>vg", ":lua print(vim.inspect(vim.pack.get()))<CR>")
 
 vim.keymap.set("n", "<leader>k", function()
   vim.cmd("KodaFetch")
@@ -176,28 +136,16 @@ vim.keymap.set("n", "<leader>q", function()
   vim.cmd(qf_exists and "cclose" or "copen")
 end, { desc = "Quickfix Toggle" })
 
--- Toggle diagnostics
--- vim.keymap.set("n", "<leader>td", function()
---   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
---   local msg = vim.diagnostic.is_enabled() and "Enabled" or "Disabled"
---   vim.notify("Diagnostics " .. msg)
--- end, { desc = "Diagnostics" })
-
-vim.keymap.set("n", "<leader>tv", function()
-  local enabled = vim.diagnostic.config().virtual_text
-  vim.diagnostic.config({ virtual_text = not enabled })
-end, { desc = "Toggle virtual text" })
-
--- Pluginless pickers
-local filescache = {}
-function _G.Find(arg, _)
-  if #filescache == 0 then filescache = vim.fn.systemlist("fd --type f --follow --hidden --exclude .git") end
-  return #arg == 0 and filescache or vim.fn.matchfuzzy(filescache, arg)
-end
-vim.o.findfunc = "v:lua.Find"
-vim.api.nvim_create_autocmd("CmdlineLeave", {
-  callback = function() filescache = {} end,
-})
+vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
+vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>")
+vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>")
+vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>")
+vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>")
+vim.keymap.set(
+  "n",
+  "<leader>n",
+  function() require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } }) end
+)
 
 -- Trigger wildmenu for command-line modes
 vim.api.nvim_create_autocmd("CmdlineChanged", {
@@ -206,7 +154,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
   callback = function() vim.cmd([[ setlocal pumheight=15 | call wildtrigger()]]) end,
 })
 
--- Auto-select first match for pickers
+-- Auto-select first match
 vim.api.nvim_create_autocmd("CmdlineLeavePre", {
   group = vim.api.nvim_create_augroup("AutoSelectFind", { clear = true }),
   pattern = ":",
@@ -215,21 +163,8 @@ vim.api.nvim_create_autocmd("CmdlineLeavePre", {
     if info.matches and #info.matches > 0 and info.selected == -1 then
       local cmd = vim.fn.getcmdline()
       if cmd:match("^find") then vim.fn.setcmdline("find " .. info.matches[1]) end
-      if cmd:match("^Recent") then vim.fn.setcmdline("Recent " .. info.matches[1]) end
       if cmd:match("^buffer") then vim.fn.setcmdline("buffer " .. info.matches[1]) end
-    end
-  end,
-})
-
--- Live grep updates quickfix list as you type
--- Create the 'Grep' user command to avoid errors
-vim.api.nvim_create_user_command("Grep", "copen", { nargs = "*" })
-vim.api.nvim_create_autocmd("CmdlineChanged", {
-  callback = function()
-    if vim.fn.getcmdline():match("^Grep") then
-      vim.cmd("silent grep! " .. vim.fn.getcmdline():sub(6))
-      vim.cmd("cwindow")
-      vim.cmd.redraw()
+      if cmd:match("^e") then vim.fn.setcmdline("e " .. info.matches[1]) end
     end
   end,
 })
@@ -292,13 +227,18 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
   end,
 })
 
-vim.keymap.set("n", "<leader>c", function()
-  vim.ui.input({}, function(c)
-    if c and c ~= "" then
-      vim.cmd("noswapfile vnew")
-      vim.bo.buftype = "nofile"
-      vim.bo.bufhidden = "wipe"
-      vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.fn.systemlist(c))
+-- Automatically install and enable treesitter parsers
+local TS = require("nvim-treesitter")
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("TSAutoInstall", { clear = true }),
+  callback = function(ev)
+    local lang = vim.treesitter.language.get_lang(ev.match) or ev.match
+    if not lang then return end
+    local has_parser = #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) > 0
+    if has_parser then
+      vim.treesitter.start(ev.buf)
+    else
+      TS.install({ lang })
     end
-  end)
-end)
+  end,
+})

@@ -2,44 +2,36 @@
   "plugins": {
     "blink.cmp": {
       "rev": "b19413d214068f316c78978b08264ed1c41830ec",
-      "src": "https://github.com/saghen/blink.cmp.git",
+      "src": "https://github.com/saghen/blink.cmp",
       "version": ">=0.0.0"
     },
     "conform.nvim": {
       "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
-      "src": "https://github.com/stevearc/conform.nvim.git"
+      "src": "https://github.com/stevearc/conform.nvim"
     },
     "friendly-snippets": {
       "rev": "572f5660cf05f8cd8834e096d7b4c921ba18e175",
-      "src": "https://github.com/rafamadriz/friendly-snippets.git"
-    },
-    "gitsigns.nvim": {
-      "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
-      "src": "https://github.com/lewis6991/gitsigns.nvim.git"
+      "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "mini.nvim": {
       "rev": "02fc1af931cb6e7bb475e4977f530073cfdcc20d",
-      "src": "https://github.com/nvim-mini/mini.nvim.git"
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-treesitter": {
       "rev": "36fcb4a4238928f0b627e1ab84ade0acc1facc2c",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter.git"
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
       "rev": "bbfa7cba85967dc9dbfe0ca486fd4b17084bf846",
-      "src": "https://github.com/stevearc/oil.nvim.git"
+      "src": "https://github.com/stevearc/oil.nvim"
     },
     "undotree": {
       "rev": "178d19e00a643f825ea11d581b1684745d0c4eda",
-      "src": "https://github.com/mbbill/undotree.git"
+      "src": "https://github.com/mbbill/undotree"
     },
-    "vim-fugitive": {
-      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
-      "src": "https://github.com/tpope/vim-fugitive.git"
-    },
-    "vim-tmux-navigator": {
-      "rev": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a",
-      "src": "https://github.com/christoomey/vim-tmux-navigator.git"
+    "vim-startuptime": {
+      "rev": "b6f0d93f6b8cf6eee0b4c94450198ba2d6a05ff6",
+      "src": "https://github.com/dstein64/vim-startuptime"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
@@ -47,4 +39,3 @@
     }
   }
 }
-
