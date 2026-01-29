@@ -1,6 +1,6 @@
 # dotfiles
 
-Configured on/for macOS Apple Silicon.  Copy at your own discretion.
+Configured on/for macOS Apple Silicon. Copy at your own discretion.
 
 ## How to install
 
@@ -27,6 +27,7 @@ git clone https://github.com/oskarnurm/dotfiles.git ~/dotfiles
 ```
 
 4. Install packages:
+
 ```bash
 cd ~/dotfiles
 brew bundle --file=Brewfile
@@ -41,12 +42,14 @@ stow <folder>
 ```
 
 6. Apply macOS settings:
+
 ```bash
 chmod +x settings.sh
 ./settings.sh
 ```
 
 ### Via install script
+
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/oskarnurm/dotfiles/main/install.sh)"
 ```
