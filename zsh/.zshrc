@@ -43,7 +43,7 @@ alias vi="nvim"
 alias v='NVIM_APPNAME=nvim-mini nvim'
 alias vl='NVIM_APPNAME=nvim-lazy nvim'
 alias lg="lazygit"
-alias ll='eza -lha --icons=auto --sort=name --group-directories-first' 
+alias la='eza -lha --icons=auto --sort=name --group-directories-first' 
 alias ls='eza -1 --icons=auto'
 alias lt='eza --icons=auto --tree'
 alias ..='cd ..'
