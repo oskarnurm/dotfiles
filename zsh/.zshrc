@@ -15,9 +15,12 @@ unsetopt BEEP
 
 export EDITOR='nvim'
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
-
+export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/dotfiles/scripts:$PATH"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
 export PATH="/opt/homebrew/opt/lld/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
@@ -39,8 +42,8 @@ function mkcd() {
   mkdir -p $@ && cd ${@:$#}
 }
 
-alias vi="nvim"
-alias v='NVIM_APPNAME=nvim-mini nvim'
+alias v="nvim"
+alias vi='NVIM_APPNAME=nvim-pack nvim'
 alias vl='NVIM_APPNAME=nvim-lazy nvim'
 alias lg="lazygit"
 alias la='eza -lha --icons=auto --sort=name --group-directories-first' 
@@ -50,16 +53,24 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
 alias venv="python3 -m venv .venv"
+
 # KTH
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
-# Fallback prompt
-PS1="%{$fg[magenta]%}%1~%{$fg[red]%} %{$reset_color%}$%b "
+# Load the version control system module
+autoload -Uz vcs_info
+precmd() { vcs_info }
 
-# Fzf
-export FZF_DEFAULT_OPTS="--color=bg:-1,fg:-1"
+# Format the git output: [branch]
+zstyle ':vcs_info:git:*' formats '%F{#ffffff}[%b]%f'
 
-eval "$(starship init zsh)"
+# Enable substitutions in the prompt string
+setopt PROMPT_SUBST
+
+# Set the prompt: dir[branch]$
+PS1='%F{#f4b8e4}%1~%f${vcs_info_msg_0_} %F{#d9ba73}$%f '
+
+# eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
@@ -80,3 +91,6 @@ else
 fi
 unset __conda_setup
 
+
+# Force zsh to refresh its PWD variable to match the actual directory
+cd .
