@@ -1,0 +1,221 @@
+local add = vim.pack.add
+local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
+
+vim.opt.runtimepath:prepend("~/odin/koda.nvim")
+vim.cmd.colorscheme("koda")
+
+now(function()
+  require("mini.icons").setup({})
+  later(MiniIcons.tweak_lsp_kind) -- Add LSP kind icons. Useful for 'mini.completion'.
+end)
+
+now_if_args(function()
+  add({ "https://github.com/stevearc/oil.nvim" })
+  require("oil").setup({ view_options = { show_hidden = true } })
+  vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
+end)
+
+-- now_if_args(function()
+--   add({ { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") } })
+--   require("blink.cmp").setup()
+-- end)
+
+now_if_args(function()
+  -- Don't show 'Text' suggestios and prioritize snippets
+  local opts = { kind_priority = { Text = -1, Snippet = 99 } }
+  local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, opts) end
+  require("mini.completion").setup({
+    lsp_completion = {
+      source_func = "omnifunc",
+      auto_setup = false, -- enable it lazily below
+      process_items = process_items,
+    },
+  })
+
+  -- Set 'omnifunc' for LSP completion only when needed.
+  local on_attach = function(ev) vim.bo[ev.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp" end
+  Config.autocmd("LspAttach", nil, on_attach, "Set 'omnifunc'")
+
+  -- Advertise to servers that Neovim now supports certain set of completion and
+  -- signature features through 'mini.completion'.
+  vim.lsp.config("*", { capabilities = MiniCompletion.get_lsp_capabilities() })
+end)
+
+now_if_args(function()
+  local ts_update = function() vim.cmd("TSUpdate") end
+  Config.on_packchanged("nvim-treesitter", { "update" }, ts_update, ":TSUpdate")
+
+  add({
+    "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+  })
+
+  local languages = {
+    -- To see available languages: `:=require('nvim-treesitter').get_available()`
+    -- - Visit 'SUPPORTED_LANGUAGES.md' file at
+    --   https://github.com/nvim-treesitter/nvim-treesitter/blob/main
+    "bash",
+    "c",
+    "diff",
+    "html",
+    "query",
+    "javascript",
+    "typescript",
+    "tsx",
+    "python",
+    "json",
+    "go",
+    "java",
+    "rust",
+    "comment",
+    "markdown",
+    "markdown_inline",
+  }
+  local not_installed = function(lang) return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0 end
+  local to_install = vim.tbl_filter(not_installed, languages)
+  if #to_install > 0 then require("nvim-treesitter").install(to_install) end
+
+  -- Enable tree-sitter after opening a file for a target language
+  local filetypes = {}
+  for _, lang in ipairs(languages) do
+    for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
+      table.insert(filetypes, ft)
+    end
+  end
+  local ts_start = function(ev) vim.treesitter.start(ev.buf) end
+  Config.autocmd("FileType", filetypes, ts_start, "Start tree-sitter")
+
+  require("nvim-treesitter-textobjects").setup({
+    select = {
+      lookahead = true,
+      selection_modes = {
+        ["@parameter.outer"] = "v",
+        ["@function.outer"] = "v",
+        ["@class.outer"] = "<c-v>",
+      },
+      include_surrounding_whitespace = false,
+    },
+  })
+end)
+
+now_if_args(function()
+  add({ "https://github.com/mason-org/mason.nvim" })
+  require("mason").setup()
+end)
+
+later(function() require("mini.extra").setup() end)
+
+-- Example usage:
+-- - `ci)` - *c*hange *i*inside parenthesis (`)`)
+-- - `di(` - *d*elete *i*inside padded parenthesis (`(`)
+-- - `yaq` - *y*ank *a*round *q*uote (any of "", '', or ``)
+-- - `vif` - *v*isually select *i*inside *f*unction call
+-- - `cina` - *c*hange *i*nside *n*ext *a*rgument
+later(function()
+  local ai = require("mini.ai")
+  ai.setup({
+    custom_textobjects = {
+      f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+      c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+      o = ai.gen_spec.treesitter({
+        a = { "@conditional.outer", "@loop.outer" },
+        i = { "@conditional.inner", "@loop.inner" },
+      }),
+    },
+  })
+end)
+
+later(function()
+  local hipatterns = require("mini.hipatterns")
+  hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
+end)
+
+-- Example usage:
+-- - `cii` - *c*hange *i*nside *i*ndent scope
+-- - `Vaiai` - *V*isually select *a*round *i*ndent scope and then again
+--   reselect *a*round new *i*indent scope
+-- - `[i` / `]i` - navigate to scope's top / bottom
+later(function() require("mini.indentscope").setup() end)
+
+later(function()
+  require("mini.pick").setup()
+  vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
+  vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>")
+  vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>")
+  vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>")
+  vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>")
+  vim.keymap.set(
+    "n",
+    "<leader>n",
+    function() require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } }) end,
+    { desc = "Pick Neovim" }
+  )
+end)
+
+-- Example usage (this may feel intimidating at first, but after practice it
+-- becomes second nature during text editing):
+-- - `saiw)` - *s*urround *a*dd for *i*nside *w*ord parenthesis (`)`)
+-- - `sdf`   - *s*urround *d*elete *f*unction call (like `f(var)` -> `var`)
+-- - `srb[`  - *s*urround *r*eplace *b*racket (any of [], (), {}) with padded `[`
+-- - `sf*`   - *s*urround *f*ind right part of `*` pair (like bold in markdown)
+-- - `shf`   - *s*urround *h*ighlight current *f*unction call
+-- - `srn{{` - *s*urround *r*eplace *n*ext curly bracket `{` with padded `{`
+-- - `sdl'`  - *s*urround *d*elete *l*ast quote pair (`'`)
+later(function() require("mini.surround").setup() end)
+
+later(function()
+  local snippets = require("mini.snippets")
+  -- Load snippets based on current language by reading files from
+  -- "snippets/" subdirectories from 'runtimepath' directories.
+  snippets.setup({ snippets = { snippets.gen_loader.from_lang() } })
+
+  -- Enable snippets
+  -- Empty tabstops are visualized with inline virtual text (“•”/“∎” for regular/final tabstops)
+  -- Jump to next with <C-l>
+  -- Jump back with <C-h>
+  -- Use <C-n> / <C-p> to select next / previous item.
+  -- Stop session with <C-c>
+  MiniSnippets.start_lsp_server()
+
+  -- Stop all sessions on Normal mode exit
+  local make_stop = function()
+    local au_opts = { pattern = "*:n", once = true }
+    au_opts.callback = function()
+      while MiniSnippets.session.get() do
+        MiniSnippets.session.stop()
+      end
+    end
+    vim.api.nvim_create_autocmd("ModeChanged", au_opts)
+  end
+  local opts = { pattern = "MiniSnippetsSessionStart", callback = make_stop }
+  vim.api.nvim_create_autocmd("User", opts)
+end)
+
+later(function() add({ "https://github.com/rafamadriz/friendly-snippets" }) end)
+
+later(function()
+  add({ "https://github.com/folke/which-key.nvim" })
+  require("which-key").setup({ preset = "helix", icons = { mappings = false } })
+end)
+
+later(function()
+  add({ "https://github.com/mbbill/undotree" })
+  vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
+end)
+
+later(function()
+  add({ "https://github.com/stevearc/conform.nvim" })
+  require("conform").setup({
+    format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
+    formatters_by_ft = {
+      sh = { "shfmt" },
+      lua = { "stylua" },
+      python = { "ruff_format" },
+      c = { lsp_format = "prefer" },
+      -- java = { "google-java-format" },
+      java = { lsp_format = "prefer" },
+      xml = { "xmlformatter" },
+      ["_"] = { "prettierd" },
+    },
+  })
+end)

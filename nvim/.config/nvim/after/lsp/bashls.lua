@@ -7,7 +7,7 @@
 --- npm i -g bash-language-server
 --- ```
 ---
---- Language server for bash, written using tree sitter in typescript.
+--- Language server for bash, written using treesitter in typescript.
 
 ---@type vim.lsp.Config
 return {
