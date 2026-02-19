@@ -22,7 +22,7 @@ end)
 
 now_if_args(function()
   -- Don't show 'Text' suggestios and prioritize snippets
-  local opts = { kind_priority = { Text = -1, Snippet = 99 } }
+  local opts = { kind_priority = { Snippet = 99 } }
   local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, opts) end
   require("mini.completion").setup({
     lsp_completion = {
@@ -217,5 +217,57 @@ later(function()
       xml = { "xmlformatter" },
       ["_"] = { "prettierd" },
     },
+  })
+end)
+
+later(function()
+  add({ "https://github.com/lewis6991/gitsigns.nvim.git" })
+  require("gitsigns").setup({
+    signs = {
+      add = { text = "+" },
+      change = { text = "~" },
+      delete = { text = "_" },
+      topdelete = { text = "‾" },
+      changedelete = { text = "~" },
+    },
+    on_attach = function(bufnr)
+      local gitsigns = require("gitsigns")
+
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
+
+      -- Navigation
+      map("n", "]h", function() gitsigns.nav_hunk("next") end, { desc = "Next Hunk" })
+      map("n", "[h", function() gitsigns.nav_hunk("prev") end, { desc = "Prev Hunk" })
+
+      -- visual mode
+      map(
+        "v",
+        "ghs",
+        function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
+        { desc = "Hunk Stage" }
+      )
+      map(
+        "v",
+        "ghr",
+        function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
+        { desc = "Hunk Reset" }
+      )
+      -- normal mode
+      map("n", "ghs", gitsigns.stage_hunk, { desc = "Hunk Stage" })
+      map("n", "ghr", gitsigns.reset_hunk, { desc = "Hunk Rest" })
+      map("n", "ghu", gitsigns.stage_hunk, { desc = "Hunk Undo Stage" })
+      map("n", "ghS", gitsigns.stage_buffer, { desc = "Hunk Stage Buffer" })
+      map("n", "ghR", gitsigns.reset_buffer, { desc = "Hunk Reset Buffer" })
+      map("n", "ghp", gitsigns.preview_hunk, { desc = "Hunk Preview Line" })
+      map("n", "ghb", gitsigns.blame_line, { desc = "Hunk Blame Line" })
+      map("n", "ghi", gitsigns.diffthis, { desc = "Hunk Diff Index" })
+      map("n", "ghc", function() gitsigns.diffthis("@") end, { desc = "Hunk Diff Commit" })
+      -- Toggles
+      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle blame line" })
+    end,
   })
 end)
