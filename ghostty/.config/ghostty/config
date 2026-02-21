@@ -1,39 +1,15 @@
 # vim set ft=conf
-background = #101010
-macos-titlebar-style = transparent
+theme = dark:koda-dark,light:koda-light
+font-size = 14
+
 font-feature = -calt
 font-feature = -dlig
 font-feature = -liga
-font-size = 15
 
-bold-is-bright = true
+window-padding-x = 20
+macos-titlebar-style = tabs
 
-# Background and foreground
-background = #faf9f5
-foreground = #101010
+macos-option-as-alt = true
 
-# Cursor colors
-cursor-color = #6a6a6a
-cursor-text = #ebebeb
-
-# Selection colors
-selection-background = #ebebeb
-selection-foreground = #101010
-
-# ANSI color palette (0-15)
-palette = 0=#e2e2e2
-palette = 1=#ca0043
-palette = 2=#407f00
-palette = 3=#926200
-palette = 4=#3d3d3d
-palette = 5=#a200d1
-palette = 6=#007d7d
-palette = 7=#6a6a6a
-palette = 8=#ababab
-palette = 9=#f30052
-palette = 10=#4f9a00
-palette = 11=#b07700
-palette = 12=#000000
-palette = 13=#c301fb
-palette = 14=#009797
-palette = 15=#101010
+keybind = ctrl+tab=csi:27;5;9~
+keybind = ctrl+shift+tab=csi:27;6;9~
