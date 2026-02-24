@@ -1,10 +1,10 @@
 # vim set ft=conf
 theme = dark:koda-dark,light:koda-light
-font-size = 14
 
-font-feature = -calt
-font-feature = -dlig
-font-feature = -liga
+font-size = 14
+adjust-cell-height = "+5%"
+
+font-feature = -calt, -dlig, -liga
 
 window-padding-x = 20
 macos-titlebar-style = tabs
