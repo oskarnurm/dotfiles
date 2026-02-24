@@ -13,6 +13,8 @@ setopt hist_find_no_dups
 # Remove BEEP
 unsetopt BEEP
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export EDITOR='nvim'
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -25,9 +27,8 @@ export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
 export PATH="/opt/homebrew/opt/lld/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 autoload -U colors && colors
 autoload -Uz compinit && compinit
@@ -37,10 +38,6 @@ _comp_options+=(globdots)
 
 bindkey -e  # Emacs keybinds
 bindkey -s '^F' 'tw.sh\n'
-
-function mkcd() {
-  mkdir -p $@ && cd ${@:$#}
-}
 
 alias v="nvim"
 alias vi='NVIM_APPNAME=nvim-pack nvim'
@@ -53,22 +50,53 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
 alias venv="python3 -m venv .venv"
-
-# KTH
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
-# Load the version control system module
+function mkcd() {
+  mkdir -p $@ && cd ${@:$#}
+}
+
+# Set the prompt: dir:[branch] $
 autoload -Uz vcs_info
-precmd() { vcs_info }
+precmd() {
+    # This ensures Zsh's internal directory stack is synced 
+    builtin cd . 2>/dev/null
+    vcs_info
+}
 
-# Format the git output: [branch]
-zstyle ':vcs_info:git:*' formats '%F{#ffffff}[%b]%f'
+# Version Control Styling
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ':[%F{9}%b%u%f]'
 
-# Enable substitutions in the prompt string
 setopt PROMPT_SUBST
+PS1='%B%F{cyan}%1~%f%b${vcs_info_msg_0_} %B$%b '
 
-# Set the prompt: dir[branch]$
-PS1='%F{#f4b8e4}%1~%f${vcs_info_msg_0_} %F{#d9ba73}$%f '
+# FZF theme
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --highlight-line \
+  --info=inline-right \
+  --ansi \
+  --layout=reverse \
+  --border=none \
+  --color=bg:-1 \
+  --color=bg+:0 \
+  --color=border:12 \
+  --color=fg:4 \
+  --color=fg+:12 \
+  --color=gutter:-1 \
+  --color=header:12 \
+  --color=hl+:11 \
+  --color=hl:11 \
+  --color=info:8 \
+  --color=marker:1 \
+  --color=pointer:12 \
+  --color=prompt:12 \
+  --color=query:15:regular \
+  --color=scrollbar:12 \
+  --color=separator:12 \
+  --color=spinner:8 \
+"
 
 # eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
@@ -90,7 +118,3 @@ else
     fi
 fi
 unset __conda_setup
-
-
-# Force zsh to refresh its PWD variable to match the actual directory
-cd .
