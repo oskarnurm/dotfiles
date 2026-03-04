@@ -50,6 +50,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias rmdir='rm -rf'
 alias venv="python3 -m venv .venv"
+alias svenv="source .venv/bin/activate"
 alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
 
 function mkcd() {
