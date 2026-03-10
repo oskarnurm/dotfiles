@@ -2,7 +2,9 @@ local add = vim.pack.add
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 vim.opt.runtimepath:prepend("~/odin/koda.nvim")
+-- Benchmark with `=MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))`
 vim.cmd.colorscheme("koda")
+require("koda").setup()
 
 now(function()
   require("mini.icons").setup({})
@@ -70,6 +72,7 @@ now_if_args(function()
     "comment",
     "markdown",
     "markdown_inline",
+    "gitcommit",
   }
   local not_installed = function(lang) return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0 end
   local to_install = vim.tbl_filter(not_installed, languages)
@@ -135,15 +138,18 @@ end)
 -- - `Vaiai` - *V*isually select *a*round *i*ndent scope and then again
 --   reselect *a*round new *i*indent scope
 -- - `[i` / `]i` - navigate to scope's top / bottom
-later(function() require("mini.indentscope").setup() end)
+-- later(function() require("mini.indentscope").setup() end)
 
 later(function()
   require("mini.pick").setup()
-  vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>")
-  vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>")
-  vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>")
-  vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>")
-  vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>")
+  vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Pick Files" })
+  vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>", { desc = "Pick Manual" })
+  vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>", { desc = "Pick Lines" })
+  vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>", { desc = "Pick Grep" })
+  vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>", { desc = "Pick Hunks" })
+  vim.keymap.set("n", "<leader>ss", "<cmd>Pick lsp scope='document_symbol'<CR>", { desc = "Pick Symbols" })
+  vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic scope='current'<CR>", { desc = "Pick Diagnostics" })
+  vim.keymap.set("n", "<leader>sD", "<cmd>Pick diagnostic scope='all'<CR>", { desc = "Pick Diagnostics All" })
   vim.keymap.set(
     "n",
     "<leader>n",
@@ -162,6 +168,8 @@ end)
 -- - `srn{{` - *s*urround *r*eplace *n*ext curly bracket `{` with padded `{`
 -- - `sdl'`  - *s*urround *d*elete *l*ast quote pair (`'`)
 later(function() require("mini.surround").setup() end)
+later(function() require("mini.pairs").setup({ modes = { command = true } }) end)
+later(function() require("mini.misc").setup() end)
 
 later(function()
   local snippets = require("mini.snippets")
@@ -210,7 +218,7 @@ later(function()
     formatters_by_ft = {
       sh = { "shfmt" },
       lua = { "stylua" },
-      python = { "ruff_format" },
+      python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
       c = { lsp_format = "prefer" },
       -- java = { "google-java-format" },
       java = { lsp_format = "prefer" },
@@ -268,6 +276,10 @@ later(function()
       map("n", "ghc", function() gitsigns.diffthis("@") end, { desc = "Hunk Diff Commit" })
       -- Toggles
       map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle blame line" })
+      -- Text object
+      map({ "o", "x" }, "ih", gitsigns.select_hunk)
     end,
   })
 end)
+
+later(function() add({ "https://github.com/tpope/vim-fugitive.git" }) end)
