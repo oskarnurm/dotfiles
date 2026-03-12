@@ -19,8 +19,6 @@ export EDITOR='nvim'
 export RIPGREP_CONFIG_PATH=$HOME/dotfiles/.ripgreprc
 export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/dotfiles/scripts:$PATH"
-# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:$PATH"
@@ -51,7 +49,8 @@ alias ...='cd ../..'
 alias rmdir='rm -rf'
 alias venv="python3 -m venv .venv"
 alias svenv="source .venv/bin/activate"
-alias compsec="docker run -it --rm -v .:/workdir -w /workdir compsec"
+alias python='python3'
+alias pip='pip3'
 
 function mkcd() {
   mkdir -p $@ && cd ${@:$#}
