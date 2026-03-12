@@ -40,6 +40,7 @@ Config.later(
       "rust_analyzer",
       "tailwindcss",
       "tsgo",
+      "ts_ls",
     })
   end
 )
