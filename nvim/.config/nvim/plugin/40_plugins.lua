@@ -73,10 +73,16 @@ now_if_args(function()
     "markdown",
     "markdown_inline",
     "gitcommit",
+    "embedded_template",
+    "prisma",
   }
   local not_installed = function(lang) return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0 end
   local to_install = vim.tbl_filter(not_installed, languages)
   if #to_install > 0 then require("nvim-treesitter").install(to_install) end
+
+  -- Ensure Neovim detects .ejs files correctly
+  vim.filetype.add({ extension = { ejs = "ejs" } })
+  vim.treesitter.language.register("embedded_template", "ejs")
 
   -- Enable tree-sitter after opening a file for a target language
   local filetypes = {}
@@ -223,6 +229,7 @@ later(function()
       -- java = { "google-java-format" },
       java = { lsp_format = "prefer" },
       xml = { "xmlformatter" },
+      prisma = { "prismals" },
       ["_"] = { "prettierd" },
     },
   })

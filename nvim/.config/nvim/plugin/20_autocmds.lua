@@ -42,3 +42,10 @@ Config.autocmd("FileType", filetypes, function()
   vim.opt_local.wrap = true
   vim.opt_local.spell = true
 end, "Wrap and check for spell in text filetypes")
+
+-- Auto create dir when saving a file, in case some intermediate directory does not exist
+Config.autocmd("BufWritePre", nil, function(event)
+  if event.match:match("^%w%w+:[\\/][\\/]") then return end
+  local file = vim.uv.fs_realpath(event.match) or event.match
+  vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+end, "Create missing dir")
