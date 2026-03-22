@@ -41,6 +41,8 @@ Config.later(
       "tailwindcss",
       "tsgo",
       "ts_ls",
+      "prismals",
+      "emmet_language_server",
     })
   end
 )
