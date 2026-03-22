@@ -28,7 +28,7 @@ config.keys = {
 }
 
 local get_theme = {
-	Light = "koda-dark", -- can change this to light whenever I want
+	Light = "koda-light", -- can change this to light whenever I want
 	Dark = "koda-dark",
 }
 
