@@ -290,3 +290,44 @@ later(function()
 end)
 
 later(function() add({ "https://github.com/tpope/vim-fugitive.git" }) end)
+later(function()
+  add({ "https://github.com/Vigemus/iron.nvim.git" })
+
+  local iron = require("iron.core")
+  local view = require("iron.view")
+  local common = require("iron.fts.common")
+
+  iron.setup({
+    config = {
+      scratch_repl = true,
+      repl_definition = {
+        sh = { command = { "zsh" } },
+        python = {
+          -- command = { "python3" },
+          command = { "ipython", "--no-autoindent" },
+          format = common.bracketed_paste_python,
+          block_dividers = { "# %%", "#%%" },
+          env = { PYTHON_BASIC_REPL = "1" },
+        },
+      },
+      repl_filetype = function(bufnr, ft) return ft end,
+      dap_integration = true,
+      repl_open_cmd = view.split.vertical(),
+    },
+    keymaps = {
+      toggle_repl = "<leader>tr",
+      restart_repl = "<leader>rr",
+      visual_send = "<leader>rv",
+      send_file = "<leader>rf",
+      send_line = "<leader>rl",
+      send_code_block = "<leader>rb",
+      send_code_block_and_move = "<leader>rnb",
+      cr = "<leader>r<cr>",
+      interrupt = "<leader>r<space>",
+      exit = "<leader>rq",
+      clear = "<leader>rc",
+    },
+    highlight = { italic = true },
+    ignore_blank_lines = true,
+  })
+end)
