@@ -18,11 +18,6 @@ vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
 
 vim.keymap.set("n", "<leader>k", "<cmd>KodaFetch<CR>")
 
-vim.keymap.set("n", "<M-h>", "<cmd>vert res +2<CR>")
-vim.keymap.set("n", "<M-l>", "<cmd>vert res -2<CR>")
-vim.keymap.set("n", "<M-j>", "<cmd>hor res +2<CR>")
-vim.keymap.set("n", "<M-k>", "<cmd>hor res -2<CR>")
-
 vim.keymap.set("n", "<leader>q", function()
   local is_qf = vim.fn.getqflist({ winid = 0 }).winid ~= 0
   vim.cmd(is_qf and "cclose" or "copen")
