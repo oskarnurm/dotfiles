@@ -58,6 +58,7 @@ now_if_args(function()
     --   https://github.com/nvim-treesitter/nvim-treesitter/blob/main
     "bash",
     "c",
+    "cpp",
     "diff",
     "html",
     "query",
@@ -229,6 +230,7 @@ later(function()
       -- java = { "google-java-format" },
       java = { lsp_format = "prefer" },
       xml = { "xmlformatter" },
+      cpp = { "clang-format" },
       prisma = { "prismals" },
       ["_"] = { "prettierd" },
     },
