@@ -10,6 +10,8 @@ vim.opt.confirm  = true  -- Raise a dialog asking if you wish to save the curren
 
 vim.opt.grepprg = "rg --vimgrep" -- Use rg for the :grep command
 vim.o.shada     = "'100,<50,s10,:1000,/100,@100,h" -- Limit ShaDa file (for startup)
+vim.opt.path:append({ "**" }) -- Add the current and all subdirectories to the search path
+vim.opt.wildignore:append({ "**/node_modules/**", "**/.git/**", "**/build/**" }) -- Ignore certain directories
 
 -- UI
 vim.o.wrap           = false      -- Don't visually wrap lines (toggle with \w)
