@@ -1,12 +1,12 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "4b18c32adef2898f95cdef6192cbd5796c1a332d",
+      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp.git",
       "version": ">=0.0.0"
     },
     "conform.nvim": {
-      "rev": "40dcec5555f960b0a04340d76eabdf4efe78599d",
+      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "friendly-snippets": {
@@ -14,32 +14,44 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "gitsigns.nvim": {
-      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "rev": "0d797daee85366bc242580e352a4f62d67557b84",
       "src": "https://github.com/lewis6991/gitsigns.nvim.git"
     },
     "iron.nvim": {
       "rev": "88cd340407b959f1168af2a6ae5a3d180e6df32c",
       "src": "https://github.com/Vigemus/iron.nvim.git"
     },
+    "marks.nvim": {
+      "rev": "f353e8c08c50f39e99a9ed474172df7eddd89b72",
+      "src": "https://github.com/chentoast/marks.nvim"
+    },
     "mason.nvim": {
-      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "rev": "b03fb0f20bc1d43daf558cda981a2be22e73ac42",
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "cad365c212fb1e332cb93fa8f72697125799d00a",
+      "rev": "2431902e78b76f435542d1e606f08475360068ca",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-treesitter": {
-      "rev": "5cb05e1b0fa3c469958a2b26f36b3fe930af221c",
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "4e91b5d0394329a229725b021a8ea217099826ef",
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "oil.nvim": {
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
     },
     "undotree": {
       "rev": "6fa6b57cda8459e1e4b2ca34df702f55242f4e4d",
