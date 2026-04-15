@@ -3,8 +3,17 @@ local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 vim.opt.runtimepath:prepend("~/odin/koda.nvim")
 -- Benchmark with `=MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))`
+require("koda").setup({
+  theme = { dark = "moss", light = "glade" },
+  styles = { functions = { bold = false } },
+
+  -- on_highlights = function(hl, _)
+  --   if vim.o.background == "light" then
+  --     if hl.Function then hl.Function.bold = true end
+  --   end
+  -- end,
+})
 vim.cmd.colorscheme("koda")
-require("koda").setup()
 
 now(function()
   require("mini.icons").setup({})
@@ -154,6 +163,8 @@ later(function()
   vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>", { desc = "Pick Lines" })
   vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>", { desc = "Pick Grep" })
   vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>", { desc = "Pick Hunks" })
+  vim.keymap.set("n", "<leader>c", "<cmd>Pick colorschemes<CR>", { desc = "Pick Colorschemes" })
+  vim.keymap.set("n", "<leader>r", "<cmd>Pick resume<CR>", { desc = "Pick Resume" })
   vim.keymap.set("n", "<leader>ss", "<cmd>Pick lsp scope='document_symbol'<CR>", { desc = "Pick Symbols" })
   vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic scope='current'<CR>", { desc = "Pick Diagnostics" })
   vim.keymap.set("n", "<leader>sD", "<cmd>Pick diagnostic scope='all'<CR>", { desc = "Pick Diagnostics All" })
@@ -177,6 +188,7 @@ end)
 later(function() require("mini.surround").setup() end)
 later(function() require("mini.pairs").setup({ modes = { command = true } }) end)
 later(function() require("mini.misc").setup() end)
+later(function() require("mini.jump2d").setup() end)
 
 later(function()
   local snippets = require("mini.snippets")
@@ -317,19 +329,38 @@ later(function()
       repl_open_cmd = view.split.vertical(),
     },
     keymaps = {
-      toggle_repl = "<leader>rt",
-      restart_repl = "<leader>rr",
-      visual_send = "<leader>rv",
-      send_file = "<leader>rf",
-      send_line = "<leader>rl",
-      send_code_block = "<leader>rb",
-      send_code_block_and_move = "<leader>rn",
-      cr = "<leader>r<cr>",
-      interrupt = "<leader>r<space>",
-      exit = "<leader>rq",
-      clear = "<leader>rc",
+      toggle_repl = "<leader>it",
+      restart_repl = "<leader>ir",
+      visual_send = "<leader>iv",
+      send_file = "<leader>if",
+      send_line = "<leader>il",
+      send_code_block = "<leader>ib",
+      send_code_block_and_move = "<leader>in",
+      cr = "<leader>i<cr>",
+      interrupt = "<leader>i<space>",
+      exit = "<leader>iq",
+      clear = "<leader>ic",
     },
     highlight = { italic = true },
     ignore_blank_lines = true,
   })
 end)
+
+later(function()
+  add({ "https://github.com/chentoast/marks.nvim" })
+  require("marks").setup()
+end)
+
+later(function()
+  add({
+    "https://github.com/folke/tokyonight.nvim",
+  })
+  require("tokyonight").setup({
+    -- styles = {
+    --   comments = { italic = false },
+    --   keywords = { italic = false },
+    -- },
+  })
+end)
+
+later(function() add({ "https://github.com/nvim-lua/plenary.nvim" }) end)
