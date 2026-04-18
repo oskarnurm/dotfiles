@@ -20,10 +20,17 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.setqflist, { desc = "Open Errors
 
 vim.keymap.set("n", "<leader>k", "<cmd>KodaFetch<CR>")
 
+-- Quickfix toggle
 vim.keymap.set("n", "<leader>q", function()
   local is_qf = vim.fn.getqflist({ winid = 0 }).winid ~= 0
   vim.cmd(is_qf and "cclose" or "copen")
 end, { desc = "Quickfix Toggle" })
+
+-- Loclist toggle
+vim.keymap.set("n", "<leader>l", function()
+  local is_loc = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+  vim.cmd(is_loc and "lclose" or "lopen")
+end, { desc = "Location List Toggle" })
 
 local term_buf = nil
 vim.keymap.set({ "n", "t" }, "<leader>tt", function()
