@@ -32,6 +32,24 @@ vim.keymap.set("n", "<leader>l", function()
   vim.cmd(is_loc and "lclose" or "lopen")
 end, { desc = "Location List Toggle" })
 
+-- Treesitter-incremental-selection
+vim.keymap.set({ "n", "x", "o" }, "<A-n>", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_parent(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(vim.v.count1)
+  end
+end, { desc = "Treesitter Select Next Node" })
+
+vim.keymap.set({ "n", "x", "o" }, "<A-p>", function()
+  if vim.treesitter.get_parser(nil, nil, { error = false }) then
+    require("vim.treesitter._select").select_child(vim.v.count1)
+  else
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end
+end, { desc = "Treesitter Select Previous Node " })
+
+-- Smart terminal toggle
 local term_buf = nil
 vim.keymap.set({ "n", "t" }, "<leader>tt", function()
   local term_win = nil
