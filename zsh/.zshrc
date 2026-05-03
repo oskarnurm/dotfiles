@@ -52,21 +52,21 @@ function mkcd() {
   mkdir -p $@ && cd ${@:$#}
 }
 
-# Set the prompt: dir:[branch] $
-autoload -Uz vcs_info
-precmd() {
-    # This ensures Zsh's internal directory stack is synced 
-    builtin cd . 2>/dev/null
-    vcs_info
-}
-
-# Version Control Styling
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' unstagedstr '*'
-zstyle ':vcs_info:git:*' formats ':[%F{9}%b%u%f]'
-
-setopt PROMPT_SUBST
-PS1='%B%F{cyan}%1~%f%b${vcs_info_msg_0_} %B$%b '
+# # Set the prompt: dir:[branch] $
+# autoload -Uz vcs_info
+# precmd() {
+#     # This ensures Zsh's internal directory stack is synced 
+#     builtin cd . 2>/dev/null
+#     vcs_info
+# }
+#
+# # Version Control Styling
+# zstyle ':vcs_info:*' check-for-changes true
+# zstyle ':vcs_info:git:*' unstagedstr '*'
+# zstyle ':vcs_info:git:*' formats ':[%F{9}%b%u%f]'
+#
+# setopt PROMPT_SUBST
+# PS1='%B%F{cyan}%1~%f%b${vcs_info_msg_0_} %B$%b '
 
 # FZF theme
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
@@ -94,7 +94,7 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
   --color=spinner:8 \
 "
 
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
