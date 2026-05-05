@@ -22,35 +22,38 @@ end)
 
 now_if_args(function()
   add({ "https://github.com/stevearc/oil.nvim" })
-  require("oil").setup({ view_options = { show_hidden = true } })
+  require("oil").setup({
+    view_options = { show_hidden = true },
+    skip_confirm_for_simple_edits = false,
+  })
   vim.keymap.set("n", "<leader>o", "<cmd>Oil<CR>")
 end)
 
--- now_if_args(function()
---   add({ { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") } })
---   require("blink.cmp").setup()
--- end)
-
 now_if_args(function()
-  -- Don't show 'Text' suggestios and prioritize snippets
-  local opts = { kind_priority = { Snippet = 99 } }
-  local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, opts) end
-  require("mini.completion").setup({
-    lsp_completion = {
-      source_func = "omnifunc",
-      auto_setup = false, -- enable it lazily below
-      process_items = process_items,
-    },
-  })
-
-  -- Set 'omnifunc' for LSP completion only when needed.
-  local on_attach = function(ev) vim.bo[ev.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp" end
-  Config.autocmd("LspAttach", nil, on_attach, "Set 'omnifunc'")
-
-  -- Advertise to servers that Neovim now supports certain set of completion and
-  -- signature features through 'mini.completion'.
-  vim.lsp.config("*", { capabilities = MiniCompletion.get_lsp_capabilities() })
+  add({ { src = "https://github.com/saghen/blink.cmp.git", version = vim.version.range("*") } })
+  require("blink.cmp").setup()
 end)
+
+-- now_if_args(function()
+--   -- Don't show 'Text' suggestios and prioritize snippets
+--   local opts = { kind_priority = { Snippet = 99 } }
+--   local process_items = function(items, base) return MiniCompletion.default_process_items(items, base, opts) end
+--   require("mini.completion").setup({
+--     lsp_completion = {
+--       source_func = "omnifunc",
+--       auto_setup = false, -- enable it lazily below
+--       process_items = process_items,
+--     },
+--   })
+--
+--   -- Set 'omnifunc' for LSP completion only when needed.
+--   local on_attach = function(ev) vim.bo[ev.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp" end
+--   Config.autocmd("LspAttach", nil, on_attach, "Set 'omnifunc'")
+--
+--   -- Advertise to servers that Neovim now supports certain set of completion and
+--   -- signature features through 'mini.completion'.
+--   vim.lsp.config("*", { capabilities = MiniCompletion.get_lsp_capabilities() })
+-- end)
 
 now_if_args(function()
   local ts_update = function() vim.cmd("TSUpdate") end
@@ -144,11 +147,6 @@ later(function()
   })
 end)
 
-later(function()
-  local hipatterns = require("mini.hipatterns")
-  hipatterns.setup({ highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() } })
-end)
-
 -- Example usage:
 -- - `cii` - *c*hange *i*nside *i*ndent scope
 -- - `Vaiai` - *V*isually select *a*round *i*ndent scope and then again
@@ -158,7 +156,7 @@ end)
 
 later(function()
   require("mini.pick").setup()
-  vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Pick Files" })
+  -- vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Pick Files" })
   vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>", { desc = "Pick Manual" })
   vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>", { desc = "Pick Lines" })
   vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>", { desc = "Pick Grep" })
@@ -176,6 +174,25 @@ later(function()
   )
 end)
 
+later(function()
+  add({ "https://github.com/dmtrKovalenko/fff.nvim" })
+  -- Config.on_packchanged(
+  --   "fff.nvim",
+  --   { "install", "update" },
+  --   function() require("fff.download").download_or_build_binary() end,
+  --   "Download binary for fff.nvim on change"
+  -- )
+
+  vim.g.fff = {
+    lazy_sync = true,
+    debug = { enabled = true, show_scores = true },
+  }
+  require("fff").setup({ prompt = "> ", layout = { prompt_position = "top" } })
+
+  vim.keymap.set("n", "<leader>f", function() require("fff").find_files() end, { desc = "Find Files" })
+  vim.keymap.set("n", "<leader>g", function() require("fff").live_grep() end, { desc = "Grep Live" })
+end)
+
 -- Example usage (this may feel intimidating at first, but after practice it
 -- becomes second nature during text editing):
 -- - `saiw)` - *s*urround *a*dd for *i*nside *w*ord parenthesis (`)`)
@@ -186,9 +203,12 @@ end)
 -- - `srn{{` - *s*urround *r*eplace *n*ext curly bracket `{` with padded `{`
 -- - `sdl'`  - *s*urround *d*elete *l*ast quote pair (`'`)
 later(function() require("mini.surround").setup() end)
-later(function() require("mini.pairs").setup({ modes = { command = true } }) end)
 later(function() require("mini.misc").setup() end)
 later(function() require("mini.jump2d").setup() end)
+later(function()
+  require("mini.visits").setup()
+  vim.keymap.set("n", "<leader>v", "<cmd>Pick visit_paths<CR>", { desc = "Pick Visits" })
+end)
 
 later(function()
   local snippets = require("mini.snippets")
@@ -296,7 +316,7 @@ later(function()
       map("n", "ghi", gitsigns.diffthis, { desc = "Hunk Diff Index" })
       map("n", "ghc", function() gitsigns.diffthis("@") end, { desc = "Hunk Diff Commit" })
       -- Toggles
-      map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle blame line" })
+      map("n", "ght", gitsigns.toggle_current_line_blame, { desc = "Toggle blame line" })
       -- Text object
       map({ "o", "x" }, "ih", gitsigns.select_hunk)
     end,
