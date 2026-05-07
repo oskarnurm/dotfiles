@@ -8,7 +8,7 @@ DIRS=(
   "$HOME/dotfiles/nvim/.config/nvim"
 )
 
-selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=1 |
+selected=$(fd . "${DIRS[@]}" --type=dir --max-depth=2 |
   sed "s|^$HOME/||" | fzf --margin 30%)
 
 [[ ! $selected ]] && exit 0
