@@ -3,6 +3,7 @@ _G.Config = {}
 
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" })
 
+-- Utils
 local misc = require("mini.misc")
 Config.now = function(f) misc.safely("now", f) end
 Config.later = function(f) misc.safely("later", f) end
@@ -26,6 +27,7 @@ Config.on_packchanged = function(plugin_name, kinds, callback, desc)
   Config.autocmd("PackChanged", "*", f, desc)
 end
 
+-- LPS
 Config.later(
   function()
     vim.lsp.enable({
