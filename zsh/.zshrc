@@ -9,8 +9,6 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
-
-# Remove BEEP
 unsetopt BEEP
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -68,32 +66,6 @@ function mkcd() {
 # setopt PROMPT_SUBST
 # PS1='%B%F{cyan}%1~%f%b${vcs_info_msg_0_} %B$%b '
 
-# FZF theme
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-  --highlight-line \
-  --info=inline-right \
-  --ansi \
-  --layout=reverse \
-  --border=none \
-  --color=bg:-1 \
-  --color=bg+:0 \
-  --color=border:12 \
-  --color=fg:4 \
-  --color=fg+:12 \
-  --color=gutter:-1 \
-  --color=header:12 \
-  --color=hl+:11 \
-  --color=hl:11 \
-  --color=info:8 \
-  --color=marker:1 \
-  --color=pointer:12 \
-  --color=prompt:12 \
-  --color=query:15:regular \
-  --color=scrollbar:12 \
-  --color=separator:12 \
-  --color=spinner:8 \
-"
-
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
@@ -114,3 +86,11 @@ else
     fi
 fi
 unset __conda_setup
+
+# Handles OSC 7 dir change requests
+function print_osc7() {
+  printf '\033]7;file://%s\033\\' "$PWD"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd print_osc7
+
