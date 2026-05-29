@@ -1,0 +1,141 @@
+[general]
+passthrough_unbounded_keys = true
+
+[hotkeys]
+"Option+Escape" = "recursive_grid --cursor-selection-mode hold --action left_click"
+"Option+Tab" = "scroll"
+
+"Cmd+Shift+Space" = "__disabled__"
+"Cmd+Shift+G" = "__disabled__"
+"Cmd+Shift+C" = "__disabled__"
+"Cmd+Shift+S" = "__disabled__"
+
+[virtual_pointer.ui]
+size = 4
+color = "#FFFFAA22"
+
+[mode_indicator.ui]
+# font_size = 4
+# border_radius = 50
+# border_color = "#00000000"
+# border_width = 0
+# padding_x = -1
+# padding_y = -1
+# indicator_x_offset = 10
+# indicator_y_offset = -20
+
+[mode_indicator.scroll]
+enabled = true
+# text = " "
+# background_color = "#FF00CF55"
+
+[sticky_modifiers.ui]
+# indicator_y_offset = -10
+# indicator_x_offset = 0
+# border_width = 0
+# background_color = "#FFFFAA22"
+# text_color = "#000000"
+
+[scroll.hotkeys]
+# "gg"      = "action go_top"
+# "Shift+G" = "action go_bottom"
+
+# "," = "action move_mouse --center"
+# "." = "recursive_grid --cursor-selection-mode hold"
+
+"Space" = ["action left_click", "idle"]
+"Shift+Space" = "action left_click"
+"Cmd+Space" = ["action right_click", "idle"]
+"Cmd+Shift+Space" = "action right_click"
+
+"Shift+M" = "action middle_click"
+"Shift+D" = "action mouse_down"
+"Shift+U" = "action mouse_up"
+
+"Up" = "action move_mouse_relative --dx=0 --dy=-25"
+"Down" = "action move_mouse_relative --dx=0 --dy=25"
+"Left" = "action move_mouse_relative --dx=-25 --dy=0"
+"Right" = "action move_mouse_relative --dx=25 --dy=0"
+
+"Cmd+Up" = "action move_mouse_relative --dx=0 --dy=-150"
+"Cmd+Down" = "action move_mouse_relative --dx=0 --dy=150"
+"Cmd+Left" = "action move_mouse_relative --dx=-150 --dy=0"
+"Cmd+Right" = "action move_mouse_relative --dx=150 --dy=0"
+
+"Shift+Up" = "action move_mouse_relative --dx=0 --dy=-5"
+"Shift+Down" = "action move_mouse_relative --dx=0 --dy=5"
+"Shift+Left" = "action move_mouse_relative --dx=-5 --dy=0"
+"Shift+Right" = "action move_mouse_relative --dx=5 --dy=0"
+
+"Shift+L" = "__disabled__"
+"Shift+R" = "__disabled__"
+"Shift+I" = "__disabled__"
+
+[recursive_grid]
+grid_cols = 5
+grid_rows = 4
+max_depth = 2
+keys = "qwertasdfgyuiophjkl;"
+min_size_height = 1
+min_size_width = 1
+
+[recursive_grid.ui]
+font_size = 18
+label_background = false                    # Enables a solid block behind the text
+label_background_color = "#597D6600"       # Sets the background block to solid black
+highlight_color = "#597D6600"
+text_color = "#FFFFFFFF"                   # Sets the text to solid white
+line_color = "#FFFFFFFF"
+label_background_padding_x = 4             # Adds breathing room horizontally
+label_background_padding_y = 4             # Adds breathing room vertically
+label_background_border_radius = 4         # Slightly rounds the corners of the background
+
+[recursive_grid.animation]
+enabled = true
+duration_ms = 50
+
+[recursive_grid.hotkeys]
+"Up" = "action move_mouse_relative --dx=0 --dy=-25"
+"Down" = "action move_mouse_relative --dx=0 --dy=25"
+"Left" = "action move_mouse_relative --dx=-25 --dy=0"
+"Right" = "action move_mouse_relative --dx=25 --dy=0"
+
+"Cmd+Up" = "action move_mouse_relative --dx=0 --dy=-150"
+"Cmd+Down" = "action move_mouse_relative --dx=0 --dy=150"
+"Cmd+Left" = "action move_mouse_relative --dx=-150 --dy=0"
+"Cmd+Right" = "action move_mouse_relative --dx=150 --dy=0"
+
+"Shift+Up" = "action move_mouse_relative --dx=0 --dy=-5"
+"Shift+Down" = "action move_mouse_relative --dx=0 --dy=5"
+"Shift+Left" = "action move_mouse_relative --dx=-5 --dy=0"
+"Shift+Right" = "action move_mouse_relative --dx=5 --dy=0"
+
+"Space" = ["action left_click", "idle"]
+"Shift+Space" = ["action left_click", "action reset"]
+"Cmd+Space" = ["action right_click", "idle"]
+"Cmd+Shift+Space" = ["action right_click", "action reset"]
+
+"Shift+M" = "action middle_click"
+"Shift+D" = "action mouse_down"
+"Shift+U" = "action mouse_up"
+
+"`" = "toggle-cursor-follow-selection"
+"," = "action reset"
+"." = ["action move_mouse", "scroll"]
+
+"Ctrl+J" = "action scroll_down"
+"Ctrl+K" = "action scroll_up"
+"Ctrl+H" = "action scroll_left"
+"Ctrl+L" = "action scroll_right"
+"Ctrl+U" = "action page_up"
+"Ctrl+D" = "action page_down"
+"Ctrl+T" = "action go_top"
+"Ctrl+B" = "action go_bottom"
+"Ctrl+M" = "action move_mouse"
+
+"Shift+L" = "__disabled__"
+"Shift+R" = "__disabled__"
+"Shift+I" = "__disabled__"
+
+[systray]
+enabled = false
