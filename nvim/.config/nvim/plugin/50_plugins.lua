@@ -4,17 +4,17 @@ local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 -- now(function() add({ "https://github.com/oskarnurm/koda.nvim" }) end)
 -- Benchmark with `=MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))`
 vim.opt.runtimepath:prepend("~/odin/koda.nvim")
-require("koda").setup({
-  theme = { dark = "moss", light = "light" },
-
-  -- on_highlights = function(hl, _)
-  --   if vim.o.background == "light" then
-  --     if hl.Function then hl.Function.bold = true end
-  --   end
-  -- end,
-})
+-- require("koda").setup({
+--   theme = { dark = "moss", light = "glade" },
+--
+--   -- on_highlights = function(hl, _)
+--   --   if vim.o.background == "light" then
+--   --     if hl.Function then hl.Function.bold = true end
+--   --   end
+--   -- end,
+-- })
+vim.cmd("colorscheme koda")
 vim.keymap.set("n", "<leader>k", "<cmd>KodaFetch<CR>")
-vim.cmd.colorscheme("koda")
 
 now_if_args(function()
   add({ "https://github.com/stevearc/oil.nvim" })
@@ -106,23 +106,23 @@ later(function()
   vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>")
 end)
 
-later(function()
-  add({ "https://github.com/dmtrKovalenko/fff.nvim" })
-  -- Config.on_packchanged(
-  --   "fff.nvim",
-  --   { "install", "update" },
-  --   function() require("fff.download").download_or_build_binary() end,
-  --   "Download binary for fff.nvim on change"
-  -- )
-
-  vim.g.fff = {
-    lazy_sync = true,
-    debug = { enabled = true, show_scores = true },
-  }
-  require("fff").setup({ prompt = "> ", layout = { prompt_position = "top" } })
-  vim.keymap.set("n", "<leader>f", function() require("fff").find_files() end, { desc = "Find Files" })
-  vim.keymap.set("n", "<leader>g", function() require("fff").live_grep() end, { desc = "Grep Live" })
-end)
+-- later(function()
+--   add({ "https://github.com/dmtrKovalenko/fff.nvim" })
+--   -- Config.on_packchanged(
+--   --   "fff.nvim",
+--   --   { "install", "update" },
+--   --   function() require("fff.download").download_or_build_binary() end,
+--   --   "Download binary for fff.nvim on change"
+--   -- )
+--
+--   vim.g.fff = {
+--     lazy_sync = true,
+--     debug = { enabled = true, show_scores = true },
+--   }
+--   require("fff").setup({ prompt = "> ", layout = { prompt_position = "top" } })
+--   vim.keymap.set("n", "<leader>f", function() require("fff").find_files() end, { desc = "Find Files" })
+--   vim.keymap.set("n", "<leader>g", function() require("fff").live_grep() end, { desc = "Grep Live" })
+-- end)
 
 later(function()
   add({ "https://github.com/folke/which-key.nvim" })
@@ -264,3 +264,26 @@ later(function()
   })
 end)
 
+-- Better find
+vim.cmd([[
+func Find(arg, _)
+  if empty(s:filescache)
+    let s:filescache = systemlist('fd --type f --color=never --follow --hidden --exclude .git')
+  endif
+  return a:arg == '' ? s:filescache : matchfuzzy(s:filescache, a:arg)
+endfunc
+let s:filescache = []
+set findfunc=Find
+
+autocmd CmdlineEnter : let s:filescache = []
+autocmd CmdlineChanged [:\/\?] call wildtrigger()
+autocmd CmdlineLeavePre :
+      \ if get(cmdcomplete_info(), 'matches', []) != [] |
+      \   let s:info = cmdcomplete_info() |
+      \   if getcmdline() =~ '^\s*fin\%[d]\s' && s:info.selected == -1 |
+      \     call setcmdline($'find {s:info.matches[0]}') |
+      \   endif |
+      \ endif
+]])
+
+vim.keymap.set("n", "<leader>f", ":find ")

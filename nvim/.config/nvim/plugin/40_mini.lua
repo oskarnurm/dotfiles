@@ -39,22 +39,22 @@ later(function() require("mini.extra").setup() end)
 later(function() require("mini.misc").setup() end)
 later(function() require("mini.jump2d").setup() end)
 
-later(function()
-  require("mini.pick").setup()
-  -- vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Pick Files" })
-  vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>", { desc = "Pick Manual" })
-  vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>", { desc = "Pick Lines" })
-  vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>", { desc = "Pick Grep" })
-  vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>", { desc = "Pick Hunks" })
-  vim.keymap.set("n", "<leader>cs", "<cmd>Pick colorschemes<CR>", { desc = "Pick Colorschemes" })
-  vim.keymap.set("n", "<leader>r", "<cmd>Pick resume<CR>", { desc = "Pick Resume" })
-  vim.keymap.set("n", "<leader>ss", "<cmd>Pick lsp scope='document_symbol'<CR>", { desc = "Pick Symbols" })
-  vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic scope='current'<CR>", { desc = "Pick Diagnostics" })
-  vim.keymap.set("n", "<leader>sD", "<cmd>Pick diagnostic scope='all'<CR>", { desc = "Pick Diagnostics All" })
-  vim.keymap.set(
-    "n",
-    "<leader>n",
-    function() require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } }) end,
-    { desc = "Pick Neovim" }
-  )
-end)
+-- later(function()
+--   require("mini.pick").setup()
+--   -- vim.keymap.set("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Pick Files" })
+--   vim.keymap.set("n", "<leader>m", "<cmd>Pick help<CR>", { desc = "Pick Manual" })
+--   vim.keymap.set("n", "<leader>/", "<cmd>Pick buf_lines<CR>", { desc = "Pick Lines" })
+--   vim.keymap.set("n", "<leader>g", "<cmd>Pick grep_live<CR>", { desc = "Pick Grep" })
+--   vim.keymap.set("n", "<leader>h", "<cmd>Pick git_hunks<CR>", { desc = "Pick Hunks" })
+--   vim.keymap.set("n", "<leader>cs", "<cmd>Pick colorschemes<CR>", { desc = "Pick Colorschemes" })
+--   vim.keymap.set("n", "<leader>r", "<cmd>Pick resume<CR>", { desc = "Pick Resume" })
+--   vim.keymap.set("n", "<leader>ss", "<cmd>Pick lsp scope='document_symbol'<CR>", { desc = "Pick Symbols" })
+--   vim.keymap.set("n", "<leader>sd", "<cmd>Pick diagnostic scope='current'<CR>", { desc = "Pick Diagnostics" })
+--   vim.keymap.set("n", "<leader>sD", "<cmd>Pick diagnostic scope='all'<CR>", { desc = "Pick Diagnostics All" })
+--   vim.keymap.set(
+--     "n",
+--     "<leader>n",
+--     function() require("mini.pick").builtin.files({}, { source = { cwd = vim.fn.stdpath("config") } }) end,
+--     { desc = "Pick Neovim" }
+--   )
+-- end)
