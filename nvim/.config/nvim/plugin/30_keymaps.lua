@@ -1,3 +1,5 @@
+vim.g.maplocalleader = ","
+
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
 vim.keymap.set({ "n", "v", "x" }, ":", ";")
 
@@ -21,6 +23,7 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww 'tw.sh'<CR>")
 vim.keymap.set("i", "<C-space>", "<C-x><C-o>")
 vim.keymap.set("n", "grd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 vim.keymap.set("n", "<leader>e", vim.diagnostic.setqflist, { desc = "Open Errors" })
+vim.keymap.set("n", "<Leader>cr", ":%s/\\<<C-r><C-w>\\>//g<Left><Left>", { desc = "Replace Word" })
 
 -- Quickfix toggle
 vim.keymap.set("n", "<leader>q", function()

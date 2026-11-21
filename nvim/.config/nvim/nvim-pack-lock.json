@@ -9,6 +9,10 @@
       "rev": "dca1a190aa85f9065979ef35802fb77131911106",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "conjure": {
+      "rev": "b23c76a8c874fe7ac5ad95255efc66173b049088",
+      "src": "https://github.com/Olical/conjure"
+    },
     "fff.nvim": {
       "rev": "4c5c92ac38364032e71e11d6adf49c8a326dcde8",
       "src": "https://github.com/dmtrKovalenko/fff.nvim"
@@ -24,6 +28,10 @@
     "iron.nvim": {
       "rev": "88cd340407b959f1168af2a6ae5a3d180e6df32c",
       "src": "https://github.com/Vigemus/iron.nvim.git"
+    },
+    "koda.nvim": {
+      "rev": "ac7e746882b31a68bdcd533464a20ca40b712bcb",
+      "src": "https://github.com/oskarnurm/koda.nvim"
     },
     "marks.nvim": {
       "rev": "f353e8c08c50f39e99a9ed474172df7eddd89b72",

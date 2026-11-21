@@ -1,9 +1,9 @@
 local add = vim.pack.add
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
--- now(function() add({ "https://github.com/oskarnurm/koda.nvim" }) end)
+now(function() add({ "https://github.com/oskarnurm/koda.nvim" }) end)
 -- Benchmark with `=MiniMisc.stat_summary(MiniMisc.bench_time(vim.cmd, 1000, 'colorscheme koda'))`
-vim.opt.runtimepath:prepend("~/odin/koda.nvim")
+-- vim.opt.runtimepath:prepend("~/odin/koda.nvim")
 -- require("koda").setup({
 --   theme = { dark = "moss", light = "glade" },
 --
@@ -60,6 +60,7 @@ now_if_args(function()
     "gitcommit",
     "embedded_template",
     "prisma",
+    "clojure",
   }
   local not_installed = function(lang) return #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".*", false) == 0 end
   local to_install = vim.tbl_filter(not_installed, languages)
@@ -130,11 +131,23 @@ later(function()
 end)
 
 later(function()
+  -- Conjure config must be set before the plugin loads.
+  -- Disable the floating HUD; use the real log buffer instead (open with <localleader>lv / <localleader>ls).
+  vim.g["conjure#log#hud#enabled"] = false
+  -- Where the log split opens and how big it is.
+  vim.g["conjure#log#botright"] = true -- open log split at the far right / bottom
+  vim.g["conjure#log#jump_to_latest#enabled"] = true -- auto-scroll to newest eval result
+
+  add({ "https://github.com/Olical/conjure" })
+end)
+
+later(function()
   add({ "https://github.com/stevearc/conform.nvim" })
   require("conform").setup({
-    -- format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
+    format_on_save = { lsp_format = "fallback", timeout_ms = 1000 },
     formatters_by_ft = {
       sh = { "shfmt" },
+      clojure = { "cljfmt" },
       lua = { "stylua" },
       python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
       c = { lsp_format = "prefer" },
@@ -263,27 +276,3 @@ later(function()
     -- },
   })
 end)
-
--- Better find
-vim.cmd([[
-func Find(arg, _)
-  if empty(s:filescache)
-    let s:filescache = systemlist('fd --type f --color=never --follow --hidden --exclude .git')
-  endif
-  return a:arg == '' ? s:filescache : matchfuzzy(s:filescache, a:arg)
-endfunc
-let s:filescache = []
-set findfunc=Find
-
-autocmd CmdlineEnter : let s:filescache = []
-autocmd CmdlineChanged [:\/\?] call wildtrigger()
-autocmd CmdlineLeavePre :
-      \ if get(cmdcomplete_info(), 'matches', []) != [] |
-      \   let s:info = cmdcomplete_info() |
-      \   if getcmdline() =~ '^\s*fin\%[d]\s' && s:info.selected == -1 |
-      \     call setcmdline($'find {s:info.matches[0]}') |
-      \   endif |
-      \ endif
-]])
-
-vim.keymap.set("n", "<leader>f", ":find ")
